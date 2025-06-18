@@ -1,5 +1,12 @@
 import React from "react";
-import { ArrowRight, Download } from "lucide-react";
+import {
+  ArrowRight,
+  Code2,
+  Download,
+  Palette,
+  Smartphone,
+  Zap,
+} from "lucide-react";
 
 const Hero = () => {
   return (
@@ -33,11 +40,41 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right Column - Stats Grid (we'll add this next) */}
+        {/* Right Column - Stats Grid */}
         <div className="relative mt-8 lg:mt-0">
           <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8">
-            <div className="text-center text-gray-400">
-              Stats grid coming next...
+            <div className="grid grid-cols-2 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                  <Code2 className="w-8 h-8 text-blue-400" />
+                </div>
+                <div className="text-3xl font-bold text-white mb-2">7+</div>
+                <div className="text-sm text-gray-400">Projects</div>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                  <Zap className="w-8 h-8 text-yellow-400" />
+                </div>
+                <div className="text-3xl font-bold text-white mb-2">3+</div>
+                <div className="text-sm text-gray-400">Years Exp</div>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                  <Palette className="w-8 h-8 text-purple-400" />
+                </div>
+                <div className="text-3xl font-bold text-white mb-2">UI/UX</div>
+                <div className="text-sm text-gray-400">Design</div>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                  <Smartphone className="w-8 h-8 text-green-400" />
+                </div>
+                <div className="text-3xl font-bold text-white mb-2">Mobile</div>
+                <div className="text-sm text-gray-400">First</div>
+              </div>
             </div>
           </div>
         </div>
