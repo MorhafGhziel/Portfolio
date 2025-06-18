@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   ArrowRight,
@@ -8,6 +10,7 @@ import {
   Zap,
 } from "lucide-react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
@@ -16,8 +19,22 @@ const Hero = () => {
         {/* Left Column - Text Content */}
         <div className="text-center lg:text-left">
           {/* Profile Avatar */}
-          <div className="flex justify-center lg:justify-start mb-8">
-            <div className="w-20 h-20 sm:w-24 sm:h-24 ring-4 ring-blue-500/50 shadow-2xl rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
+          <motion.div
+            className="flex justify-center lg:justify-start mb-8"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+              delay: 0.5,
+            }}
+          >
+            <motion.div
+              className="w-20 h-20 sm:w-24 sm:h-24 ring-4 ring-blue-500/50 shadow-2xl rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center"
+              whileHover={{ scale: 1.1, rotate: 5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
               <Image
                 src="/images/profile.jpg"
                 alt="Morhaf Profile Picture"
@@ -25,14 +42,23 @@ const Hero = () => {
                 height={96}
                 className="w-full h-full object-cover rounded-full"
               />
-            </div>
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+            </motion.div>
+          </motion.div>
+          <motion.h1
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
             Hi, I'm{" "}
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <motion.span
+              className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+              animate={{ backgroundPosition: ["0%", "100%", "0%"] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+            >
               Morhaf
-            </span>
-          </h1>
+            </motion.span>
+          </motion.h1>
           <p className="text-xl text-gray-300 mb-8">
             Front-End Developer & UI/UX Engineer
           </p>
