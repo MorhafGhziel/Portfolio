@@ -7,6 +7,7 @@ import {
   Smartphone,
   Zap,
 } from "lucide-react";
+import Image from "next/image";
 
 const Hero = () => {
   return (
@@ -14,6 +15,18 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
         {/* Left Column - Text Content */}
         <div className="text-center lg:text-left">
+          {/* Profile Avatar */}
+          <div className="flex justify-center lg:justify-start mb-8">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 ring-4 ring-blue-500/50 shadow-2xl rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
+              <Image
+                src="/images/profile.jpg"
+                alt="Morhaf Profile Picture"
+                width={96}
+                height={96}
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
+          </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Hi, I'm{" "}
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
