@@ -80,43 +80,92 @@ const Hero = () => {
         </div>
 
         {/* Right Column - Stats Grid */}
-        <div className="relative mt-8 lg:mt-0">
-          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8">
+        <motion.div
+          className="relative mt-8 lg:mt-0"
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+        >
+          <motion.div
+            className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          >
             <div className="grid grid-cols-2 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+              <motion.div
+                className="text-center"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 2.5, type: "spring", stiffness: 200 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <motion.div
+                  className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                >
                   <Code2 className="w-8 h-8 text-blue-400" />
-                </div>
+                </motion.div>
                 <div className="text-3xl font-bold text-white mb-2">7+</div>
                 <div className="text-sm text-gray-400">Projects</div>
-              </div>
+              </motion.div>
 
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+              <motion.div
+                className="text-center"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 2.7, type: "spring", stiffness: 200 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <motion.div
+                  className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                >
                   <Zap className="w-8 h-8 text-yellow-400" />
-                </div>
+                </motion.div>
                 <div className="text-3xl font-bold text-white mb-2">3+</div>
                 <div className="text-sm text-gray-400">Years Exp</div>
-              </div>
+              </motion.div>
 
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+              <motion.div
+                className="text-center"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 2.9, type: "spring", stiffness: 200 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <motion.div
+                  className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                >
                   <Palette className="w-8 h-8 text-purple-400" />
-                </div>
+                </motion.div>
                 <div className="text-3xl font-bold text-white mb-2">UI/UX</div>
                 <div className="text-sm text-gray-400">Design</div>
-              </div>
+              </motion.div>
 
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+              <motion.div
+                className="text-center"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 3.1, type: "spring", stiffness: 200 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <motion.div
+                  className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                >
                   <Smartphone className="w-8 h-8 text-green-400" />
-                </div>
+                </motion.div>
                 <div className="text-3xl font-bold text-white mb-2">Mobile</div>
                 <div className="text-sm text-gray-400">First</div>
-              </div>
+              </motion.div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
