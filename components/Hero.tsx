@@ -51,7 +51,7 @@ const Hero = () => {
             }}
           >
             <motion.div
-              className="w-20 h-20 sm:w-24 sm:h-24 ring-4 ring-blue-500/50 shadow-2xl rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center"
+              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 ring-2 sm:ring-4 ring-blue-500/50 shadow-2xl rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center"
               whileHover={{ scale: 1.1, rotate: 5 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
@@ -64,21 +64,30 @@ const Hero = () => {
               />
             </motion.div>
           </motion.div>
+
+          {/* Enhanced Title */}
           <motion.h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
+            className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
           >
-            Hi, I'm{" "}
+            <span className="block">Hi, I'm</span>
             <motion.span
-              className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
-              animate={{ backgroundPosition: ["0%", "100%", "0%"] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+              className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+              animate={{
+                backgroundPosition: ["0%", "100%", "0%"],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "linear",
+              }}
             >
               Morhaf
             </motion.span>
           </motion.h1>
+
           <p className="text-xl text-gray-300 mb-8">
             Front-End Developer & UI/UX Engineer
           </p>
@@ -110,11 +119,12 @@ const Hero = () => {
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
         >
           <motion.div
-            className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8"
+            className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+              {/* Projects Stat */}
               <motion.div
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
@@ -123,16 +133,19 @@ const Hero = () => {
                 whileHover={{ scale: 1.05 }}
               >
                 <motion.div
-                  className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Code2 className="w-8 h-8 text-blue-400" />
+                  <Code2 className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-400" />
                 </motion.div>
-                <div className="text-3xl font-bold text-white mb-2">7+</div>
-                <div className="text-sm text-gray-400">Projects</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
+                  7+
+                </div>
+                <div className="text-xs sm:text-sm text-gray-400">Projects</div>
               </motion.div>
 
+              {/* Experience Stat */}
               <motion.div
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
@@ -141,16 +154,21 @@ const Hero = () => {
                 whileHover={{ scale: 1.05 }}
               >
                 <motion.div
-                  className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Zap className="w-8 h-8 text-yellow-400" />
+                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-yellow-400" />
                 </motion.div>
-                <div className="text-3xl font-bold text-white mb-2">3+</div>
-                <div className="text-sm text-gray-400">Years Exp</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
+                  3+
+                </div>
+                <div className="text-xs sm:text-sm text-gray-400">
+                  Years Exp
+                </div>
               </motion.div>
 
+              {/* UI/UX Stat */}
               <motion.div
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
@@ -159,16 +177,19 @@ const Hero = () => {
                 whileHover={{ scale: 1.05 }}
               >
                 <motion.div
-                  className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Palette className="w-8 h-8 text-purple-400" />
+                  <Palette className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-purple-400" />
                 </motion.div>
-                <div className="text-3xl font-bold text-white mb-2">UI/UX</div>
-                <div className="text-sm text-gray-400">Design</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
+                  UI/UX
+                </div>
+                <div className="text-xs sm:text-sm text-gray-400">Design</div>
               </motion.div>
 
+              {/* Mobile Stat */}
               <motion.div
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
@@ -177,14 +198,16 @@ const Hero = () => {
                 whileHover={{ scale: 1.05 }}
               >
                 <motion.div
-                  className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
+                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Smartphone className="w-8 h-8 text-green-400" />
+                  <Smartphone className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-green-400" />
                 </motion.div>
-                <div className="text-3xl font-bold text-white mb-2">Mobile</div>
-                <div className="text-sm text-gray-400">First</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
+                  Mobile
+                </div>
+                <div className="text-xs sm:text-sm text-gray-400">First</div>
               </motion.div>
             </div>
           </motion.div>
