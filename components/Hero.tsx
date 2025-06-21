@@ -7,10 +7,12 @@ import {
   Download,
   Palette,
   Smartphone,
+  Sparkles,
   Zap,
 } from "lucide-react";
 import Image from "next/image";
 import { easeInOut, motion } from "framer-motion";
+import Button from "./ui/Button";
 
 const Hero = () => {
   return (
@@ -86,14 +88,17 @@ const Hero = () => {
             web technologies.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-3 rounded-lg font-medium transition duration-300 shadow-lg flex items-center justify-center gap-2">
+            <Button
+              variant="primary"
+              leftIcon={Sparkles}
+              rightIcon={ArrowRight}
+            >
               View My Work
-              <ArrowRight className="w-5 h-5" />
-            </button>
-            <button className="border border-gray-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-gray-800 hover:border-gray-500 transition duration-300 flex items-center justify-center gap-2">
-              <Download className="w-5 h-5" />
+            </Button>
+
+            <Button variant="secondary" leftIcon={Download}>
               Download Resume
-            </button>
+            </Button>
           </div>
         </div>
 
