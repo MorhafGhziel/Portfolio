@@ -30,7 +30,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <motion.button
       type="button"
-      className={`px-8 py-3 rounded-lg font-medium transition duration-300 flex items-center justify-center cursor-pointer gap-2 ${variants[variant]} ${className}`}
+      className={`px-8 py-3 rounded-lg font-medium transition duration-300 flex items-center justify-center cursor-pointer gap-2 w-fit mx-auto md:mx-0 ${variants[variant]} ${className}`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.9 }}
       onClick={onClick}

@@ -88,10 +88,10 @@ const Hero = () => {
             </motion.span>
           </motion.h1>
 
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-3xl text-gray-300 mb-8">
             Front-End Developer & UI/UX Engineer
           </p>
-          <p className="text-gray-400 max-w-2xl mx-auto lg:mx-0">
+          <p className="text-gray-400 max-w-2xl text-xl mx-auto lg:mx-0">
             I create exceptional digital experiences by combining clean code
             with thoughtful design. Specialized in React, Next.js, and modern
             web technologies.
