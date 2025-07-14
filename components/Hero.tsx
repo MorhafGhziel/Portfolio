@@ -15,8 +15,18 @@ import { easeInOut, motion } from "framer-motion";
 import Button from "./ui/Button";
 
 const Hero = () => {
+  const handleDownloadResume = () => {
+    // Create a link element
+    const link = document.createElement("a");
+    link.href = "/Morhaf_Ghziel_Resume.pdf";
+    link.download = "Morhaf_Ghziel_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <section className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-4">
+    <section className="min-h-screen bg-black text-white flex items-center justify-center px-4 py-12">
       {/* Animated Background Orbs */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -74,7 +84,7 @@ const Hero = () => {
           >
             <span className="block">Hi, I'm</span>
             <motion.span
-              className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
               animate={{
                 backgroundPosition: ["0%", "100%", "0%"],
               }}
@@ -105,7 +115,11 @@ const Hero = () => {
               View My Work
             </Button>
 
-            <Button variant="secondary" leftIcon={Download}>
+            <Button
+              variant="secondary"
+              leftIcon={Download}
+              onClick={handleDownloadResume}
+            >
               Download Resume
             </Button>
           </div>
