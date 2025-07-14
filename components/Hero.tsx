@@ -26,7 +26,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen bg-black text-white flex items-center justify-center px-4 py-12">
+    <section className="min-h-screen bg-black text-white flex items-center justify-center px-4 py-12 pt-24 sm:pt-28">
       {/* Animated Background Orbs */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -127,7 +127,7 @@ const Hero = () => {
 
         {/* Right Column - Stats Grid */}
         <motion.div
-          className="relative mt-8 lg:mt-0"
+          className="relative mt-8 lg:mt-0 mb-20 sm:mb-24"
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
@@ -230,7 +230,7 @@ const Hero = () => {
 
       {/* Scroll Indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 3.5, duration: 1 }}

@@ -21,7 +21,7 @@ type FloatingProps = {
   delay: number;
 };
 
-export function FloatingElements() {
+export default function FloatingElements() {
   const [mounted, setMounted] = useState(false);
   const [floatingProps, setFloatingProps] = useState<FloatingProps[]>([]);
 

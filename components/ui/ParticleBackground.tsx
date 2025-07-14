@@ -13,7 +13,7 @@ interface Particle {
   color: string;
 }
 
-export function ParticleBackground() {
+export default function ParticleBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
