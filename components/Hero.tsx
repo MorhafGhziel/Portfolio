@@ -98,15 +98,60 @@ const Hero = () => {
             </motion.span>
           </motion.h1>
 
-          <p className="text-3xl text-gray-300 mb-8">
-            Front-End Developer & UI/UX Engineer
-          </p>
-          <p className="text-gray-400 max-w-2xl text-xl mx-auto lg:mx-0">
+          <motion.p
+            className="text-xl md:text-3xl text-gray-300 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1 }}
+          >
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.8, // Delay the fade cycle until after entrance
+              }}
+            >
+              FrontEnd Developer
+            </motion.span>{" "}
+            &{" "}
+            <motion.span
+              initial={{ opacity: 1 }}
+              animate={{
+                opacity: [1, 0, 1],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.8, // Delay the fade cycle until after entrance
+              }}
+            >
+              UI/UX Engineer
+            </motion.span>
+          </motion.p>
+
+          <motion.p
+            className="text-gray-400 max-w-2xl text-xl mx-auto lg:mx-0"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+          >
             I create exceptional digital experiences by combining clean code
             with thoughtful design. Specialized in React, Next.js, and modern
             web technologies.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          </motion.p>
+
+          <motion.div
+            className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.4 }}
+          >
             <Button
               variant="primary"
               leftIcon={Sparkles}
@@ -122,7 +167,7 @@ const Hero = () => {
             >
               Download Resume
             </Button>
-          </div>
+          </motion.div>
         </div>
 
         {/* Right Column - Stats Grid */}

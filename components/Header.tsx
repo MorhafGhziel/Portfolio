@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Mail } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -12,6 +13,8 @@ const navItems = [
 ];
 
 export function Header() {
+  const pathname = usePathname();
+
   return (
     <motion.header
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4 bg-black/95 backdrop-blur-lg border-b border-white/10"
@@ -33,17 +36,28 @@ export function Header() {
 
         {/* Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.path}
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <motion.span whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
-                {item.name}
-              </motion.span>
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = pathname === item.path;
+            return (
+              <Link
+                key={item.name}
+                href={item.path}
+                className={`transition-all ${
+                  isActive
+                    ? "text-white font-medium scale-105"
+                    : "text-gray-400 hover:text-white"
+                }`}
+              >
+                <motion.span
+                  whileHover={{ y: -2 }}
+                  whileTap={{ y: 0 }}
+                  animate={isActive ? { y: -2 } : { y: 0 }}
+                >
+                  {item.name}
+                </motion.span>
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Get in touch button */}
