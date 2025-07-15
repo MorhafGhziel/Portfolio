@@ -26,7 +26,10 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen text-white flex items-center justify-center px-4 py-12 pt-24 sm:pt-28 relative">
+    <section
+      id="home"
+      className="min-h-screen text-white flex items-center justify-center px-4 py-12 pt-24 sm:pt-28 relative"
+    >
       {/* Animated Background Orbs */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div

@@ -7,7 +7,10 @@ import LocationCard from "./ui/LocationCard";
 
 const About = () => {
   return (
-    <section className="min-h-screen text-white flex items-center justify-center px-4 flex-col py-12">
+    <section
+      id="about"
+      className="min-h-screen text-white flex items-center justify-center px-4 flex-col py-12"
+    >
       <div className="text-center mb-16">
         <h2 className="text-4xl font-bold mb-4">About Me</h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
