@@ -20,19 +20,33 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = document.querySelectorAll("section[id]");
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      const sections = document.querySelectorAll("[id]");
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
 
+      let currentSection = "";
       sections.forEach((section) => {
         const sectionElement = section as HTMLElement;
         const sectionTop = sectionElement.offsetTop;
-        const sectionBottom = sectionTop + sectionElement.offsetHeight;
+        const sectionHeight = sectionElement.offsetHeight;
         const sectionId = sectionElement.getAttribute("id") || "";
 
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-          setActiveSection(sectionId);
+        // Special handling for the contact section
+        if (sectionId === "contact") {
+          if (
+            window.innerHeight + window.scrollY >=
+            document.documentElement.scrollHeight - 100
+          ) {
+            currentSection = "contact";
+          }
+        } else if (
+          scrollPosition >= sectionTop &&
+          scrollPosition < sectionTop + sectionHeight
+        ) {
+          currentSection = sectionId;
         }
       });
+
+      setActiveSection(currentSection);
     };
 
     window.addEventListener("scroll", handleScroll);

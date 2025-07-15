@@ -57,6 +57,13 @@ const Hero = () => {
     }
   };
 
+  const handleScrollToWork = () => {
+    const workSection = document.getElementById("work");
+    if (workSection) {
+      workSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <motion.section
       id="home"
@@ -205,6 +212,7 @@ const Hero = () => {
               variant="primary"
               leftIcon={Sparkles}
               rightIcon={ArrowRight}
+              onClick={handleScrollToWork}
             >
               View My Work
             </Button>

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,7 +47,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black min-h-screen`}
       >
-        <div className="relative">
+        <Toaster position="top-center" theme="dark" />
+        <div className="relative bg-black">
           {/* Background gradient for header */}
           <div className="fixed inset-0 h-[20vh] bg-gradient-to-b from-black via-black/50 to-transparent z-10 pointer-events-none" />
 
@@ -55,6 +58,9 @@ export default function RootLayout({
 
           {/* Main content */}
           <main className="relative bg-black">{children}</main>
+
+          {/* Footer */}
+          <Footer />
         </div>
       </body>
     </html>
