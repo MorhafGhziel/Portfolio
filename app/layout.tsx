@@ -18,7 +18,20 @@ export const metadata: Metadata = {
   description:
     "Front-End Developer specializing in React, Next.js, and modern web technologies.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "./favicon.ico",
+  },
+  openGraph: {
+    title: "Morhaf Ghziel",
+    description:
+      "Front-End Developer specializing in React, Next.js, and modern web technologies.",
+    images: ["./opengraph-image.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Morhaf Ghziel",
+    description:
+      "Front-End Developer specializing in React, Next.js, and modern web technologies.",
+    images: ["./opengraph-image.jpg"],
   },
 };
 
