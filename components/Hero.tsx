@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowRight,
   Code2,
@@ -9,12 +9,37 @@ import {
   Smartphone,
   Sparkles,
   Zap,
+  ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
-import { easeInOut, motion } from "framer-motion";
+import { easeInOut, motion, useScroll, useTransform } from "framer-motion";
 import Button from "./ui/Button";
 
 const Hero = () => {
+  const { scrollY } = useScroll();
+
+  // Container transforms for the entire hero section
+  const heroScale = useTransform(scrollY, [0, 400], [1, 0.85]);
+  const heroY = useTransform(scrollY, [0, 400], [0, -200]);
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+
+  // Different fade ranges for each section - adjusted to be faster
+  const avatarOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+  const titleOpacity = useTransform(scrollY, [50, 150], [1, 0]);
+  const subtitleOpacity = useTransform(scrollY, [100, 200], [1, 0]);
+  const descriptionOpacity = useTransform(scrollY, [150, 250], [1, 0]);
+  const buttonsOpacity = useTransform(scrollY, [200, 300], [1, 0]);
+  const statsOpacity = useTransform(scrollY, [250, 350], [1, 0]);
+  const scrollIndicatorOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+
+  // Transform effects for individual elements
+  const avatarScale = useTransform(scrollY, [0, 100], [1, 0.9]);
+  const titleY = useTransform(scrollY, [50, 150], [0, -20]);
+  const subtitleY = useTransform(scrollY, [100, 200], [0, -15]);
+  const buttonsY = useTransform(scrollY, [200, 300], [0, -15]);
+  const statsScale = useTransform(scrollY, [250, 350], [1, 0.95]);
+  const scrollIndicatorY = useTransform(scrollY, [0, 100], [0, -30]);
+
   const handleDownloadResume = () => {
     // Create a link element
     const link = document.createElement("a");
@@ -25,13 +50,33 @@ const Hero = () => {
     document.body.removeChild(link);
   };
 
+  const handleScrollToAbout = () => {
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <section
+    <motion.section
       id="home"
       className="min-h-screen text-white flex items-center justify-center px-4 py-12 pt-24 sm:pt-28 relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      style={{
+        scale: heroScale,
+        y: heroY,
+        opacity: heroOpacity,
+        transformOrigin: "center top",
+        zIndex: 10,
+      }}
     >
       {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
+      <motion.div
+        className="absolute inset-0 overflow-hidden"
+        style={{ opacity: useTransform(scrollY, [0, 200], [1, 0]) }}
+      >
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
@@ -47,21 +92,18 @@ const Hero = () => {
             delay: 4,
           }}
         />
-      </div>
+      </motion.div>
+
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
         {/* Left Column - Text Content */}
         <div className="text-center lg:text-left">
           {/* Profile Avatar */}
           <motion.div
             className="flex justify-center lg:justify-start mb-8"
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 20,
-              delay: 0.5,
-            }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            style={{ opacity: avatarOpacity, scale: avatarScale }}
           >
             <motion.div
               className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 ring-2 sm:ring-4 ring-blue-500/50 shadow-2xl rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center"
@@ -81,9 +123,10 @@ const Hero = () => {
           {/* Enhanced Title */}
           <motion.h1
             className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            style={{ opacity: titleOpacity, y: titleY }}
           >
             <span className="block">Hi, I'm</span>
             <motion.span
@@ -103,9 +146,10 @@ const Hero = () => {
 
           <motion.p
             className="text-xl md:text-3xl text-gray-300 mb-8"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            style={{ opacity: subtitleOpacity, y: subtitleY }}
           >
             <motion.span
               initial={{ opacity: 0 }}
@@ -140,9 +184,10 @@ const Hero = () => {
 
           <motion.p
             className="text-gray-400 max-w-2xl text-xl mx-auto lg:mx-0"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+            style={{ opacity: descriptionOpacity }}
           >
             I create exceptional digital experiences by combining clean code
             with thoughtful design. Specialized in React, Next.js, and modern
@@ -151,9 +196,10 @@ const Hero = () => {
 
           <motion.div
             className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.4 }}
+            transition={{ duration: 0.5, delay: 1 }}
+            style={{ opacity: buttonsOpacity, y: buttonsY }}
           >
             <Button
               variant="primary"
@@ -176,12 +222,13 @@ const Hero = () => {
         {/* Right Column - Stats Grid */}
         <motion.div
           className="relative mt-8 lg:mt-0 mb-20 sm:mb-24"
-          initial={{ opacity: 0, x: 100 }}
+          initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          style={{ opacity: statsOpacity, scale: statsScale }}
         >
           <motion.div
-            className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8"
+            className="bg-gradient-to-br from-gray-900 to-gray-950 border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
@@ -278,24 +325,25 @@ const Hero = () => {
 
       {/* Scroll Indicator */}
       <motion.div
-        className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 3.5, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
+        style={{ opacity: scrollIndicatorOpacity, y: scrollIndicatorY }}
+        onClick={handleScrollToAbout}
       >
+        <span className="text-sm text-gray-400">Scroll to explore</span>
         <motion.div
-          className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center"
-          animate={{ opacity: [1, 0.3, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          animate={{
+            y: [0, 8, 0],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         >
-          <motion.div
-            className="w-1 h-3 bg-gray-400 rounded-full mt-2"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
+          <ChevronDown className="w-6 h-6 text-blue-500" />
         </motion.div>
       </motion.div>
-    </section>
+    </motion.section>
   );
 };
 
