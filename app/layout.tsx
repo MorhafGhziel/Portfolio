@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Morhaf Ghziel - Full-Stack Developer",
+  title: "Morhaf Ghziel",
   description:
-    "Full-Stack Developer specializing in React, Next.js, and modern web technologies.",
+    "Front-End Developer specializing in React, Next.js, and modern web technologies.",
 };
 
 export default function RootLayout({
