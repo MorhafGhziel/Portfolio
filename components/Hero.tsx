@@ -26,7 +26,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen bg-black text-white flex items-center justify-center px-4 py-12 pt-24 sm:pt-28">
+    <section className="min-h-screen text-white flex items-center justify-center px-4 py-12 pt-24 sm:pt-28 relative">
       {/* Animated Background Orbs */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -35,7 +35,7 @@ const Hero = () => {
           transition={{ duration: 8, repeat: Infinity, ease: easeInOut }}
         />
         <motion.div
-          className="absolute top-3/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
+          className="absolute top-4/7 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
           animate={{ scale: [1.2, 1, 1.2], opacity: [0.5, 0.3, 0.5] }}
           transition={{
             duration: 8,

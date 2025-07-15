@@ -38,7 +38,7 @@ export default function RootLayout({
           <Header />
 
           {/* Main content */}
-          <main className="relative">{children}</main>
+          <main className="relative bg-black">{children}</main>
         </div>
       </body>
     </html>
