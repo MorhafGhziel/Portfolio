@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { Mail } from "lucide-react";
 
 const ContactCTA = () => {
   return (
@@ -47,24 +48,11 @@ const ContactCTA = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <Link
-            href="mailto:ghzielmorhaf@gmail.com"
+            href="/contact"
             className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-medium transition-all duration-200 transform hover:scale-105 text-sm sm:text-base"
           >
-            <svg
-              className="w-4 h-4 sm:w-5 sm:h-5 mr-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-            Start a Project
+            <Mail className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+            Send Email
           </Link>
 
           <Link

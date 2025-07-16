@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || "https://morhaf-portfolio.vercel.app"
+  ),
   title: "Morhaf Ghziel",
   description:
     "Front-End Developer specializing in React, Next.js, and modern web technologies.",

@@ -43,6 +43,12 @@ const Footer = () => {
               Available worldwide
             </span>
           </div>
+
+          {/* Copyright text in the middle */}
+          <div className="text-gray-500 text-sm sm:text-base">
+            © {new Date().getFullYear()} All rights reserved by Morhaf
+          </div>
+
           <div className="flex items-center gap-6 sm:gap-8">
             <motion.a
               href="https://github.com/MorhafGhziel"

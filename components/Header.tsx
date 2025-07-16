@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Mail, Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const navItems = [
   { name: "Home", path: "/", sectionId: "home" },
@@ -15,6 +16,7 @@ const navItems = [
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -55,15 +57,24 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = (
+  const handleNavClick = async (
     e: React.MouseEvent<HTMLAnchorElement>,
     sectionId: string
   ) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false); // Close mobile menu after clicking
+
+    // If we're not on the home page, navigate to home first
+    if (pathname !== "/") {
+      router.push("/");
+      // Wait for navigation and DOM update
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+
+    // Then scroll to the section
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false); // Close mobile menu after clicking
     }
   };
 
