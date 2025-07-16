@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Orbitron } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,6 +13,11 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
   subsets: ["latin"],
 });
 
@@ -48,7 +54,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} antialiased bg-black min-h-screen`}
       >
         <Toaster position="top-center" theme="dark" />
         <div className="relative bg-black">
