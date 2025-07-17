@@ -13,7 +13,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
   return (
     <motion.div
-      className="group"
+      className="group h-full"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -24,7 +24,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         damping: 10,
       }}
     >
-      <div className="rounded-lg border text-card-foreground shadow-sm bg-gray-900/80 backdrop-blur-sm border-gray-700/50 overflow-hidden h-full hover:bg-gray-800/80 transition-all duration-300">
+      <div className="flex flex-col h-full rounded-lg border text-card-foreground shadow-sm bg-gray-900/80 backdrop-blur-sm border-gray-700/50 overflow-hidden hover:bg-gray-800/80 transition-all duration-300">
         <div className="aspect-video bg-gray-800 overflow-hidden relative">
           <Image
             src={image}
@@ -35,13 +35,13 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <div className="flex flex-col space-y-1.5 p-6 pb-4">
-          <div className="font-semibold tracking-tight text-xl text-white group-hover:text-gray-400 transition-colors">
+
+        <div className="flex flex-col flex-1 p-6">
+          <h3 className="font-semibold tracking-tight text-xl text-white group-hover:text-gray-400 transition-colors mb-3">
             {title}
-          </div>
-          <div className="text-gray-400 text-sm">{description}</div>
-        </div>
-        <div className="p-6 pt-0">
+          </h3>
+          <p className="text-gray-400 text-sm mb-6">{description}</p>
+
           <div className="flex flex-wrap gap-2 mb-6">
             {techStack.map((tech, index) => (
               <div
@@ -52,7 +52,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               </div>
             ))}
           </div>
-          <div className="flex gap-3">
+
+          <div className="flex gap-3 mt-auto">
             <div className="flex-1">
               <a
                 href={githubUrl}
