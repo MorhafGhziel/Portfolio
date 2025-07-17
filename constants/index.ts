@@ -57,4 +57,38 @@ export const PROJECTS: Project[] = [
     githubUrl: "https://github.com/MorhafGhziel/product-upload-dashboard",
     liveUrl: "https://product-upload-dashboard.vercel.app/products",
   },
+  {
+    title: "CarHub",
+    description:
+      "Car showcase website built with a modern frontend stack, featuring vehicle listings, dynamic filtering, and smooth UI transitions for an optimized user experience.",
+    image: "/images/CarShowCase.png",
+    techStack: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "TailwindCSS",
+      "Headless UI",
+      "PostCSS",
+      "ESLint",
+    ],
+    githubUrl: "http://github.com/MorhafGhziel/car_showcase",
+    liveUrl: "https://car-showcase-seven-tau.vercel.app/",
+  },
+  {
+    title: "Promptopia",
+    description:
+      "Full-stack AI prompt sharing app with authentication, CRUD features, and real-time search.",
+    image: "/images/Promptopia.png",
+    techStack: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "TailwindCSS",
+      "MongoDB",
+      "NextAuth.js",
+      "PostCSS",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/ai-prompt-sharing",
+    liveUrl: "https://project-next-14-ai-prompt-sharing-self.vercel.app/",
+  },
 ] as const;
