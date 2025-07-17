@@ -23,7 +23,7 @@ const orbitron = Orbitron({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "https://morhaf-portfolio.vercel.app"
+    process.env.NEXT_PUBLIC_BASE_URL || "https://morhaf.me"
   ),
   title: "Morhaf Ghziel",
   description:
