@@ -51,9 +51,15 @@ const Hero = () => {
   };
 
   const handleScrollToAbout = () => {
-    const aboutSection = document.getElementById("about");
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: "smooth" });
+    const element = document.getElementById("about");
+    if (element) {
+      const offset = window.innerHeight / 12.5;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: "smooth",
+      });
     }
   };
 
