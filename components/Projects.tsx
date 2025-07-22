@@ -1,25 +1,124 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PROJECTS } from "@/constants";
 import ProjectCard from "./ui/ProjectCard";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Projects = () => {
-  const [visibleProjects, setVisibleProjects] = useState(3);
+  // Get initial count based on screen size
+  const [initialCount, setInitialCount] = useState(3);
+  const [visibleProjects, setVisibleProjects] = useState(initialCount);
+
+  // Update initial count on mount and screen resize
+  useEffect(() => {
+    const updateInitialCount = () => {
+      if (window.matchMedia("(max-width: 640px)").matches) {
+        setInitialCount(1); // Small screens
+      } else if (window.matchMedia("(max-width: 1024px)").matches) {
+        setInitialCount(2); // Medium screens
+      } else {
+        setInitialCount(3); // Large screens
+      }
+      // Adjust visible projects if needed
+      setVisibleProjects((prev) => {
+        const newInitialCount = window.matchMedia("(max-width: 640px)").matches
+          ? 1
+          : window.matchMedia("(max-width: 1024px)").matches
+            ? 2
+            : 3;
+        return Math.min(prev, newInitialCount);
+      });
+    };
+
+    // Initial check
+    updateInitialCount();
+
+    // Add resize listener
+    window.addEventListener("resize", updateInitialCount);
+    return () => window.removeEventListener("resize", updateInitialCount);
+  }, []);
 
   const showMoreProjects = () => {
-    setVisibleProjects((prev) => Math.min(prev + 3, PROJECTS.length));
+    // Increment based on screen size
+    let increment = 3; // default for large screens
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      increment = 1; // small screens
+    } else if (window.matchMedia("(max-width: 1024px)").matches) {
+      increment = 2; // medium screens
+    }
+
+    const newVisibleProjects = Math.min(
+      visibleProjects + increment,
+      PROJECTS.length
+    );
+    setVisibleProjects(newVisibleProjects);
+
+    // Calculate the row number to scroll to (projects per row based on screen size)
+    const projectsPerRow = increment;
+    const targetRow = Math.floor((newVisibleProjects - 1) / projectsPerRow);
+    const scrollTarget = document.getElementById("work");
+
+    if (scrollTarget) {
+      // Get the actual project card height
+      const projectCards = document.querySelectorAll(".project-card");
+      const firstCard = projectCards[0] as HTMLDivElement;
+      const cardHeight = firstCard?.offsetHeight || 400;
+      const scrollPosition =
+        scrollTarget.offsetTop + targetRow * (cardHeight + 32); // 32px for gap
+
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: "smooth",
+      });
+    }
   };
 
   const showLessProjects = () => {
-    setVisibleProjects(3);
+    // Get current screen size increment
+    let projectsPerRow = 3; // default for large screens
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      projectsPerRow = 1; // small screens
+    } else if (window.matchMedia("(max-width: 1024px)").matches) {
+      projectsPerRow = 2; // medium screens
+    }
+
+    // Calculate projects in the last row
+    const lastRowProjects = visibleProjects % projectsPerRow;
+
+    // If we're on the last row and it's not full, just remove those projects
+    // Otherwise, remove a full row
+    const projectsToRemove =
+      lastRowProjects > 0 ? lastRowProjects : projectsPerRow;
+
+    // Calculate the new number of visible projects
+    const newVisibleProjects = visibleProjects - projectsToRemove;
+    setVisibleProjects(newVisibleProjects);
+
+    // Calculate the row number to scroll to
+    const targetRow = Math.floor((newVisibleProjects - 1) / projectsPerRow);
+    const scrollTarget = document.getElementById("work");
+
+    if (scrollTarget) {
+      // Get the actual project card height
+      const projectCards = document.querySelectorAll(".project-card");
+      const firstCard = projectCards[0] as HTMLDivElement;
+      const cardHeight = firstCard?.offsetHeight || 400;
+      const scrollPosition =
+        scrollTarget.offsetTop + targetRow * (cardHeight + 32); // 32px for gap
+
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: "smooth",
+      });
+    }
   };
 
   // Calculate dynamic height based on number of rows
   const getMinHeight = () => {
-    const projectRows = Math.ceil(visibleProjects / 3); // 3 projects per row
-    return `${100 + (projectRows - 1) * 40}vh`; // Base 100vh + 40vh per additional row
+    const projectsPerRow = initialCount;
+    const projectRows = Math.ceil(visibleProjects / projectsPerRow);
+    return `${100 + (projectRows - 1) * 40}vh`;
   };
 
   return (
@@ -64,8 +163,8 @@ const Projects = () => {
           </motion.p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {/* First three projects with subtle scroll animations */}
-          {PROJECTS.slice(0, 3).map((project, index) => (
+          {/* Initial projects with subtle scroll animations */}
+          {PROJECTS.slice(0, initialCount).map((project, index) => (
             <motion.div
               key={`${project.title}-${index}`}
               initial={{ opacity: 0, y: 30 }}
@@ -76,7 +175,7 @@ const Projects = () => {
                 delay: index * 0.2,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="relative"
+              className="relative project-card"
             >
               <ProjectCard project={project} />
             </motion.div>
@@ -84,40 +183,43 @@ const Projects = () => {
 
           {/* Additional projects with animations */}
           <AnimatePresence mode="popLayout">
-            {visibleProjects > 3 &&
-              PROJECTS.slice(3, visibleProjects).map((project, index) => (
-                <motion.div
-                  key={`${project.title}-${index}`}
-                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                    y: 0,
-                    transition: {
-                      duration: 0.5,
-                      ease: [0.16, 1, 0.3, 1],
-                      delay: index * 0.1,
-                    },
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.8,
-                    y: -20,
-                    transition: {
-                      duration: 0.3,
-                      ease: [0.16, 1, 0.3, 1],
-                      delay: (visibleProjects - index - 4) * 0.1,
-                    },
-                  }}
-                  className="relative"
-                >
-                  <ProjectCard project={project} />
-                </motion.div>
-              ))}
+            {visibleProjects > initialCount &&
+              PROJECTS.slice(initialCount, visibleProjects).map(
+                (project, index) => (
+                  <motion.div
+                    key={`${project.title}-${index}`}
+                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      y: 0,
+                      transition: {
+                        duration: 0.5,
+                        ease: [0.16, 1, 0.3, 1],
+                        delay: index * 0.1,
+                      },
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.8,
+                      y: -20,
+                      transition: {
+                        duration: 0.3,
+                        ease: [0.16, 1, 0.3, 1],
+                        delay:
+                          (visibleProjects - index - initialCount - 1) * 0.1,
+                      },
+                    }}
+                    className="relative project-card"
+                  >
+                    <ProjectCard project={project} />
+                  </motion.div>
+                )
+              )}
           </AnimatePresence>
         </div>
         <motion.div
-          className="mt-8 flex justify-center"
+          className="mt-8 flex justify-center gap-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
@@ -127,21 +229,32 @@ const Projects = () => {
           }}
         >
           <AnimatePresence mode="wait" initial={false}>
-            {visibleProjects < PROJECTS.length ? (
-              <button
-                onClick={showMoreProjects}
-                className="px-8 py-3 rounded-lg font-medium cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 active:scale-95"
-              >
-                Show More
-              </button>
-            ) : (
-              <button
-                onClick={showLessProjects}
-                className="px-8 py-3 rounded-lg font-medium cursor-pointer border border-gray-600 hover:bg-gray-800 hover:border-gray-500 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 active:scale-95"
-              >
-                Show Less
-              </button>
-            )}
+            <div key="buttons-container" className="flex gap-4">
+              {visibleProjects > initialCount && (
+                <motion.button
+                  key="less-button"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  onClick={showLessProjects}
+                  className="px-8 py-3 rounded-lg font-medium cursor-pointer border border-gray-600 hover:bg-gray-800 hover:border-gray-500 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 active:scale-95"
+                >
+                  Show Less
+                </motion.button>
+              )}
+              {visibleProjects < PROJECTS.length && (
+                <motion.button
+                  key="more-button"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  onClick={showMoreProjects}
+                  className="px-8 py-3 rounded-lg font-medium cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 active:scale-95"
+                >
+                  Show More
+                </motion.button>
+              )}
+            </div>
           </AnimatePresence>
         </motion.div>
       </div>

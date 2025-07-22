@@ -144,7 +144,7 @@ export const PROJECTS: Project[] = [
     title: "iPhone Interactive Showcase",
     description:
       "A smooth, scroll-driven iPhone landing page clone featuring interactive 3D models, animated sections, and promo videos — built for a premium, Apple-like experience.",
-    image: "/images/IPhoneShowCase.png",
+    image: "/images/IphoneShowCase.png",
     techStack: [
       "React",
       "Vite",

@@ -17,28 +17,115 @@ import Button from "./ui/Button";
 
 const Hero = () => {
   const { scrollY } = useScroll();
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+
+  // Check screen size on mount and resize
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobileOrTablet(window.innerWidth < 1024); // lg breakpoint in Tailwind
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   // Container transforms for the entire hero section
-  const heroScale = useTransform(scrollY, [0, 400], [1, 0.85]);
-  const heroY = useTransform(scrollY, [0, 400], [0, -200]);
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const heroScale = useTransform(
+    scrollY,
+    [0, isMobileOrTablet ? 1000 : 400],
+    [1, 0.85]
+  );
+  const heroY = useTransform(
+    scrollY,
+    [0, isMobileOrTablet ? 1000 : 400],
+    [0, -200]
+  );
+  const heroOpacity = useTransform(
+    scrollY,
+    [0, isMobileOrTablet ? 1000 : 400],
+    [1, 0]
+  );
 
-  // Different fade ranges for each section - adjusted to be faster
-  const avatarOpacity = useTransform(scrollY, [0, 100], [1, 0]);
-  const titleOpacity = useTransform(scrollY, [50, 150], [1, 0]);
-  const subtitleOpacity = useTransform(scrollY, [100, 200], [1, 0]);
-  const descriptionOpacity = useTransform(scrollY, [150, 250], [1, 0]);
-  const buttonsOpacity = useTransform(scrollY, [200, 300], [1, 0]);
-  const statsOpacity = useTransform(scrollY, [250, 350], [1, 0]);
-  const scrollIndicatorOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+  // Different fade ranges for each section
+  const avatarOpacity = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 600 : 0, isMobileOrTablet ? 700 : 100],
+    [1, 0]
+  );
+
+  const titleOpacity = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 650 : 50, isMobileOrTablet ? 750 : 150],
+    [1, 0]
+  );
+
+  const subtitleOpacity = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 700 : 100, isMobileOrTablet ? 800 : 200],
+    [1, 0]
+  );
+
+  const descriptionOpacity = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 750 : 150, isMobileOrTablet ? 850 : 250],
+    [1, 0]
+  );
+
+  const buttonsOpacity = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 800 : 200, isMobileOrTablet ? 900 : 300],
+    [1, 0]
+  );
+
+  const statsOpacity = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 850 : 250, isMobileOrTablet ? 950 : 350],
+    [1, 0]
+  );
+
+  const scrollIndicatorOpacity = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 500 : 0, isMobileOrTablet ? 600 : 100],
+    [1, 0]
+  );
 
   // Transform effects for individual elements
-  const avatarScale = useTransform(scrollY, [0, 100], [1, 0.9]);
-  const titleY = useTransform(scrollY, [50, 150], [0, -20]);
-  const subtitleY = useTransform(scrollY, [100, 200], [0, -15]);
-  const buttonsY = useTransform(scrollY, [200, 300], [0, -15]);
-  const statsScale = useTransform(scrollY, [250, 350], [1, 0.95]);
-  const scrollIndicatorY = useTransform(scrollY, [0, 100], [0, -30]);
+  const avatarScale = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 600 : 0, isMobileOrTablet ? 700 : 100],
+    [1, 0.9]
+  );
+
+  const titleY = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 650 : 50, isMobileOrTablet ? 750 : 150],
+    [0, -20]
+  );
+
+  const subtitleY = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 700 : 100, isMobileOrTablet ? 800 : 200],
+    [0, -15]
+  );
+
+  const buttonsY = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 800 : 200, isMobileOrTablet ? 900 : 300],
+    [0, -15]
+  );
+
+  const statsScale = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 850 : 250, isMobileOrTablet ? 950 : 350],
+    [1, 0.95]
+  );
+
+  const scrollIndicatorY = useTransform(
+    scrollY,
+    [isMobileOrTablet ? 500 : 0, isMobileOrTablet ? 600 : 100],
+    [0, -30]
+  );
 
   const handleDownloadResume = () => {
     // Create a link element
