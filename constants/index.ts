@@ -141,6 +141,24 @@ export const PROJECTS: Project[] = [
     liveUrl: "https://saa-s-landing-page-zeta.vercel.app/",
   },
   {
+    title: "iPhone Interactive Showcase",
+    description:
+      "A smooth, scroll-driven iPhone landing page clone featuring interactive 3D models, animated sections, and promo videos — built for a premium, Apple-like experience.",
+    image: "/images/IPhoneShowCase.png",
+    techStack: [
+      "React",
+      "Vite",
+      "TailwindCSS",
+      "PostCSS",
+      "Autoprefixer",
+      "Three.js",
+      "GSAP",
+      "ESLint",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/iphone",
+    liveUrl: "https://iphone-ilb7.vercel.app/",
+  },
+  {
     title: "AI Innovate",
     description:
       "A landing page for an AI startup that showcases services, features, and product benefits with smooth animations, engaging visuals, and responsive layout to attract potential users and investors.",
@@ -170,5 +188,22 @@ export const PROJECTS: Project[] = [
     ],
     githubUrl: "https://github.com/MorhafGhziel/SaaS-nextjs-project",
     liveUrl: "https://saa-s-nextjs-project.vercel./",
+  },
+  {
+    title: "NFT Marketplace Frontend",
+    description:
+      "A modern and responsive NFT marketplace frontend focused on performance and user experience, featuring smooth animations and scalable architecture.",
+    image: "/images/NFTMarket.png",
+    techStack: [
+      "Next.js",
+      "React",
+      "TailwindCSS",
+      "PostCSS",
+      "Autoprefixer",
+      "Framer Motion",
+      "ESLint",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/NFT-MarketPlace",
+    liveUrl: "https://nft-marketplace-gilt-kappa.vercel.app/",
   },
 ] as const;

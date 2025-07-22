@@ -263,7 +263,7 @@ const Hero = () => {
                   <Code2 className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-400" />
                 </motion.div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  7+
+                  10+
                 </div>
                 <div className="text-xs sm:text-sm text-gray-400">Projects</div>
               </motion.div>
