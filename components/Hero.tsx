@@ -206,12 +206,12 @@ const Hero = () => {
             style={{ opacity: avatarOpacity, scale: avatarScale }}
           >
             <motion.div
-              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 ring-2 sm:ring-4 ring-blue-500/50 shadow-2xl rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center"
+              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 ring-2 sm:ring-4 ring-gray-100/50 shadow-2xl rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center"
               whileHover={{ scale: 1.1, rotate: 5 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
               <Image
-                src="/images/profile.jpg"
+                src="/images/Profile3.png"
                 alt="Morhaf Profile Picture"
                 width={96}
                 height={96}
