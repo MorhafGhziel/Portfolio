@@ -1,38 +1,123 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import ParticleBackground from "@/components/ui/ParticleBackground";
 import FloatingElements from "@/components/ui/FloatingElements";
-import { Mail, Phone, MapPin, Send, Home } from "lucide-react";
+import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { toast } from "sonner";
-import Link from "next/link";
 
 export default function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const validateForm = () => {
+    const newErrors = {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    };
+    let isValid = true;
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Please enter your name";
+      isValid = false;
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Please enter your email";
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email";
+      isValid = false;
+    }
+
+    if (!formData.subject.trim()) {
+      newErrors.subject = "Please enter a subject";
+      isValid = false;
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Please enter your message";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to send message");
+      }
+
+      const data = await response.json();
+      toast.success(data.message || "Message sent successfully!");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "An error occurred. Please try again later."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Clear error when user starts typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
   return (
     <>
       <ParticleBackground />
       <FloatingElements />
-      <div className="min-h-screen bg-transparent text-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        {/* Coming Soon Overlay */}
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-xl z-50 flex items-center justify-center">
-          <div className="text-center space-y-6">
-            <h2 className="text-4xl font-bold text-white mb-4">Coming Soon</h2>
-            <p className="text-gray-300">
-              Contact form will be available soon!
-            </p>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
-            >
-              <Home className="w-4 h-4" />
-              Back to Home
-            </Link>
-          </div>
-        </div>
-
-        {/* Keep the original content but it will be blurred */}
+      <div className="min-h-screen bg-transparent text-white flex items-center justify-center py-12 pt-24 sm:pt-0 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-7xl grid md:grid-cols-2 gap-12">
           {/* Contact Info Section */}
           <motion.div
@@ -75,9 +160,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">Email</p>
-                  <p className="text-white font-medium">
-                    ghzielmorhaf@gmail.com
-                  </p>
+                  <p className="text-white font-medium">contact@morhaf.me</p>
                 </div>
               </div>
 
@@ -111,44 +194,129 @@ export default function Contact() {
             transition={{ duration: 0.5 }}
           >
             <div className="backdrop-blur-md bg-black/40 p-8 rounded-2xl border border-gray-800">
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <input
-                      type="text"
-                      placeholder="Name"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-800 bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Name"
+                        className={`w-full px-4 py-3 rounded-xl border transition-colors duration-200 ${
+                          errors.name ? "border-red-500" : "border-gray-800"
+                        } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                      />
+                      <div className="h-6 mt-1">
+                        <AnimatePresence mode="wait">
+                          {errors.name && (
+                            <motion.p
+                              className="text-red-500 text-sm"
+                              initial={{ opacity: 0, y: -2 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -2 }}
+                              transition={{ duration: 0.2, ease: "easeInOut" }}
+                            >
+                              {errors.name}
+                            </motion.p>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
                   </div>
                   <div>
-                    <input
-                      type="email"
-                      placeholder="Email"
-                      className="w-full px-4 py-3 rounded-xl border border-gray-800 bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
+                    <div className="relative">
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                        className={`w-full px-4 py-3 rounded-xl border transition-colors duration-200 ${
+                          errors.email ? "border-red-500" : "border-gray-800"
+                        } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                      />
+                      <div className="h-6 mt-1">
+                        <AnimatePresence mode="wait">
+                          {errors.email && (
+                            <motion.p
+                              className="text-red-500 text-sm"
+                              initial={{ opacity: 0, y: -2 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -2 }}
+                              transition={{ duration: 0.2, ease: "easeInOut" }}
+                            >
+                              {errors.email}
+                            </motion.p>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div>
+                <div className="relative">
                   <input
                     type="text"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
                     placeholder="Subject"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-800 bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className={`w-full px-4 py-3 rounded-xl border transition-colors duration-200 ${
+                      errors.subject ? "border-red-500" : "border-gray-800"
+                    } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
                   />
+                  <div className="h-6 mt-1">
+                    <AnimatePresence mode="wait">
+                      {errors.subject && (
+                        <motion.p
+                          className="text-red-500 text-sm"
+                          initial={{ opacity: 0, y: -2 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -2 }}
+                          transition={{ duration: 0.2, ease: "easeInOut" }}
+                        >
+                          {errors.subject}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
-                <div>
+                <div className="relative">
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     placeholder="Your message"
                     rows={6}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-800 bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    className={`w-full px-4 py-3 rounded-xl border transition-colors duration-200 ${
+                      errors.message ? "border-red-500" : "border-gray-800"
+                    } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none`}
                   />
+                  <div className="h-6 mt-1">
+                    <AnimatePresence mode="wait">
+                      {errors.message && (
+                        <motion.p
+                          className="text-red-500 text-sm"
+                          initial={{ opacity: 0, y: -2 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -2 }}
+                          transition={{ duration: 0.2, ease: "easeInOut" }}
+                        >
+                          {errors.message}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
                 <motion.button
                   type="submit"
-                  className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium hover:from-blue-700 hover:to-purple-700 focus:outline-none transition-all duration-200 flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium hover:from-blue-700 hover:to-purple-700 focus:outline-none transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <span>Send Message</span>
+                  <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
                   <Send className="w-4 h-4" />
                 </motion.button>
               </form>
