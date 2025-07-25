@@ -312,6 +312,11 @@ export function Header() {
   };
 
   const getIsActive = (item: (typeof navItems)[0]) => {
+    // If we're on the contact page, no nav items should be active
+    if (pathname === "/contact") {
+      return false;
+    }
+    // For home page, use the scroll position logic
     return activeSection === item.sectionId;
   };
 

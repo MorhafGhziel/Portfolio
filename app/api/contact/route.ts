@@ -57,14 +57,14 @@ export async function POST(req: Request) {
                 <h2 style="color: #60A5FA; margin-bottom: 20px; text-align: center;">Thank You for Reaching Out!</h2>
                 
               <div style="line-height: 1.6;">
-                  <p style="color: #FFFFFF; margin-bottom: 15px;">Dear ${name},</p>
+                  <p style="color: #f5f5f7 !important; margin-bottom: 15px;">Dear ${name},</p>
                   
-                  <p style="color: #FFFFFF; margin-bottom: 15px;">Thank you for contacting me through my portfolio website. I have received your message and will get back to you as soon as possible.</p>
+                  <p style="color: #f5f5f7 !important; margin-bottom: 15px;">Thank you for contacting me through my portfolio website. I have received your message and will get back to you as soon as possible.</p>
                   
                 </div>
                 
-              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #374151;">
-                  <p style="color: #FFFFFF; margin: 0;">Best regards,</p>
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid white;">
+                  <p style="color: #f5f5f7 !important; margin: 0;">Best regards,</p>
                   <p style="margin: 5px 0; color: #60A5FA; font-weight: bold;">Morhaf Ghziel</p>
               </div>
             </div>
