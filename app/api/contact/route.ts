@@ -50,21 +50,21 @@ export async function POST(req: Request) {
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <div style="text-align: center; margin-bottom: 30px;">
-                             <img src="https://morhaf.me/images/Logo.jpg" alt="Morhaf Ghziel" style="width: 150px; height: 150px; object-fit: cover; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+              <img src="https://morhaf.me/images/Logo.jpg" alt="Morhaf Ghziel" style="width: 150px; height: 150px; object-fit: cover; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
               </div>
               
               <div style="background: linear-gradient(to right, #1F2937, #111827); padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                 <h2 style="color: #60A5FA; margin-bottom: 20px; text-align: center;">Thank You for Reaching Out!</h2>
                 
-               <div style="color: #FFFFFF; line-height: 1.6;">
-                  <p style="margin-bottom: 15px;">Dear ${name},</p>
+              <div style="line-height: 1.6;">
+                  <p style="color: #FFFFFF; margin-bottom: 15px;">Dear ${name},</p>
                   
-                  <p style="margin-bottom: 15px;">Thank you for contacting me through my portfolio website. I have received your message and will get back to you as soon as possible.</p>
+                  <p style="color: #FFFFFF; margin-bottom: 15px;">Thank you for contacting me through my portfolio website. I have received your message and will get back to you as soon as possible.</p>
                   
                 </div>
                 
-               <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #374151; color: #FFFFFF;">
-                  <p style="margin: 0;">Best regards,</p>
+              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #374151;">
+                  <p style="color: #FFFFFF; margin: 0;">Best regards,</p>
                   <p style="margin: 5px 0; color: #60A5FA; font-weight: bold;">Morhaf Ghziel</p>
               </div>
             </div>

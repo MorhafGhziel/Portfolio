@@ -160,7 +160,9 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">Email</p>
-                  <p className="text-white font-medium">contact@morhaf.me</p>
+                  <p className="text-white font-medium">
+                    Ghzielmorhaf@gmail.com
+                  </p>
                 </div>
               </div>
 

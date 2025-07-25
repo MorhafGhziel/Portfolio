@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence, Variants, Easing } from "framer-motion";
 import Link from "next/link";
-import { Mail, Menu, X, Rocket } from "lucide-react";
+import { Mail, Menu, X, Rocket, ArrowLeft } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -369,17 +369,38 @@ export function Header() {
           </motion.div>
         </button>
 
-        {/* Get in touch button - Desktop */}
-        <motion.a
-          href="/contact"
-          onClick={(e) => handleNavClick(e, "contact")}
-          className="hidden md:flex px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white items-center gap-2 hover:opacity-90 transition-opacity"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <Mail className="w-4 h-4" />
-          Get in touch
-        </motion.a>
+        {/* Get in touch/Back home buttons - Desktop */}
+        <div className="hidden md:block relative">
+          <AnimatePresence mode="wait">
+            <motion.a
+              key={pathname === "/contact" ? "back" : "contact"}
+              href={pathname === "/contact" ? "/" : "/contact"}
+              onClick={(e) => {
+                e.preventDefault();
+                router.push(pathname === "/contact" ? "/" : "/contact");
+              }}
+              className="flex px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white items-center gap-2 hover:opacity-90 transition-opacity"
+              initial={{ x: pathname === "/contact" ? -20 : 20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: pathname === "/contact" ? 20 : -20, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {pathname === "/contact" ? (
+                <>
+                  <ArrowLeft className="w-4 h-4" />
+                  Back Home
+                </>
+              ) : (
+                <>
+                  <Mail className="w-4 h-4" />
+                  Get in touch
+                </>
+              )}
+            </motion.a>
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -410,15 +431,28 @@ export function Header() {
                   </Link>
                 );
               })}
-              <motion.a
-                href="/contact"
-                onClick={(e) => handleNavClick(e, "contact")}
+              {/* Mobile Get in touch/Back home button */}
+              <Link
+                href={pathname === "/contact" ? "/" : "/contact"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push(pathname === "/contact" ? "/" : "/contact");
+                  setIsMobileMenuOpen(false);
+                }}
                 className="mt-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white flex items-center gap-2 hover:opacity-90 transition-opacity"
-                whileTap={{ scale: 0.95 }}
               >
-                <Mail className="w-4 h-4" />
-                Get in touch
-              </motion.a>
+                {pathname === "/contact" ? (
+                  <>
+                    <ArrowLeft className="w-4 h-4" />
+                    Back Home
+                  </>
+                ) : (
+                  <>
+                    <Mail className="w-4 h-4" />
+                    Get in touch
+                  </>
+                )}
+              </Link>
             </nav>
           </motion.div>
         )}
