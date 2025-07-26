@@ -172,7 +172,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-gray-400 text-sm">Phone</p>
-                  <p className="text-white font-medium">+966 54 791 5988</p>
+                  <p className="text-white font-medium">+966 50 714 9775</p>
                 </div>
               </div>
 
