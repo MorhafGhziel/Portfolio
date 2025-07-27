@@ -6,15 +6,18 @@ import { Mail, Menu, X, Rocket, ArrowLeft } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "./LanguageContext";
+import { LanguageSwitch } from "./ui/LanguageSwitch";
 
 const navItems = [
-  { name: "Home", path: "/", sectionId: "home" },
-  { name: "About", path: "/about", sectionId: "about" },
-  { name: "Work", path: "/work", sectionId: "work" },
-  { name: "Contact", path: "/contact", sectionId: "contact" },
+  { name: "nav.home", path: "/", sectionId: "home" },
+  { name: "nav.about", path: "/about", sectionId: "about" },
+  { name: "nav.work", path: "/work", sectionId: "work" },
+  { name: "nav.contact", path: "/contact", sectionId: "contact" },
 ];
 
 const AnimatedLogo = () => {
+  const { t } = useLanguage();
   const [isAnimating, setIsAnimating] = useState(true);
   const [rocketState, setRocketState] = useState("start"); // "start", "fly", "enter", "inside"
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -31,7 +34,7 @@ const AnimatedLogo = () => {
       y: [20, 0, 30, 10, 20],
       rotate: [15, 30, -15, 45, 0],
       transition: {
-        duration: 3, // Increased from 2 to 3 seconds
+        duration: 3,
         times: [0, 0.25, 0.5, 0.75, 1],
         ease: [0.6, 0.01, -0.05, 0.95] as Easing,
       },
@@ -42,7 +45,7 @@ const AnimatedLogo = () => {
       rotate: 0,
       opacity: 0,
       transition: {
-        duration: 0.8, // Increased from 0.5 to 0.8 seconds
+        duration: 0.8,
         ease: [0.68, -0.55, 0.265, 1.55] as Easing,
       },
     },
@@ -76,16 +79,13 @@ const AnimatedLogo = () => {
   useEffect(() => {
     if (!hasAnimated) {
       const animationSequence = async () => {
-        // Start flying
         setRocketState("fly");
         setIsAnimating(true);
-        await new Promise((resolve) => setTimeout(resolve, 3000)); // Increased from 2000
+        await new Promise((resolve) => setTimeout(resolve, 3000));
 
-        // Enter text
         setRocketState("enter");
-        await new Promise((resolve) => setTimeout(resolve, 800)); // Increased from 500
+        await new Promise((resolve) => setTimeout(resolve, 800));
 
-        // Stay inside and keep final styles
         setRocketState("inside");
         setIsAnimating(false);
         setHasAnimated(true);
@@ -96,7 +96,7 @@ const AnimatedLogo = () => {
   }, [hasAnimated]);
 
   return (
-    <div className="relative">
+    <div className="relative w-fit">
       <div className="relative">
         {/* Text glow background effect */}
         <motion.div
@@ -119,7 +119,7 @@ const AnimatedLogo = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          MORHAF
+          {t("hero.name")}
         </motion.div>
       </div>
 
@@ -226,10 +226,10 @@ const AnimatedLogo = () => {
                   x2="100%"
                   y2="100%"
                 >
-                  <stop offset="0%" stopColor="#60A5FA" /> {/* Blue */}
-                  <stop offset="40%" stopColor="#4F46E5" /> {/* Indigo */}
-                  <stop offset="70%" stopColor="#7C3AED" /> {/* Purple */}
-                  <stop offset="100%" stopColor="#EC4899" /> {/* Pink */}
+                  <stop offset="0%" stopColor="#60A5FA" />
+                  <stop offset="40%" stopColor="#4F46E5" />
+                  <stop offset="70%" stopColor="#7C3AED" />
+                  <stop offset="100%" stopColor="#EC4899" />
                 </linearGradient>
                 <filter id="glow">
                   <feGaussianBlur stdDeviation="2" result="coloredBlur" />
@@ -252,71 +252,79 @@ export function Header() {
   const router = useRouter();
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll("[id]");
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+    // Reset active section when navigating to contact page
+    if (pathname === "/contact") {
+      setActiveSection("contact");
+      return;
+    }
 
-      let currentSection = "";
-      sections.forEach((section) => {
-        const sectionElement = section as HTMLElement;
-        const sectionTop = sectionElement.offsetTop;
-        const sectionHeight = sectionElement.offsetHeight;
-        const sectionId = sectionElement.getAttribute("id") || "";
-
-        // Special handling for the contact section
-        if (sectionId === "contact") {
-          if (
-            window.innerHeight + window.scrollY >=
-            document.documentElement.scrollHeight - 100
-          ) {
-            currentSection = "contact";
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
           }
-        } else if (
-          scrollPosition >= sectionTop &&
-          scrollPosition < sectionTop + sectionHeight
-        ) {
-          currentSection = sectionId;
-        }
+        });
+      },
+      {
+        threshold: 0.3, // Lower threshold to detect sections earlier
+        rootMargin: "-80px 0px 0px 0px", // Account for header height
+      }
+    );
+
+    // Observe all sections including the contact section
+    document
+      .querySelectorAll("section[id], section#contact")
+      .forEach((section) => {
+        observer.observe(section);
       });
 
-      setActiveSection(currentSection);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Call once on mount to set initial active section
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => observer.disconnect();
+  }, [pathname]);
 
   const handleNavClick = async (
     e: React.MouseEvent<HTMLAnchorElement>,
     sectionId: string
   ) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false); // Close mobile menu after clicking
+    setIsMobileMenuOpen(false);
 
-    // If we're not on the home page, navigate to home first
-    if (pathname !== "/") {
-      router.push("/");
-      // Wait for navigation and DOM update
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
+    if (sectionId === "contact" && pathname === "/") {
+      // If we're on home page and clicking contact, scroll to contact section
+      const section = document.getElementById("contact");
+      if (section) {
+        const headerHeight = 50;
+        const sectionTop = section.offsetTop - headerHeight;
+        window.scrollTo({
+          top: sectionTop,
+          behavior: "smooth",
+        });
+      }
+    } else if (sectionId === "contact") {
+      // If we're not on home page, navigate to contact page
+      router.push("/contact");
+    } else {
+      if (pathname !== "/") {
+        router.push("/");
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
 
-    // Then scroll to the section
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const headerHeight = 50;
+        const sectionTop = section.offsetTop - headerHeight;
+        window.scrollTo({
+          top: sectionTop,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
   const getIsActive = (item: (typeof navItems)[0]) => {
-    // If we're on the contact page, no nav items should be active
-    if (pathname === "/contact") {
-      return false;
-    }
-    // For home page, use the scroll position logic
     return activeSection === item.sectionId;
   };
 
@@ -327,36 +335,57 @@ export function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center">
         {/* Logo */}
-        <Link href="/" onClick={(e) => handleNavClick(e, "home")}>
-          <AnimatedLogo />
-        </Link>
+        <div className="flex-1 min-w-[120px] relative">
+          <Link
+            href="/"
+            onClick={(e) => handleNavClick(e, "home")}
+            className="inline-block"
+          >
+            <AnimatedLogo />
+          </Link>
+        </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => {
+        <nav className="hidden md:flex items-center justify-center flex-1">
+          {navItems.map((item, index) => {
             const isActive = getIsActive(item);
 
             return (
-              <Link
+              <motion.div
                 key={item.name}
-                href={item.path}
-                onClick={(e) => handleNavClick(e, item.sectionId)}
-                className={`transition-all ${
-                  isActive
-                    ? "text-white font-medium scale-105"
-                    : "text-gray-400 hover:text-white"
-                }`}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.3,
+                  delay: index * 0.1,
+                  ease: "easeOut",
+                }}
               >
-                <motion.span
-                  whileHover={{ y: -2 }}
-                  whileTap={{ y: 0 }}
-                  animate={isActive ? { y: -2 } : { y: 0 }}
+                <Link
+                  href={item.path}
+                  onClick={(e) => handleNavClick(e, item.sectionId)}
+                  className={`transition-all duration-300 px-3 ${
+                    isActive
+                      ? "text-white font-medium scale-105"
+                      : "text-gray-400 hover:text-white"
+                  }`}
                 >
-                  {item.name}
-                </motion.span>
-              </Link>
+                  <motion.span
+                    whileHover={{ y: -2 }}
+                    whileTap={{ y: 0 }}
+                    animate={
+                      isActive
+                        ? { y: -2, color: "#ffffff" }
+                        : { y: 0, color: "#9ca3af" }
+                    }
+                    transition={{ duration: 0.3 }}
+                  >
+                    {t(item.name)}
+                  </motion.span>
+                </Link>
+              </motion.div>
             );
           })}
         </nav>
@@ -374,8 +403,9 @@ export function Header() {
           </motion.div>
         </button>
 
-        {/* Get in touch/Back home buttons - Desktop */}
-        <div className="hidden md:block relative">
+        {/* Desktop Actions */}
+        <div className="hidden md:flex items-center gap-4 justify-end flex-1 min-w-[120px]">
+          <LanguageSwitch />
           <AnimatePresence mode="wait">
             <motion.a
               key={pathname === "/contact" ? "back" : "contact"}
@@ -395,12 +425,12 @@ export function Header() {
               {pathname === "/contact" ? (
                 <>
                   <ArrowLeft className="w-4 h-4" />
-                  Back Home
+                  {t("cta.backHome")}
                 </>
               ) : (
                 <>
                   <Mail className="w-4 h-4" />
-                  Get in touch
+                  {t("cta.getInTouch")}
                 </>
               )}
             </motion.a>
@@ -419,45 +449,65 @@ export function Header() {
             transition={{ duration: 0.2 }}
           >
             <nav className="flex flex-col gap-4">
-              {navItems.map((item) => {
+              {navItems.map((item, index) => {
                 const isActive = getIsActive(item);
                 return (
-                  <Link
+                  <motion.div
                     key={item.name}
-                    href={item.path}
-                    onClick={(e) => handleNavClick(e, item.sectionId)}
-                    className={`transition-all px-4 py-2 rounded-lg ${
-                      isActive
-                        ? "text-white font-medium bg-white/10"
-                        : "text-gray-400 hover:text-white hover:bg-white/5"
-                    }`}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      duration: 0.3,
+                      delay: index * 0.1,
+                      ease: "easeOut",
+                    }}
                   >
-                    {item.name}
-                  </Link>
+                    <Link
+                      href={item.path}
+                      onClick={(e) => handleNavClick(e, item.sectionId)}
+                      className={`transition-all duration-300 px-4 py-2 rounded-lg ${
+                        isActive
+                          ? "text-white font-medium bg-white/10"
+                          : "text-gray-400 hover:text-white hover:bg-white/5"
+                      }`}
+                    >
+                      <motion.span
+                        animate={
+                          isActive ? { color: "#ffffff" } : { color: "#9ca3af" }
+                        }
+                        transition={{ duration: 0.3 }}
+                      >
+                        {t(item.name)}
+                      </motion.span>
+                    </Link>
+                  </motion.div>
                 );
               })}
-              {/* Mobile Get in touch/Back home button */}
-              <Link
-                href={pathname === "/contact" ? "/" : "/contact"}
-                onClick={(e) => {
-                  e.preventDefault();
-                  router.push(pathname === "/contact" ? "/" : "/contact");
-                  setIsMobileMenuOpen(false);
-                }}
-                className="mt-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white flex items-center gap-2 hover:opacity-90 transition-opacity"
-              >
-                {pathname === "/contact" ? (
-                  <>
-                    <ArrowLeft className="w-4 h-4" />
-                    Back Home
-                  </>
-                ) : (
-                  <>
-                    <Mail className="w-4 h-4" />
-                    Get in touch
-                  </>
-                )}
-              </Link>
+              {/* Mobile Actions */}
+              <div className="flex items-center gap-4 px-4 py-2">
+                <LanguageSwitch />
+                <Link
+                  href={pathname === "/contact" ? "/" : "/contact"}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(pathname === "/contact" ? "/" : "/contact");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex-1 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white flex items-center gap-2 hover:opacity-90 transition-opacity"
+                >
+                  {pathname === "/contact" ? (
+                    <>
+                      <ArrowLeft className="w-4 h-4" />
+                      {t("cta.backHome")}
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="w-4 h-4" />
+                      {t("cta.getInTouch")}
+                    </>
+                  )}
+                </Link>
+              </div>
             </nav>
           </motion.div>
         )}

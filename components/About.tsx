@@ -5,8 +5,11 @@ import Skills from "./ui/Skills";
 import Expertise from "./ui/Expertise";
 import LocationCard from "./ui/LocationCard";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { useLanguage } from "./LanguageContext";
 
 const About = () => {
+  const { t, language } = useLanguage();
+  const isRTL = language === "ar";
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress, scrollY } = useScroll({
     target: sectionRef,
@@ -80,14 +83,13 @@ const About = () => {
         style={{ y: titleY }}
       >
         <motion.h2 className="text-4xl font-bold mb-4" variants={titleVariants}>
-          About Me
+          {t("about.title")}
         </motion.h2>
         <motion.p
           className="text-gray-400 max-w-2xl mx-auto"
           variants={itemVariants}
         >
-          Get to know more about my journey, experience, and what drives me as a
-          developer
+          {t("about.subtitle")}
         </motion.p>
       </motion.div>
 
@@ -100,7 +102,11 @@ const About = () => {
           className="grid lg:grid-cols-3 gap-8 items-start"
           variants={containerVariants}
         >
-          <motion.div className="lg:col-span-2" variants={itemVariants}>
+          {/* Main Content */}
+          <motion.div
+            className={`lg:col-span-2 ${isRTL ? "lg:order-1" : ""}`}
+            variants={itemVariants}
+          >
             <motion.h3
               className="text-3xl font-bold mb-6"
               variants={itemVariants}
@@ -112,19 +118,14 @@ const About = () => {
                   transition: { type: "tween", duration: 0.2 },
                 }}
               >
-                Front End Developer & UI/UX Designer
+                {t("about.role")}
               </motion.span>
             </motion.h3>
             <motion.p
-              className="text-gray-300 text-lg max-w-3xl leading-relaxed mb-8"
+              className={`text-gray-300 text-lg max-w-3xl leading-relaxed mb-8 ${isRTL ? "lg:text-right" : ""}`}
               variants={itemVariants}
             >
-              I'm Morhaf Ghziel, a passionate Front End Developer and UI/UX
-              Designer based in Saudi Arabia. I specialize in creating modern,
-              responsive web applications using cutting-edge technologies. My
-              journey in web development combines technical expertise with
-              creative design thinking to deliver exceptional digital
-              experiences.
+              {t("about.description")}
             </motion.p>
             <motion.div variants={itemVariants} className="mb-12">
               <Expertise />
@@ -133,7 +134,10 @@ const About = () => {
               <Skills />
             </motion.div>
           </motion.div>
+
+          {/* Location Card */}
           <motion.div
+            className={isRTL ? "lg:order-2" : ""}
             variants={itemVariants}
             whileHover={{
               scale: 1.02,

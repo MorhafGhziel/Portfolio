@@ -4,8 +4,12 @@ import { useState, useEffect } from "react";
 import { PROJECTS } from "@/constants";
 import ProjectCard from "./ui/ProjectCard";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "./LanguageContext";
 
 const Projects = () => {
+  const { t, language } = useLanguage();
+  const isRTL = language === "ar";
+
   // Get initial count based on screen size
   const [initialCount, setInitialCount] = useState(3);
   const [visibleProjects, setVisibleProjects] = useState(initialCount);
@@ -132,9 +136,12 @@ const Projects = () => {
       }}
       id="work"
       className="w-full py-16 sm:py-20 md:py-24 text-white flex justify-center items-center"
+      dir={isRTL ? "rtl" : "ltr"}
     >
       <div className="w-full max-w-[90%] sm:max-w-[85%] md:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-12">
+        <div
+          className={`text-center mb-8 sm:mb-12 ${isRTL ? "font-arabic" : ""}`}
+        >
           <motion.h3
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -145,7 +152,7 @@ const Projects = () => {
             }}
             className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4"
           >
-            Featured Projects
+            {t("projects.title")}
           </motion.h3>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -158,8 +165,7 @@ const Projects = () => {
             }}
             className="text-sm sm:text-base md:text-lg text-gray-400 max-w-[95%] sm:max-w-xl md:max-w-2xl mx-auto"
           >
-            Here are some of my recent projects that showcase my skills and
-            experience
+            {t("projects.subtitle")}
           </motion.p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
@@ -229,29 +235,32 @@ const Projects = () => {
           }}
         >
           <AnimatePresence mode="wait" initial={false}>
-            <div key="buttons-container" className="flex gap-4">
+            <div
+              key="buttons-container"
+              className={`flex gap-4 ${isRTL ? "flex-row-reverse" : ""}`}
+            >
               {visibleProjects > initialCount && (
                 <motion.button
                   key="less-button"
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
+                  exit={{ opacity: 0, x: isRTL ? 20 : -20 }}
                   onClick={showLessProjects}
-                  className="px-8 py-3 rounded-lg font-medium cursor-pointer border border-gray-600 hover:bg-gray-800 hover:border-gray-500 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 active:scale-95"
+                  className={`px-8 py-3 rounded-lg font-medium cursor-pointer border border-gray-600 hover:bg-gray-800 hover:border-gray-500 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 active:scale-95 ${isRTL ? "font-arabic" : ""}`}
                 >
-                  Show Less
+                  {t("projects.showLess")}
                 </motion.button>
               )}
               {visibleProjects < PROJECTS.length && (
                 <motion.button
                   key="more-button"
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
+                  exit={{ opacity: 0, x: isRTL ? -20 : 20 }}
                   onClick={showMoreProjects}
-                  className="px-8 py-3 rounded-lg font-medium cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 active:scale-95"
+                  className={`px-8 py-3 rounded-lg font-medium cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 active:scale-95 ${isRTL ? "font-arabic" : ""}`}
                 >
-                  Show More
+                  {t("projects.showMore")}
                 </motion.button>
               )}
             </div>

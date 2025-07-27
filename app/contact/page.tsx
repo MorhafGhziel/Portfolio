@@ -6,8 +6,11 @@ import ParticleBackground from "@/components/ui/ParticleBackground";
 import FloatingElements from "@/components/ui/FloatingElements";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { toast } from "sonner";
+import { useLanguage } from "@/components/LanguageContext";
 
 export default function Contact() {
+  const { t, language } = useLanguage();
+  const isRTL = language === "ar";
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({
     name: "",
@@ -32,25 +35,25 @@ export default function Contact() {
     let isValid = true;
 
     if (!formData.name.trim()) {
-      newErrors.name = "Please enter your name";
+      newErrors.name = t("contact.form.errors.name");
       isValid = false;
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = "Please enter your email";
+      newErrors.email = t("contact.form.errors.email");
       isValid = false;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email";
+      newErrors.email = t("contact.form.errors.emailInvalid");
       isValid = false;
     }
 
     if (!formData.subject.trim()) {
-      newErrors.subject = "Please enter a subject";
+      newErrors.subject = t("contact.form.errors.subject");
       isValid = false;
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = "Please enter your message";
+      newErrors.message = t("contact.form.errors.message");
       isValid = false;
     }
 
@@ -82,13 +85,15 @@ export default function Contact() {
       }
 
       const data = await response.json();
-      toast.success(data.message || "Message sent successfully!");
+      toast.success(
+        isRTL ? "تم إرسال الرسالة بنجاح!" : "Message sent successfully!"
+      );
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       console.error("Error:", error);
       toast.error(
-        error instanceof Error
-          ? error.message
+        isRTL
+          ? "حدث خطأ. يرجى المحاولة مرة أخرى لاحقاً."
           : "An error occurred. Please try again later."
       );
     } finally {
@@ -117,34 +122,36 @@ export default function Contact() {
     <>
       <ParticleBackground />
       <FloatingElements />
-      <div className="min-h-screen bg-transparent text-white flex items-center justify-center py-12 pt-24 sm:pt-0 px-4 sm:px-6 lg:px-8">
+      <div
+        className="min-h-screen bg-transparent text-white flex items-center justify-center py-12 pt-24 sm:pt-0 px-4 sm:px-6 lg:px-8"
+        dir={isRTL ? "rtl" : "ltr"}
+      >
         <div className="w-full max-w-7xl grid md:grid-cols-2 gap-12">
           {/* Contact Info Section */}
           <motion.div
             className="space-y-8"
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
             <div>
               <motion.h2
-                className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 pb-1"
+                className={`text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 pb-1 ${isRTL ? "font-arabic text-right" : "text-left"}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                Let&apos;s Create
+                {t("contact.title")}
                 <br />
-                Something Together
+                {t("contact.subtitle")}
               </motion.h2>
               <motion.p
-                className="text-gray-400 max-w-md mt-4"
+                className={`text-gray-400 max-w-md mt-4 ${isRTL ? "font-arabic text-right" : "text-left"}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
               >
-                Have a project in mind? Let&apos;s discuss how we can work
-                together to bring your ideas to life.
+                {t("contact.description")}
               </motion.p>
             </div>
 
@@ -154,35 +161,59 @@ export default function Contact() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <div className="flex items-center gap-4">
+              <div
+                className={`flex items-center ${isRTL ? "gap-6 text-right" : "gap-4"}`}
+              >
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600/10 to-purple-600/10 backdrop-blur-sm border border-gray-800 flex items-center justify-center">
                   <Mail className="w-5 h-5 text-blue-500" />
                 </div>
-                <div>
-                  <p className="text-gray-400 text-sm">Email</p>
+                <div className={isRTL ? "text-right" : "text-left"}>
+                  <p
+                    className={`text-gray-400 text-sm ${isRTL ? "font-arabic" : ""}`}
+                  >
+                    {t("contact.form.email")}
+                  </p>
                   <p className="text-white font-medium">
                     Ghzielmorhaf@gmail.com
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4">
+              <div
+                className={`flex items-center ${isRTL ? "gap-6 text-right" : "gap-4"}`}
+              >
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600/10 to-purple-600/10 backdrop-blur-sm border border-gray-800 flex items-center justify-center">
                   <Phone className="w-5 h-5 text-purple-500" />
                 </div>
-                <div>
-                  <p className="text-gray-400 text-sm">Phone</p>
-                  <p className="text-white font-medium">+966 50 714 9775</p>
+                <div className={isRTL ? "text-right" : "text-left"}>
+                  <p
+                    className={`text-gray-400 text-sm ${isRTL ? "font-arabic" : ""}`}
+                  >
+                    {t("contact.form.phone")}
+                  </p>
+                  <p className="text-white font-medium" dir="ltr">
+                    {isRTL ? "+966 50 714 9775" : "+966 50 714 9775"}
+                  </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4">
+              <div
+                className={`flex items-center ${isRTL ? "gap-6 text-right" : "gap-4"}`}
+              >
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600/10 to-purple-600/10 backdrop-blur-sm border border-gray-800 flex items-center justify-center">
                   <MapPin className="w-5 h-5 text-blue-500" />
                 </div>
-                <div>
-                  <p className="text-gray-400 text-sm">Location</p>
-                  <p className="text-white font-medium">Riyadh, Saudi Arabia</p>
+                <div className={isRTL ? "text-right" : "text-left"}>
+                  <p
+                    className={`text-gray-400 text-sm ${isRTL ? "font-arabic" : ""}`}
+                  >
+                    {t("contact.form.location")}
+                  </p>
+                  <p
+                    className={`text-white font-medium ${isRTL ? "font-arabic" : ""}`}
+                  >
+                    {t("contact.form.locationValue")}
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -191,7 +222,7 @@ export default function Contact() {
           {/* Form Section */}
           <motion.div
             className="relative"
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
@@ -205,16 +236,16 @@ export default function Contact() {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        placeholder="Name"
+                        placeholder={t("contact.form.name")}
                         className={`w-full px-4 py-3 rounded-xl border transition-colors duration-200 ${
                           errors.name ? "border-red-500" : "border-gray-800"
-                        } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                        } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isRTL ? "font-arabic text-right" : "text-left"}`}
                       />
                       <div className="h-6 mt-1">
                         <AnimatePresence mode="wait">
                           {errors.name && (
                             <motion.p
-                              className="text-red-500 text-sm"
+                              className={`text-red-500 text-sm ${isRTL ? "font-arabic text-right" : "text-left"}`}
                               initial={{ opacity: 0, y: -2 }}
                               animate={{ opacity: 1, y: 0 }}
                               exit={{ opacity: 0, y: -2 }}
@@ -234,16 +265,16 @@ export default function Contact() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder="Email"
+                        placeholder={t("contact.form.email")}
                         className={`w-full px-4 py-3 rounded-xl border transition-colors duration-200 ${
                           errors.email ? "border-red-500" : "border-gray-800"
-                        } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                        } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isRTL ? "font-arabic text-right" : "text-left"}`}
                       />
                       <div className="h-6 mt-1">
                         <AnimatePresence mode="wait">
                           {errors.email && (
                             <motion.p
-                              className="text-red-500 text-sm"
+                              className={`text-red-500 text-sm ${isRTL ? "font-arabic text-right" : "text-left"}`}
                               initial={{ opacity: 0, y: -2 }}
                               animate={{ opacity: 1, y: 0 }}
                               exit={{ opacity: 0, y: -2 }}
@@ -263,16 +294,16 @@ export default function Contact() {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    placeholder="Subject"
+                    placeholder={t("contact.form.subject")}
                     className={`w-full px-4 py-3 rounded-xl border transition-colors duration-200 ${
                       errors.subject ? "border-red-500" : "border-gray-800"
-                    } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+                    } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${isRTL ? "font-arabic text-right" : "text-left"}`}
                   />
                   <div className="h-6 mt-1">
                     <AnimatePresence mode="wait">
                       {errors.subject && (
                         <motion.p
-                          className="text-red-500 text-sm"
+                          className={`text-red-500 text-sm ${isRTL ? "font-arabic text-right" : "text-left"}`}
                           initial={{ opacity: 0, y: -2 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -2 }}
@@ -289,17 +320,17 @@ export default function Contact() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Your message"
+                    placeholder={t("contact.form.message")}
                     rows={6}
                     className={`w-full px-4 py-3 rounded-xl border transition-colors duration-200 ${
                       errors.message ? "border-red-500" : "border-gray-800"
-                    } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none`}
+                    } bg-black/50 placeholder-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none ${isRTL ? "font-arabic text-right" : "text-left"}`}
                   />
                   <div className="h-6 mt-1">
                     <AnimatePresence mode="wait">
                       {errors.message && (
                         <motion.p
-                          className="text-red-500 text-sm"
+                          className={`text-red-500 text-sm ${isRTL ? "font-arabic text-right" : "text-left"}`}
                           initial={{ opacity: 0, y: -2 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -2 }}
@@ -314,11 +345,15 @@ export default function Contact() {
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium hover:from-blue-700 hover:to-purple-700 focus:outline-none transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  className={`w-full py-4 px-6 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium hover:from-blue-700 hover:to-purple-700 focus:outline-none transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer ${isRTL ? "font-arabic flex-row-reverse" : ""}`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
+                  <span>
+                    {isSubmitting
+                      ? t("contact.form.sending")
+                      : t("contact.form.send")}
+                  </span>
                   <Send className="w-4 h-4" />
                 </motion.button>
               </form>

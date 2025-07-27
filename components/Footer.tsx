@@ -2,24 +2,34 @@
 
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { useLanguage } from "./LanguageContext";
 
 const Footer = () => {
+  const { t, language } = useLanguage();
+  const isRTL = language === "ar";
   const email = "ghzielmorhaf@gmail.com";
 
   const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
-      toast.success("Email copied to clipboard!");
+      toast.success(t("footer.copyEmail"));
     } catch (err) {
-      toast.error("Failed to copy email");
+      toast.error(t("footer.copyEmailError"));
     }
   };
 
   return (
-    <footer className="w-full border-t border-gray-800">
+    <footer
+      className="w-full border-t border-gray-800"
+      dir={isRTL ? "rtl" : "ltr"}
+    >
       <div className="mx-10 px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-8">
-          <div className="text-gray-400 text-sm sm:text-base">
+        <div
+          className={`flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-8 ${isRTL ? "sm:flex-row-reverse" : ""}`}
+        >
+          <div
+            className={`text-gray-400 text-sm sm:text-base ${isRTL ? "font-arabic" : ""}`}
+          >
             <span className="flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -40,16 +50,20 @@ const Footer = () => {
                 <path d="M11 17v.01" />
                 <path d="M7 14v.01" />
               </svg>
-              Available worldwide
+              {t("footer.availableWorldwide")}
             </span>
           </div>
 
           {/* Copyright text in the middle */}
-          <div className="text-gray-500 text-sm sm:text-base">
-            © {new Date().getFullYear()} All rights reserved by Morhaf
+          <div
+            className={`text-gray-500 text-sm sm:text-base ${isRTL ? "font-arabic" : ""}`}
+          >
+            © {new Date().getFullYear()} {t("footer.copyright")}
           </div>
 
-          <div className="flex items-center gap-6 sm:gap-8">
+          <div
+            className={`flex items-center gap-6 sm:gap-8 ${isRTL ? "flex-row-reverse" : ""}`}
+          >
             <motion.a
               href="https://github.com/MorhafGhziel"
               target="_blank"
@@ -57,6 +71,7 @@ const Footer = () => {
               className="text-gray-400 hover:text-white transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
+              aria-label={t("footer.github")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -80,6 +95,7 @@ const Footer = () => {
               className="text-gray-400 hover:text-white transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
+              aria-label={t("footer.linkedin")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +120,7 @@ const Footer = () => {
               className="text-gray-400 hover:text-white transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
+              aria-label={t("footer.twitter")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -127,6 +144,7 @@ const Footer = () => {
               className="text-gray-400 hover:text-white transition-colors"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
+              aria-label={t("footer.instagram")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -149,6 +167,7 @@ const Footer = () => {
               className="text-gray-400 hover:text-white transition-colors cursor-pointer"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
+              aria-label={t("footer.email")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

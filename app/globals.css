@@ -6,6 +6,7 @@
   --font-geist-sans: "";
   --font-geist-mono: "";
   --font-orbitron: "";
+  --font-noto-sans-arabic: "";
 }
 
 @theme inline {
@@ -22,8 +23,70 @@
   }
 }
 
+/* Default font for English */
+[dir="ltr"] {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Arabic font and RTL support */
+[dir="rtl"] {
+  font-family: var(--font-noto-sans-arabic), system-ui, sans-serif;
+}
+
+/* Additional Arabic font support */
+.font-arabic {
+  font-family: var(--font-noto-sans-arabic), system-ui, sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* RTL specific improvements */
+[dir="rtl"] .text-gradient {
+  background: linear-gradient(to left, #4f46e5, #7c3aed);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+[dir="ltr"] .text-gradient {
+  background: linear-gradient(to right, #4f46e5, #7c3aed);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* Icon positioning for RTL */
+[dir="rtl"] .icon-right {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+[dir="ltr"] .icon-right {
+  margin-right: 0.5rem;
+  margin-left: 0;
+}
+
+/* Animation adjustments for RTL */
+[dir="rtl"] .slide-in-left {
+  transform: translateX(50px);
+}
+
+[dir="ltr"] .slide-in-left {
+  transform: translateX(-50px);
+}
+
+[dir="rtl"] .slide-in-right {
+  transform: translateX(-50px);
+}
+
+[dir="ltr"] .slide-in-right {
+  transform: translateX(50px);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Smooth transitions for language switching */
+* {
+  transition: font-family 0.3s ease;
 }

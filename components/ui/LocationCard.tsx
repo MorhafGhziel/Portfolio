@@ -3,8 +3,12 @@
 import React from "react";
 import { Clock, Globe, MapPin } from "lucide-react";
 import { motion, Variants } from "framer-motion";
+import { useLanguage } from "../LanguageContext";
 
 const LocationCard = () => {
+  const { t, language } = useLanguage();
+  const isRTL = language === "ar";
+
   const cardVariants: Variants = {
     hidden: {
       opacity: 0,
@@ -33,7 +37,7 @@ const LocationCard = () => {
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, x: -20 },
+    hidden: { opacity: 0, x: isRTL ? 20 : -20 },
     visible: {
       opacity: 1,
       x: 0,
@@ -56,7 +60,7 @@ const LocationCard = () => {
     },
     hover: {
       scale: 1.1,
-      rotate: 5,
+      rotate: isRTL ? -5 : 5,
       transition: {
         type: "spring",
         stiffness: 400,
@@ -74,56 +78,64 @@ const LocationCard = () => {
       whileHover="hover"
       viewport={{ once: true, margin: "-50px" }}
     >
-      <div className="p-6">
+      <div className={`p-6 ${isRTL ? "text-right" : "text-left"}`}>
         <motion.h4
           className="text-xl font-semibold text-white mb-6"
           variants={itemVariants}
         >
-          Location & Availability
+          {t("about.location.title")}
         </motion.h4>
         <div className="space-y-4">
           {/* Location */}
           <motion.div
-            className="flex items-center gap-3 text-gray-300"
+            className={`flex items-center gap-3 text-gray-300 ${isRTL ? "" : ""}`}
             variants={itemVariants}
           >
             <motion.div variants={iconVariants}>
               <MapPin className="w-5 h-5 text-blue-400" />
             </motion.div>
             <div>
-              <div className="font-medium">Based in Riyadh, Saudi Arabia</div>
+              <div className="font-medium">{t("about.location.based")}</div>
               <div className="text-sm text-gray-400">
-                Available for remote work worldwide
+                {t("about.location.available")}
               </div>
             </div>
           </motion.div>
 
           {/* Timezone */}
           <motion.div
-            className="flex items-center gap-3 text-gray-300"
+            className={`flex items-center gap-3 text-gray-300 ${isRTL ? "" : ""}`}
             variants={itemVariants}
           >
             <motion.div variants={iconVariants}>
               <Clock className="w-5 h-5 text-purple-400" />
             </motion.div>
             <div>
-              <div className="font-medium">Timezone</div>
-              <div className="text-sm text-gray-400">GMT+3 (Riyadh Time)</div>
+              <div className="font-medium">
+                {isRTL ? "التوقيت" : t("about.location.timezone")}
+              </div>
+              <div className="text-sm text-gray-400">
+                {isRTL ? "توقيت الرياض (GMT+3)" : t("about.location.timezone")}
+              </div>
             </div>
           </motion.div>
 
           {/* Languages */}
           <motion.div
-            className="flex items-center gap-3 text-gray-300"
+            className={`flex items-center gap-3 text-gray-300 ${isRTL ? "" : ""}`}
             variants={itemVariants}
           >
             <motion.div variants={iconVariants}>
               <Globe className="w-5 h-5 text-green-400" />
             </motion.div>
             <div>
-              <div className="font-medium">Languages</div>
+              <div className="font-medium">
+                {isRTL ? "اللغات" : t("about.location.languages")}
+              </div>
               <div className="text-sm text-gray-400">
-                Arabic (Native) • English (Professional)
+                {isRTL
+                  ? "العربية (اللغة الأم) • الإنجليزية (مستوى احترافي)"
+                  : t("about.location.languages")}
               </div>
             </div>
           </motion.div>
@@ -149,7 +161,7 @@ const LocationCard = () => {
                   repeatType: "reverse",
                 }}
               >
-                Available for new projects
+                {t("about.location.status")}
               </motion.div>
             </div>
           </motion.div>

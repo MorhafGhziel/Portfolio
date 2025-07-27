@@ -14,10 +14,13 @@ import {
 import Image from "next/image";
 import { easeInOut, motion, useScroll, useTransform } from "framer-motion";
 import Button from "./ui/Button";
+import { useLanguage } from "./LanguageContext";
 
 const Hero = () => {
+  const { t, language } = useLanguage();
   const { scrollY } = useScroll();
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  const isRTL = language === "ar";
 
   // Check screen size on mount and resize
   useEffect(() => {
@@ -163,7 +166,7 @@ const Hero = () => {
       className="min-h-screen text-white flex items-center justify-center px-4 py-12 pt-24 sm:pt-28 relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.8, ease: easeInOut }}
       style={{
         scale: heroScale,
         y: heroY,
@@ -194,20 +197,24 @@ const Hero = () => {
         />
       </motion.div>
 
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
-        {/* Left Column - Text Content */}
-        <div className="text-center lg:text-left">
+      <div
+        className={`max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10`}
+      >
+        {/* Text Content Column */}
+        <motion.div
+          className={`text-center ${isRTL ? "lg:text-right" : "lg:text-left"}`}
+        >
           {/* Profile Avatar */}
           <motion.div
-            className="flex justify-center lg:justify-start mb-8"
+            className={`flex justify-center ${isRTL ? "lg:justify-start" : "lg:justify-start"} mb-8`}
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, ease: easeInOut }}
             style={{ opacity: avatarOpacity, scale: avatarScale }}
           >
             <motion.div
               className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 ring-2 sm:ring-4 ring-gray-100/50 shadow-2xl rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center"
-              whileHover={{ scale: 1.1, rotate: 5 }}
+              whileHover={{ scale: 1.1, rotate: isRTL ? -5 : 5 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
             >
               <Image
@@ -220,19 +227,21 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Enhanced Title */}
+          {/* Title */}
           <motion.h1
             className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: easeInOut }}
             style={{ opacity: titleOpacity, y: titleY }}
           >
-            <span className="block">Hi, I'm</span>
+            <span className="block">{t("hero.title")}</span>
             <motion.span
               className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
               animate={{
-                backgroundPosition: ["0%", "100%", "0%"],
+                backgroundPosition: isRTL
+                  ? ["100%", "0%", "100%"]
+                  : ["0%", "100%", "0%"],
               }}
               transition={{
                 duration: 5,
@@ -240,15 +249,15 @@ const Hero = () => {
                 ease: "linear",
               }}
             >
-              Morhaf
+              {t("hero.name")}
             </motion.span>
           </motion.h1>
 
           <motion.p
             className="text-xl md:text-3xl text-gray-300 mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: easeInOut }}
             style={{ opacity: subtitleOpacity, y: subtitleY }}
           >
             <motion.span
@@ -259,11 +268,10 @@ const Hero = () => {
               transition={{
                 duration: 5,
                 repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.8, // Delay the fade cycle until after entrance
+                ease: easeInOut,
               }}
             >
-              FrontEnd Developer
+              {t("hero.frontEndDev")}
             </motion.span>{" "}
             &{" "}
             <motion.span
@@ -274,31 +282,28 @@ const Hero = () => {
               transition={{
                 duration: 5,
                 repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.8, // Delay the fade cycle until after entrance
+                ease: easeInOut,
               }}
             >
-              UI/UX Engineer
+              {t("hero.uiuxEngineer")}
             </motion.span>
           </motion.p>
 
           <motion.p
-            className="text-gray-400 max-w-2xl text-xl mx-auto lg:mx-0"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
+            className={`text-gray-400 max-w-2xl text-xl mx-auto ${isRTL ? "lg:mr-0 lg:ml-auto" : "lg:ml-0"}`}
+            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: easeInOut }}
             style={{ opacity: descriptionOpacity }}
           >
-            I create exceptional digital experiences by combining clean code
-            with thoughtful design. Specialized in React, Next.js, and modern
-            web technologies.
+            {t("hero.description")}
           </motion.p>
 
           <motion.div
-            className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-            initial={{ opacity: 0, y: 30 }}
+            className={`mt-10 flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? "lg:justify-start" : "lg:justify-start"}`}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1 }}
+            transition={{ duration: 0.5, ease: easeInOut }}
             style={{ opacity: buttonsOpacity, y: buttonsY }}
           >
             <Button
@@ -307,7 +312,7 @@ const Hero = () => {
               rightIcon={ArrowRight}
               onClick={handleScrollToWork}
             >
-              View My Work
+              {t("nav.work")}
             </Button>
 
             <Button
@@ -315,17 +320,17 @@ const Hero = () => {
               leftIcon={Download}
               onClick={handleDownloadResume}
             >
-              Download Resume
+              {t("cta.downloadResume")}
             </Button>
           </motion.div>
-        </div>
+        </motion.div>
 
-        {/* Right Column - Stats Grid */}
+        {/* Stats Grid */}
         <motion.div
           className="relative mt-8 lg:mt-0 mb-20 sm:mb-24"
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8, ease: easeInOut }}
           style={{ opacity: statsOpacity, scale: statsScale }}
         >
           <motion.div
@@ -334,7 +339,7 @@ const Hero = () => {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
-              {/* Projects Stat */}
+              {/* Years Exp Stat */}
               <motion.div
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
@@ -347,15 +352,17 @@ const Hero = () => {
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Code2 className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-400" />
+                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-yellow-400" />
                 </motion.div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  10+
+                  +3
                 </div>
-                <div className="text-xs sm:text-sm text-gray-400">Projects</div>
+                <div className="text-xs sm:text-sm text-gray-400">
+                  {t("hero.stats.years")}
+                </div>
               </motion.div>
 
-              {/* Experience Stat */}
+              {/* Projects Stat */}
               <motion.div
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
@@ -368,17 +375,17 @@ const Hero = () => {
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-yellow-400" />
+                  <Code2 className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-400" />
                 </motion.div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  3+
+                  +10
                 </div>
                 <div className="text-xs sm:text-sm text-gray-400">
-                  Years Exp
+                  {t("hero.stats.projects")}
                 </div>
               </motion.div>
 
-              {/* UI/UX Stat */}
+              {/* Mobile First Stat */}
               <motion.div
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
@@ -391,15 +398,17 @@ const Hero = () => {
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Palette className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-purple-400" />
+                  <Smartphone className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-green-400" />
                 </motion.div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  UI/UX
+                  {t("hero.stats.mobile")}
                 </div>
-                <div className="text-xs sm:text-sm text-gray-400">Design</div>
+                <div className="text-xs sm:text-sm text-gray-400">
+                  {t("hero.stats.mobileFirst")}
+                </div>
               </motion.div>
 
-              {/* Mobile Stat */}
+              {/* UI/UX Stat */}
               <motion.div
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
@@ -412,12 +421,14 @@ const Hero = () => {
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <Smartphone className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-green-400" />
+                  <Palette className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-purple-400" />
                 </motion.div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  Mobile
+                  {t("hero.stats.uiux")}
                 </div>
-                <div className="text-xs sm:text-sm text-gray-400">First</div>
+                <div className="text-xs sm:text-sm text-gray-400">
+                  {t("hero.stats.design")}
+                </div>
               </motion.div>
             </div>
           </motion.div>
@@ -430,7 +441,9 @@ const Hero = () => {
         style={{ opacity: scrollIndicatorOpacity, y: scrollIndicatorY }}
         onClick={handleScrollToAbout}
       >
-        <span className="text-sm text-gray-400">Scroll to explore</span>
+        <span className="text-sm text-gray-400">
+          {t("cta.scrollToExplore")}
+        </span>
         <motion.div
           animate={{
             y: [0, 8, 0],
@@ -438,7 +451,7 @@ const Hero = () => {
           transition={{
             duration: 1.5,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: easeInOut,
           }}
         >
           <ChevronDown className="w-6 h-6 text-blue-500" />

@@ -2,8 +2,12 @@
 
 import { motion, Variants } from "framer-motion";
 import { SKILLS } from "@/constants";
+import { useLanguage } from "../LanguageContext";
 
 const Skills = () => {
+  const { t, language } = useLanguage();
+  const isRTL = language === "ar";
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -35,15 +39,16 @@ const Skills = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
+      className={isRTL ? "text-right" : ""}
     >
       <motion.h4
         className="text-xl font-semibold text-white mb-4"
         variants={skillVariants}
       >
-        Skills
+        {t("about.skills")}
       </motion.h4>
       <motion.div
-        className="max-w-2xl flex flex-wrap gap-2"
+        className={`max-w-2xl flex flex-wrap gap-2 ${isRTL ? "justify-start" : ""}`}
         variants={containerVariants}
       >
         {SKILLS.map((skill, index) => (

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Orbitron } from "next/font/google";
+import { Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
+import { LanguageProvider } from "@/components/LanguageContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +21,13 @@ const geistMono = Geist_Mono({
 const orbitron = Orbitron({
   variable: "--font-orbitron",
   subsets: ["latin"],
+});
+
+const notoSansArabic = Noto_Sans_Arabic({
+  variable: "--font-noto-sans-arabic",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -52,26 +61,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} antialiased bg-black min-h-screen`}
-      >
-        <Toaster position="top-center" theme="dark" />
-        <div className="relative bg-black">
-          {/* Background gradient for header */}
-          <div className="fixed inset-0 h-[20vh] bg-gradient-to-b from-black via-black/50 to-transparent z-10 pointer-events-none" />
+    <html lang="en" suppressHydrationWarning>
+      <LanguageProvider>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${notoSansArabic.variable} antialiased bg-black min-h-screen font-sans`}
+        >
+          <Toaster position="top-center" theme="dark" />
+          <div className="relative bg-black">
+            {/* Background gradient for header */}
+            <div className="fixed inset-0 h-[20vh] bg-gradient-to-b from-black via-black/50 to-transparent z-10 pointer-events-none" />
 
-          {/* Header with backdrop blur */}
-          <div className="fixed inset-x-0 top-0 h-20 bg-black/20 backdrop-blur-sm z-20" />
-          <Header />
+            {/* Header with backdrop blur */}
+            <div className="fixed inset-x-0 top-0 h-20 bg-black/20 backdrop-blur-sm z-20" />
+            <Header />
 
-          {/* Main content */}
-          <main className="relative bg-black">{children}</main>
+            {/* Main content */}
+            <main className="relative bg-black">{children}</main>
 
-          {/* Footer */}
-          <Footer />
-        </div>
-      </body>
+            {/* Footer */}
+            <Footer />
+          </div>
+        </body>
+      </LanguageProvider>
     </html>
   );
 }
