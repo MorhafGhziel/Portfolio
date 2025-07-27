@@ -135,7 +135,7 @@ const Projects = () => {
         },
       }}
       id="work"
-      className="w-full py-16 sm:py-20 md:py-24 text-white flex justify-center items-center"
+      className="w-full py-16 sm:py-20 md:py-24 lg:pb-40 text-white flex justify-center items-center"
       dir={isRTL ? "rtl" : "ltr"}
     >
       <div className="w-full max-w-[90%] sm:max-w-[85%] md:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -246,7 +246,10 @@ const Projects = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: isRTL ? 20 : -20 }}
                   onClick={showLessProjects}
-                  className={`px-8 py-3 rounded-lg font-medium cursor-pointer border border-gray-600 hover:bg-gray-800 hover:border-gray-500 transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 active:scale-95 ${isRTL ? "font-arabic" : ""}`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className={`px-8 py-3 rounded-lg font-medium cursor-pointer border border-gray-600 hover:bg-gray-800 hover:border-gray-500 transition-colors duration-300 ease-out ${isRTL ? "font-arabic" : ""}`}
                 >
                   {t("projects.showLess")}
                 </motion.button>
@@ -258,7 +261,10 @@ const Projects = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: isRTL ? -20 : 20 }}
                   onClick={showMoreProjects}
-                  className={`px-8 py-3 rounded-lg font-medium cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg transition-all duration-200 hover:scale-105 hover:-translate-y-0.5 active:scale-95 ${isRTL ? "font-arabic" : ""}`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className={`px-8 py-3 rounded-lg font-medium cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl transition-all duration-300 ease-out ${isRTL ? "font-arabic" : ""}`}
                 >
                   {t("projects.showMore")}
                 </motion.button>

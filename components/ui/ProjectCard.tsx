@@ -37,15 +37,14 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        whileHover={{ scale: 1.05, y: -10 }}
+        whileHover={{ scale: 1.02 }}
         transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 10,
+          duration: 0.3,
+          ease: "easeOut",
         }}
         dir={isRTL ? "rtl" : "ltr"}
       >
-        <div className="flex flex-col h-full rounded-lg border text-card-foreground shadow-sm bg-gray-900/80 backdrop-blur-sm border-gray-700/50 overflow-hidden hover:bg-gray-800/80 transition-all duration-300">
+        <div className="flex flex-col h-full rounded-lg border text-card-foreground shadow-sm bg-gray-900/80 backdrop-blur-sm border-gray-700/50 overflow-hidden hover:bg-gray-800/80 transition-colors duration-300 ease-out">
           <div
             className="aspect-video bg-gray-800 overflow-hidden relative cursor-pointer"
             onClick={() => setIsImageModalOpen(true)}
@@ -55,11 +54,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               alt={displayTitle}
               width={1920}
               height={1080}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transform group-hover:scale-[1.03] transition-transform duration-700 ease-in-out"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out flex items-center justify-center">
               <span
-                className={`text-white bg-black/50 px-4 py-2 rounded-full text-sm font-medium opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 ${isRTL ? "font-arabic" : ""}`}
+                className={`text-white bg-black/50 px-4 py-2 rounded-full text-sm font-medium opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-out ${isRTL ? "font-arabic" : ""}`}
               >
                 {t("projects.clickToView")}
               </span>
@@ -68,12 +67,12 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
           <div className="flex flex-col flex-1 p-6">
             <h3
-              className={`font-semibold tracking-tight text-xl text-white group-hover:text-gray-400 transition-colors mb-3 ${isRTL ? "font-arabic text-right" : "text-left"}`}
+              className={`font-semibold tracking-tight text-xl text-white group-hover:text-gray-200 transition-colors duration-300 ease-out mb-3 ${isRTL ? "font-arabic text-right" : "text-left"}`}
             >
               {displayTitle}
             </h3>
             <p
-              className={`text-gray-400 text-sm mb-6 ${isRTL ? "font-arabic text-right" : "text-left"}`}
+              className={`text-gray-400 group-hover:text-gray-300 transition-colors duration-300 ease-out text-sm mb-6 ${isRTL ? "font-arabic text-right" : "text-left"}`}
             >
               {displayDescription}
             </p>
@@ -84,7 +83,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               {techStack.map((tech, index) => (
                 <div
                   key={index}
-                  className="inline-flex items-center rounded-full border text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 px-3 py-1 bg-gray-800 text-gray-200 border-gray-600 hover:bg-gray-700 cursor-pointer"
+                  className="inline-flex items-center rounded-full border text-xs font-semibold transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 px-3 py-1 bg-gray-800 text-gray-200 border-gray-600 hover:bg-gray-700 hover:border-gray-500 hover:text-white cursor-pointer"
                 >
                   {tech}
                 </div>
@@ -95,10 +94,13 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               className={`flex gap-3 mt-auto ${isRTL ? "flex-row-reverse" : ""}`}
             >
               <div className="flex-1">
-                <a
+                <motion.a
                   href={githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
                   className={`inline-flex items-center justify-center gap-2 w-full px-4 py-2 text-sm font-medium text-gray-300 bg-gray-800/80 border border-gray-600 rounded-md hover:bg-gray-700 hover:text-white hover:border-gray-500 transition-all duration-200 backdrop-blur-sm ${isRTL ? "font-arabic" : ""}`}
                 >
                   <svg
@@ -117,14 +119,17 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     <path d="M9 18c-4.51 2-5-2-7-2"></path>
                   </svg>
                   {t("projects.viewCode")}
-                </a>
+                </motion.a>
               </div>
               <div className="flex-1">
-                <a
+                <motion.a
                   href={liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center justify-center gap-2 w-full px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-md shadow-lg hover:shadow-xl transition-all duration-200 border-0 ${isRTL ? "font-arabic" : ""}`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
+                  className={`inline-flex items-center justify-center gap-2 w-full px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-md shadow-lg hover:shadow-xl transition-all duration-200 ${isRTL ? "font-arabic" : ""}`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +148,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   </svg>
                   {t("projects.viewProject")}
-                </a>
+                </motion.a>
               </div>
             </div>
           </div>

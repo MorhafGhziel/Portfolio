@@ -12,7 +12,7 @@ const ContactCTA = () => {
   return (
     <motion.section
       id="contact"
-      className="relative w-full py-16 sm:py-20 md:py-24 overflow-hidden mb-30"
+      className="relative w-full py-16 sm:py-20 md:py-24 lg:pt-40 overflow-hidden mb-30"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
