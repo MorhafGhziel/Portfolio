@@ -264,14 +264,14 @@ export function Header() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.7) {
             setActiveSection(entry.target.id);
           }
         });
       },
       {
-        threshold: 0.3, // Lower threshold to detect sections earlier
-        rootMargin: "-80px 0px 0px 0px", // Account for header height
+        threshold: [0.7], // Require 70% visibility to activate
+        rootMargin: "-100px 0px -100px 0px", // Adjust margins to account for header and better visibility
       }
     );
 
