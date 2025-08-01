@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import { PROJECTS } from "@/constants";
 import About from "@/components/About";
 import FloatingElements from "@/components/ui/FloatingElements";
 import ParticleBackground from "@/components/ui/ParticleBackground";
@@ -10,7 +11,7 @@ export default function Home() {
     <>
       <ParticleBackground />
       <FloatingElements />
-      <Hero />
+      <Hero projectsCount={PROJECTS.length} />
       <About />
       <Projects />
       <ContactCTA />

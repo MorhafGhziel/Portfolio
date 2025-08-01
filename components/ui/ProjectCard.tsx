@@ -4,14 +4,15 @@ import Image from "next/image";
 import { type Project } from "@/constants";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import ImageModal from "./ImageModal";
+
 import { useLanguage } from "../LanguageContext";
 
 interface ProjectCardProps {
   project: Project;
+  onImageClick: (url: string, alt: string) => void;
 }
 
-const ProjectCard = ({ project }: ProjectCardProps) => {
+const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
   const { t, language } = useLanguage();
   const isRTL = language === "ar";
   const {
@@ -24,7 +25,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     githubUrl,
     liveUrl,
   } = project;
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
   // Use Arabic or English content based on language
   const displayTitle = isRTL ? titleAr : title;
@@ -44,10 +44,10 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         }}
         dir={isRTL ? "rtl" : "ltr"}
       >
-        <div className="flex flex-col h-full rounded-lg border text-card-foreground shadow-sm bg-gray-900/80 backdrop-blur-sm border-gray-700/50 overflow-hidden hover:bg-gray-800/80 transition-colors duration-300 ease-out">
+        <div className="flex flex-col h-full rounded-lg border text-card-foreground shadow-sm bg-gray-900/80 backdrop-blur-sm border-gray-700/50 overflow-hidden hover:bg-gray-800/80 transition-colors duration-300 ease-out relative">
           <div
             className="aspect-video bg-gray-800 overflow-hidden relative cursor-pointer"
-            onClick={() => setIsImageModalOpen(true)}
+            onClick={() => onImageClick(image, displayTitle)}
           >
             <Image
               src={image}
@@ -94,13 +94,10 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               className={`flex gap-3 mt-auto ${isRTL ? "flex-row-reverse" : ""}`}
             >
               <div className="flex-1">
-                <motion.a
+                <a
                   href={githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.2 }}
                   className={`inline-flex items-center justify-center gap-2 w-full px-4 py-2 text-sm font-medium text-gray-300 bg-gray-800/80 border border-gray-600 rounded-md hover:bg-gray-700 hover:text-white hover:border-gray-500 transition-all duration-200 backdrop-blur-sm ${isRTL ? "font-arabic" : ""}`}
                 >
                   <svg
@@ -119,16 +116,13 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     <path d="M9 18c-4.51 2-5-2-7-2"></path>
                   </svg>
                   {t("projects.viewCode")}
-                </motion.a>
+                </a>
               </div>
               <div className="flex-1">
-                <motion.a
+                <a
                   href={liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.2 }}
                   className={`inline-flex items-center justify-center gap-2 w-full px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-md shadow-lg hover:shadow-xl transition-all duration-200 ${isRTL ? "font-arabic" : ""}`}
                 >
                   <svg
@@ -148,19 +142,12 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                   </svg>
                   {t("projects.viewProject")}
-                </motion.a>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </motion.div>
-
-      <ImageModal
-        isOpen={isImageModalOpen}
-        onClose={() => setIsImageModalOpen(false)}
-        imageUrl={image}
-        imageAlt={displayTitle}
-      />
     </>
   );
 };

@@ -16,7 +16,11 @@ import { easeInOut, motion, useScroll, useTransform } from "framer-motion";
 import Button from "./ui/Button";
 import { useLanguage } from "./LanguageContext";
 
-const Hero = () => {
+interface HeroProps {
+  projectsCount: number;
+}
+
+const Hero = ({ projectsCount }: HeroProps) => {
   const { t, language } = useLanguage();
   const { scrollY } = useScroll();
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
@@ -344,8 +348,14 @@ const Hero = () => {
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 2.5, type: "spring", stiffness: 200 }}
+                transition={{
+                  delay: 0.3,
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17,
+                }}
                 whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <motion.div
                   className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
@@ -367,8 +377,14 @@ const Hero = () => {
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 2.7, type: "spring", stiffness: 200 }}
+                transition={{
+                  delay: 0.4,
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17,
+                }}
                 whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <motion.div
                   className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
@@ -378,7 +394,7 @@ const Hero = () => {
                   <Code2 className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-400" />
                 </motion.div>
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  +10
+                  +{projectsCount}
                 </div>
                 <div className="text-xs sm:text-sm text-gray-400">
                   {t("hero.stats.projects")}
@@ -390,8 +406,14 @@ const Hero = () => {
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 2.9, type: "spring", stiffness: 200 }}
+                transition={{
+                  delay: 0.5,
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17,
+                }}
                 whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <motion.div
                   className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
@@ -413,8 +435,14 @@ const Hero = () => {
                 className="text-center"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 3.1, type: "spring", stiffness: 200 }}
+                transition={{
+                  delay: 0.6,
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17,
+                }}
                 whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <motion.div
                   className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
