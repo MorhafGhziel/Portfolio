@@ -216,7 +216,7 @@ const AnimatedLogo = () => {
               }
             />
 
-            <Rocket className="w-6 h-6 [&>path]:fill-[url(#rocketGradient)]" />
+            <Rocket className="w-6 h-6 stroke-purple-400 [&>path]:fill-[url(#rocketGradient)]" />
             <svg width="0" height="0">
               <defs>
                 <linearGradient

@@ -11,7 +11,7 @@ import {
   Zap,
   ChevronDown,
 } from "lucide-react";
-import Image from "next/image";
+import ThreeDImage from "./ui/3DImage";
 import { easeInOut, motion, useScroll, useTransform } from "framer-motion";
 import Button from "./ui/Button";
 import { useLanguage } from "./LanguageContext";
@@ -216,19 +216,10 @@ const Hero = ({ projectsCount }: HeroProps) => {
             transition={{ duration: 0.5, ease: easeInOut }}
             style={{ opacity: avatarOpacity, scale: avatarScale }}
           >
-            <motion.div
-              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 ring-2 sm:ring-4 ring-gray-100/50 shadow-2xl rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center"
-              whileHover={{ scale: 1.1, rotate: isRTL ? -5 : 5 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            >
-              <Image
-                src="/images/Profile3.png"
-                alt="Morhaf Profile Picture"
-                width={96}
-                height={96}
-                className="w-full h-full object-cover rounded-full"
-              />
-            </motion.div>
+            <ThreeDImage
+              src="/images/Profile3.png"
+              alt="Morhaf Profile Picture"
+            />
           </motion.div>
 
           {/* Title */}
