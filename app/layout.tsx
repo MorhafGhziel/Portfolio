@@ -71,8 +71,7 @@ export default function RootLayout({
             {/* Background gradient for header */}
             <div className="fixed inset-0 h-[20vh] bg-gradient-to-b from-black via-black/50 to-transparent z-10 pointer-events-none" />
 
-            {/* Header with backdrop blur */}
-            <div className="fixed inset-x-0 top-0 h-20 bg-black/20 backdrop-blur-sm z-20" />
+            {/* Header */}
             <Header />
 
             {/* Main content */}

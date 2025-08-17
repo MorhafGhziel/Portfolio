@@ -330,7 +330,7 @@ export function Header() {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 px-4 py-4 bg-black/95 backdrop-blur-lg border-b border-white/10"
+      className="fixed top-0 left-0 right-0 z-50 px-4 py-4 bg-black/20 backdrop-blur-xl border-b border-purple-700/20 shadow-lg"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -442,7 +442,7 @@ export function Header() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="fixed inset-x-0 top-[73px] p-4 bg-black/95 backdrop-blur-lg border-b border-white/10 md:hidden"
+            className="fixed inset-x-0 top-[73px] p-4 bg-black/20 backdrop-blur-xl border-b border-white/20 shadow-lg md:hidden"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
