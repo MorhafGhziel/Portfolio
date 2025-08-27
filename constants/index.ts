@@ -50,8 +50,8 @@ export const PROJECTS: Project[] = [
       "Headless UI",
       "PostCSS",
     ],
-    githubUrl: "https://github.com/MorhafGhziel/mrhfmarket",
-    liveUrl: "https://mrhfmarket.vercel.app/",
+    githubUrl: "https://github.com/MorhafGhziel/shopify-ecommerce",
+    liveUrl: "https://shopify-ecommerce-livid.vercel.app/",
   },
   {
     title: "Socially",
