@@ -34,6 +34,26 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    title: "eCommerce Clothes Market",
+    description:
+      "Modern eCommerce platform built with Next.js, featuring real-time cart management, product galleries, advanced search, and Shopify integration. webhook integration, and performance optimization.",
+    titleAr: "متجر مرحف",
+    descriptionAr:
+      "منصة تجارة إلكترونية حديثة مبنية بـ Next.js تتضمن إدارة سلة تسوق فورية ومعارض منتجات وبحث متقدم وتكامل مع Shopify. تتضمن تكامل Webhook وتحسين الأداء.",
+    image: "/images/MrhfMarket.png",
+    techStack: [
+      "Next.js",
+      "TypeScript",
+      "TailwindCSS",
+      "Shopify Storefront API",
+      "Framer Motion",
+      "Headless UI",
+      "PostCSS",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/mrhfmarket",
+    liveUrl: "https://mrhfmarket.vercel.app/",
+  },
+  {
     title: "Socially",
     description:
       "Full Stack social platform featuring real-time posts, likes, and customizable user profiles.",

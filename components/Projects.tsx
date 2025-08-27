@@ -302,7 +302,7 @@ const Projects = () => {
             </motion.div>
 
             {/* Technology Filter */}
-            <motion.div className="relative z-[100]" ref={filterRef}>
+            <motion.div className="relative z-30" ref={filterRef}>
               <motion.button
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
                 className={`flex items-center justify-center gap-2 px-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg text-white hover:bg-gray-700/50 transition-all duration-200 cursor-pointer min-w-[160px] ${isRTL ? "font-arabic flex-row-reverse" : ""}`}
@@ -321,7 +321,6 @@ const Projects = () => {
                 </motion.span>
               </motion.button>
 
-              {/* Enhanced Filter Dropdown */}
               <AnimatePresence>
                 {isFilterOpen && (
                   <motion.div
@@ -329,10 +328,9 @@ const Projects = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -10, scale: 0.95 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full sm:left-0 left-1/2 -translate-x-1/2 sm:translate-x-0 mt-2 w-64 bg-gray-900/95 backdrop-blur-lg border border-gray-700/50 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] ring-1 ring-white/10 z-[200]"
+                    className="absolute top-full sm:left-0 left-1/2 -translate-x-1/2 sm:translate-x-0 mt-2 w-64 bg-gray-900/95 backdrop-blur-lg border border-gray-700/50 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] ring-1 ring-white/10 z-40"
                   >
                     <div className="p-4">
-                      {/* Header */}
                       <div className="flex items-center justify-between mb-4">
                         <motion.h4
                           className="text-white font-medium text-sm cursor-pointer"
