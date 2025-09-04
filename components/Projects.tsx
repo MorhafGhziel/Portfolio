@@ -87,8 +87,6 @@ const Projects = () => {
       } else {
         setInitialCount(3); // Large screens
       }
-      // Reset visible projects when filtering
-      setVisibleProjects(initialCount);
     };
 
     // Initial check
@@ -97,12 +95,12 @@ const Projects = () => {
     // Add resize listener
     window.addEventListener("resize", updateInitialCount);
     return () => window.removeEventListener("resize", updateInitialCount);
-  }, [initialCount]);
+  }, []);
 
-  // Reset visible projects when filtering changes
+  // Reset visible projects when filtering changes (but not when initialCount changes)
   useEffect(() => {
     setVisibleProjects(initialCount);
-  }, [searchQuery, selectedTechs, initialCount]);
+  }, [searchQuery, selectedTechs]);
 
   const showMoreProjects = () => {
     // Increment based on screen size
