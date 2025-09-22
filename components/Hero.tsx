@@ -26,7 +26,6 @@ const Hero = ({ projectsCount }: HeroProps) => {
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const isRTL = language === "ar";
 
-  // Check screen size on mount and resize
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobileOrTablet(window.innerWidth < 1024); // lg breakpoint in Tailwind
