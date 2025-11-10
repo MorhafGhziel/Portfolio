@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
-import { ArrowRight, Download, Sparkles } from "lucide-react";
+import React, { useRef } from "react";
+import { ArrowRight, ArrowLeft, Download, Sparkles } from "lucide-react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { useLanguage } from "./LanguageContext";
 
 interface HeroProps {
@@ -13,31 +13,7 @@ interface HeroProps {
 const Hero = ({ projectsCount }: HeroProps) => {
   const { t, language } = useLanguage();
   const isRTL = language === "ar";
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (heroRef.current) {
-        const rect = heroRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: (e.clientX - rect.left) / rect.width,
-          y: (e.clientY - rect.top) / rect.height,
-        });
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  const heroRef = useRef(null);
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
@@ -67,52 +43,7 @@ const Hero = ({ projectsCount }: HeroProps) => {
       {/* Grid Pattern Overlay */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
 
-      {/* Radial Gradient Lights */}
-      <motion.div
-        className="absolute inset-0 opacity-10"
-        style={{
-          background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)`,
-        }}
-      />
-      <motion.div
-        className="absolute inset-0 opacity-5"
-        style={{
-          background: `radial-gradient(circle at ${(1 - mousePosition.x) * 100}% ${(1 - mousePosition.y) * 100}%, rgba(255, 255, 255, 0.05) 0%, transparent 50%)`,
-        }}
-      />
-
-      {/* Floating Orbs */}
-      <motion.div
-        className="absolute top-20 left-10 w-72 h-72 bg-white/3 rounded-full blur-3xl"
-        animate={{
-          x: [0, 100, 0],
-          y: [0, -50, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-10 w-96 h-96 bg-white/3 rounded-full blur-3xl"
-        animate={{
-          x: [0, -80, 0],
-          y: [0, 80, 0],
-          scale: [1, 1.3, 1],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
-      <motion.div
-        style={{ y, opacity }}
-        className="relative max-w-7xl w-full mx-auto z-10"
-      >
+      <div className="relative max-w-7xl w-full mx-auto z-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Left Column - Text Content */}
           <motion.div
@@ -191,7 +122,7 @@ const Hero = ({ projectsCount }: HeroProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className={`mt-12 flex ${isRTL ? "flex-row-reverse" : ""} gap-4 flex-wrap`}
+              className={`mt-12 flex ${isRTL ? "flex-row-reverse justify-end" : ""} gap-4 flex-wrap`}
             >
               <motion.button
                 onClick={handleScrollToWork}
@@ -209,14 +140,26 @@ const Hero = ({ projectsCount }: HeroProps) => {
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.4 }}
                 />
-                <span className="relative z-10 flex items-center gap-2">
+                <span
+                  className={`relative z-10 flex items-center gap-2 ${isRTL ? "flex-row-reverse" : ""}`}
+                >
+                  {isRTL && (
+                    <motion.div
+                      animate={{ x: [0, -4, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                    </motion.div>
+                  )}
                   {t("nav.work")}
-                  <motion.div
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.div>
+                  {!isRTL && (
+                    <motion.div
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.div>
+                  )}
                 </span>
               </motion.button>
 
@@ -344,7 +287,7 @@ const Hero = ({ projectsCount }: HeroProps) => {
             </motion.div>
           </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

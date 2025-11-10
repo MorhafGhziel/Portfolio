@@ -80,7 +80,7 @@ export default function Contact() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        const errorMessage = errorData.details 
+        const errorMessage = errorData.details
           ? `${errorData.error}: ${errorData.details}`
           : errorData.error || "Failed to send message";
         console.error("API Error:", errorData);
@@ -94,11 +94,12 @@ export default function Contact() {
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       console.error("Error:", error);
-      const errorMessage = error instanceof Error 
-        ? error.message 
-        : isRTL
-        ? "حدث خطأ. يرجى المحاولة مرة أخرى لاحقاً."
-        : "An error occurred. Please try again later.";
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : isRTL
+            ? "حدث خطأ. يرجى المحاولة مرة أخرى لاحقاً."
+            : "An error occurred. Please try again later.";
       toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
@@ -129,34 +130,6 @@ export default function Contact() {
       {/* Animated Background */}
       <div className="absolute inset-0 animated-bg" />
       <div className="absolute inset-0 grid-pattern opacity-10" />
-
-      {/* Floating Gradient Orbs */}
-      <motion.div
-        className="absolute top-1/4 right-1/4 w-96 h-96 bg-white/3 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.3, 1],
-          x: [0, 60, 0],
-          y: [0, -40, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-white/3 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          x: [0, -40, 0],
-          y: [0, 60, 0],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
 
       <div className="relative w-full max-w-7xl z-10">
         {/* Back Button */}
@@ -206,9 +179,7 @@ export default function Contact() {
                 </span>
               </motion.div>
               <h1 className="mt-4 text-4xl md:text-6xl font-bold tracking-tight">
-                <span className="text-gradient">
-                  {t("contact.subtitle")}
-                </span>
+                <span className="text-gradient">{t("contact.subtitle")}</span>
               </h1>
               <p className="mt-6 text-xl text-gray-300 leading-relaxed">
                 {t("contact.description")}
@@ -218,9 +189,22 @@ export default function Contact() {
             {/* Contact Info Cards */}
             <div className="space-y-4">
               {[
-                { icon: Mail, label: t("contact.form.email"), value: "Ghzielmorhaf@gmail.com" },
-                { icon: Phone, label: t("contact.form.phone"), value: "+966 50 714 9775", dir: "ltr" },
-                { icon: MapPin, label: t("contact.form.location"), value: t("contact.form.locationValue") },
+                {
+                  icon: Mail,
+                  label: t("contact.form.email"),
+                  value: "Ghzielmorhaf@gmail.com",
+                },
+                {
+                  icon: Phone,
+                  label: t("contact.form.phone"),
+                  value: "+966 50 714 9775",
+                  dir: "ltr",
+                },
+                {
+                  icon: MapPin,
+                  label: t("contact.form.location"),
+                  value: t("contact.form.locationValue"),
+                },
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -231,7 +215,9 @@ export default function Contact() {
                     transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
                     className="glass rounded-2xl p-6 border border-white/10 card-hover"
                   >
-                    <div className={`flex ${isRTL ? "flex-row-reverse" : ""} items-start gap-4`}>
+                    <div
+                      className={`flex ${isRTL ? "flex-row-reverse" : ""} items-start gap-4`}
+                    >
                       <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/20 flex items-center justify-center flex-shrink-0">
                         <Icon className="w-6 h-6 text-white" />
                       </div>
@@ -239,7 +225,10 @@ export default function Contact() {
                         <div className="text-xs text-gray-500 uppercase tracking-wider mb-2">
                           {item.label}
                         </div>
-                        <div className="text-white font-medium" dir={item.dir || undefined}>
+                        <div
+                          className="text-white font-medium"
+                          dir={item.dir || undefined}
+                        >
                           {item.value}
                         </div>
                       </div>
@@ -257,7 +246,11 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="glass rounded-3xl p-8 md:p-10 border border-white/10 flex flex-col h-full"
           >
-            <form onSubmit={handleSubmit} className="flex flex-col space-y-6 flex-1" noValidate>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col space-y-6 flex-1"
+              noValidate
+            >
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <input
@@ -336,9 +329,11 @@ export default function Contact() {
                 type="submit"
                 disabled={isSubmitting}
                 className="group relative w-full py-5 rounded-2xl font-medium overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer bg-white text-black mt-auto"
-                whileHover={{ 
+                whileHover={{
                   scale: isSubmitting ? 1 : 1.02,
-                  boxShadow: isSubmitting ? undefined : "0 20px 40px rgba(255, 255, 255, 0.2)",
+                  boxShadow: isSubmitting
+                    ? undefined
+                    : "0 20px 40px rgba(255, 255, 255, 0.2)",
                 }}
                 whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                 transition={{ duration: 0.3 }}
@@ -357,7 +352,10 @@ export default function Contact() {
                 <motion.div
                   className="relative z-10"
                   animate={isSubmitting ? { x: [0, 4, 0] } : {}}
-                  transition={{ duration: 1, repeat: isSubmitting ? Infinity : 0 }}
+                  transition={{
+                    duration: 1,
+                    repeat: isSubmitting ? Infinity : 0,
+                  }}
                 >
                   <Send className="w-4 h-4" />
                 </motion.div>

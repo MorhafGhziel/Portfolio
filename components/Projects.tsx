@@ -63,21 +63,6 @@ const Projects = () => {
       <div className="absolute inset-0 animated-bg" />
       <div className="absolute inset-0 grid-pattern opacity-10" />
 
-      {/* Floating Gradient Orbs */}
-      <motion.div
-        className="absolute top-1/3 left-1/3 w-96 h-96 bg-white/3 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.3, 1],
-          x: [0, 60, 0],
-          y: [0, -40, 0],
-        }}
-        transition={{
-          duration: 22,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
       <div className="relative max-w-7xl w-full mx-auto z-10">
         {/* Section Header */}
         <motion.div
