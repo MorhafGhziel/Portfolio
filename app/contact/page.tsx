@@ -80,7 +80,11 @@ export default function Contact() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to send message");
+        const errorMessage = errorData.details 
+          ? `${errorData.error}: ${errorData.details}`
+          : errorData.error || "Failed to send message";
+        console.error("API Error:", errorData);
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
@@ -90,11 +94,12 @@ export default function Contact() {
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       console.error("Error:", error);
-      toast.error(
-        isRTL
-          ? "حدث خطأ. يرجى المحاولة مرة أخرى لاحقاً."
-          : "An error occurred. Please try again later."
-      );
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : isRTL
+        ? "حدث خطأ. يرجى المحاولة مرة أخرى لاحقاً."
+        : "An error occurred. Please try again later.";
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -250,9 +255,9 @@ export default function Contact() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="glass rounded-3xl p-8 md:p-10 border border-white/10"
+            className="glass rounded-3xl p-8 md:p-10 border border-white/10 flex flex-col h-full"
           >
-            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-6 flex-1" noValidate>
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <input
@@ -330,7 +335,7 @@ export default function Contact() {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="group relative w-full py-5 rounded-2xl font-medium overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer bg-white text-black"
+                className="group relative w-full py-5 rounded-2xl font-medium overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer bg-white text-black mt-auto"
                 whileHover={{ 
                   scale: isSubmitting ? 1 : 1.02,
                   boxShadow: isSubmitting ? undefined : "0 20px 40px rgba(255, 255, 255, 0.2)",
