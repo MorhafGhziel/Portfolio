@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { ArrowRight, ArrowLeft, Download, Sparkles } from "lucide-react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "./LanguageContext";
 
 interface HeroProps {
@@ -13,7 +13,27 @@ interface HeroProps {
 const Hero = ({ projectsCount }: HeroProps) => {
   const { t, language } = useLanguage();
   const isRTL = language === "ar";
-  const heroRef = useRef(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkIsDesktop();
+    window.addEventListener("resize", checkIsDesktop);
+    return () => window.removeEventListener("resize", checkIsDesktop);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Scroll animation - only on desktop (screens wider than 768px)
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
@@ -43,7 +63,13 @@ const Hero = ({ projectsCount }: HeroProps) => {
       {/* Grid Pattern Overlay */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
 
-      <div className="relative max-w-7xl w-full mx-auto z-10">
+      <motion.div
+        className="relative max-w-7xl w-full mx-auto z-10"
+        style={{
+          y: isDesktop ? y : undefined,
+          opacity: isDesktop ? opacity : undefined,
+        }}
+      >
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Left Column - Text Content */}
           <motion.div
@@ -287,7 +313,7 @@ const Hero = ({ projectsCount }: HeroProps) => {
             </motion.div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
