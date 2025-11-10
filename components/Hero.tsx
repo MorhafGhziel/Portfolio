@@ -115,29 +115,29 @@ const Hero = ({ projectsCount }: HeroProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-12 flex gap-6"
+              className="mt-6 sm:mt-8 md:mt-12 flex gap-3 sm:gap-4 md:gap-6"
             >
               <motion.div
                 whileHover={{ scale: 1.05, y: -5 }}
-                className="glass px-6 py-4 rounded-xl relative overflow-hidden group border border-white/10"
+                className="glass px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 rounded-xl relative overflow-hidden group border border-white/10 flex-1 sm:flex-none"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="text-4xl font-bold text-white relative z-10">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white relative z-10">
                   5+
                 </div>
-                <div className="mt-1 text-sm text-gray-500 uppercase tracking-wider relative z-10">
+                <div className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-gray-500 uppercase tracking-wider relative z-10">
                   {t("hero.stats.years")}
                 </div>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.05, y: -5 }}
-                className="glass px-6 py-4 rounded-xl relative overflow-hidden group border border-white/10"
+                className="glass px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 rounded-xl relative overflow-hidden group border border-white/10 flex-1 sm:flex-none"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="text-4xl font-bold text-white relative z-10">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white relative z-10">
                   {projectsCount}+
                 </div>
-                <div className="mt-1 text-sm text-gray-500 uppercase tracking-wider relative z-10">
+                <div className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-gray-500 uppercase tracking-wider relative z-10">
                   {t("hero.stats.projects")}
                 </div>
               </motion.div>
@@ -148,11 +148,11 @@ const Hero = ({ projectsCount }: HeroProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className={`mt-12 flex ${isRTL ? "flex-row-reverse justify-end" : ""} gap-4 flex-wrap`}
+              className={`mt-6 sm:mt-8 md:mt-12 flex flex-col sm:flex-row ${isRTL ? "sm:flex-row-reverse sm:justify-end" : ""} gap-3 sm:gap-4`}
             >
               <motion.button
                 onClick={handleScrollToWork}
-                className="group relative px-8 py-4 rounded-xl font-medium overflow-hidden cursor-pointer bg-white text-black"
+                className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-base font-medium overflow-hidden cursor-pointer bg-white text-black"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 20px 40px rgba(255, 255, 255, 0.2)",
@@ -191,7 +191,7 @@ const Hero = ({ projectsCount }: HeroProps) => {
 
               <motion.button
                 onClick={handleDownloadResume}
-                className="group relative px-8 py-4 glass rounded-xl text-white font-medium overflow-hidden cursor-pointer border border-white/20"
+                className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 glass rounded-xl text-white text-sm sm:text-base font-medium overflow-hidden cursor-pointer border border-white/20"
                 whileHover={{
                   scale: 1.05,
                   borderColor: "rgba(255, 255, 255, 0.4)",
@@ -223,7 +223,7 @@ const Hero = ({ projectsCount }: HeroProps) => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className={`relative ${isRTL ? "lg:order-1" : ""} perspective`}
+            className={`relative hidden lg:block ${isRTL ? "lg:order-1" : ""} perspective`}
           >
             <motion.div
               className="relative aspect-square max-w-lg mx-auto lg:max-w-none group"
