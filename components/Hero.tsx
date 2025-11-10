@@ -1,19 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import {
-  ArrowRight,
-  Code2,
-  Download,
-  Palette,
-  Smartphone,
-  Sparkles,
-  Zap,
-  ChevronDown,
-} from "lucide-react";
-import ThreeDImage from "./ui/3DImage";
-import { easeInOut, motion, useScroll, useTransform } from "framer-motion";
-import Button from "./ui/Button";
+import React, { useEffect, useState, useRef } from "react";
+import { ArrowRight, Download, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useLanguage } from "./LanguageContext";
 
 interface HeroProps {
@@ -22,139 +12,40 @@ interface HeroProps {
 
 const Hero = ({ projectsCount }: HeroProps) => {
   const { t, language } = useLanguage();
-  const { scrollY } = useScroll();
-  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const isRTL = language === "ar";
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const heroRef = useRef<HTMLDivElement>(null);
 
-  // Check screen size on mount and resize
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
   useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobileOrTablet(window.innerWidth < 1024); // lg breakpoint in Tailwind
+    const handleMouseMove = (e: MouseEvent) => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: (e.clientX - rect.left) / rect.width,
+          y: (e.clientY - rect.top) / rect.height,
+        });
+      }
     };
 
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Container transforms for the entire hero section
-  const heroScale = useTransform(
-    scrollY,
-    [0, isMobileOrTablet ? 1000 : 400],
-    [1, 0.85]
-  );
-  const heroY = useTransform(
-    scrollY,
-    [0, isMobileOrTablet ? 1000 : 400],
-    [0, -200]
-  );
-  const heroOpacity = useTransform(
-    scrollY,
-    [0, isMobileOrTablet ? 1000 : 400],
-    [1, 0]
-  );
-
-  // Different fade ranges for each section
-  const avatarOpacity = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 600 : 0, isMobileOrTablet ? 700 : 100],
-    [1, 0]
-  );
-
-  const titleOpacity = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 650 : 50, isMobileOrTablet ? 750 : 150],
-    [1, 0]
-  );
-
-  const subtitleOpacity = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 700 : 100, isMobileOrTablet ? 800 : 200],
-    [1, 0]
-  );
-
-  const descriptionOpacity = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 750 : 150, isMobileOrTablet ? 850 : 250],
-    [1, 0]
-  );
-
-  const buttonsOpacity = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 800 : 200, isMobileOrTablet ? 900 : 300],
-    [1, 0]
-  );
-
-  const statsOpacity = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 850 : 250, isMobileOrTablet ? 950 : 350],
-    [1, 0]
-  );
-
-  const scrollIndicatorOpacity = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 500 : 0, isMobileOrTablet ? 600 : 100],
-    [1, 0]
-  );
-
-  // Transform effects for individual elements
-  const avatarScale = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 600 : 0, isMobileOrTablet ? 700 : 100],
-    [1, 0.9]
-  );
-
-  const titleY = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 650 : 50, isMobileOrTablet ? 750 : 150],
-    [0, -20]
-  );
-
-  const subtitleY = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 700 : 100, isMobileOrTablet ? 800 : 200],
-    [0, -15]
-  );
-
-  const buttonsY = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 800 : 200, isMobileOrTablet ? 900 : 300],
-    [0, -15]
-  );
-
-  const statsScale = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 850 : 250, isMobileOrTablet ? 950 : 350],
-    [1, 0.95]
-  );
-
-  const scrollIndicatorY = useTransform(
-    scrollY,
-    [isMobileOrTablet ? 500 : 0, isMobileOrTablet ? 600 : 100],
-    [0, -30]
-  );
-
   const handleDownloadResume = () => {
-    // Create a link element
     const link = document.createElement("a");
     link.href = "/Morhaf_Ghziel_Resume.pdf";
     link.download = "Morhaf_Ghziel_Resume.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
-
-  const handleScrollToAbout = () => {
-    const element = document.getElementById("about");
-    if (element) {
-      const offset = window.innerHeight / 12.5;
-      const elementPosition =
-        element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: elementPosition - offset,
-        behavior: "smooth",
-      });
-    }
   };
 
   const handleScrollToWork = () => {
@@ -165,318 +56,323 @@ const Hero = ({ projectsCount }: HeroProps) => {
   };
 
   return (
-    <motion.section
+    <section
+      ref={heroRef}
       id="home"
-      className="min-h-screen text-white flex items-center justify-center px-4 py-12 pt-24 sm:pt-28 relative"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8, ease: easeInOut }}
-      style={{
-        scale: heroScale,
-        y: heroY,
-        opacity: heroOpacity,
-        transformOrigin: "center top",
-        zIndex: 10,
-      }}
+      className="relative min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-20 py-32 overflow-hidden"
     >
-      {/* Animated Background Orbs */}
+      {/* Animated Background Gradient */}
+      <div className="absolute inset-0 animated-bg" />
+
+      {/* Grid Pattern Overlay */}
+      <div className="absolute inset-0 grid-pattern opacity-20" />
+
+      {/* Radial Gradient Lights */}
       <motion.div
-        className="absolute inset-0 overflow-hidden"
-        style={{ opacity: useTransform(scrollY, [0, 200], [1, 0]) }}
+        className="absolute inset-0 opacity-10"
+        style={{
+          background: `radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)`,
+        }}
+      />
+      <motion.div
+        className="absolute inset-0 opacity-5"
+        style={{
+          background: `radial-gradient(circle at ${(1 - mousePosition.x) * 100}% ${(1 - mousePosition.y) * 100}%, rgba(255, 255, 255, 0.05) 0%, transparent 50%)`,
+        }}
+      />
+
+      {/* Floating Orbs */}
+      <motion.div
+        className="absolute top-20 left-10 w-72 h-72 bg-white/3 rounded-full blur-3xl"
+        animate={{
+          x: [0, 100, 0],
+          y: [0, -50, 0],
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-10 w-96 h-96 bg-white/3 rounded-full blur-3xl"
+        animate={{
+          x: [0, -80, 0],
+          y: [0, 80, 0],
+          scale: [1, 1.3, 1],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      <motion.div
+        style={{ y, opacity }}
+        className="relative max-w-7xl w-full mx-auto z-10"
       >
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity, ease: easeInOut }}
-        />
-        <motion.div
-          className="absolute top-4/7 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
-          animate={{ scale: [1.2, 1, 1.2], opacity: [0.5, 0.3, 0.5] }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: easeInOut,
-            delay: 4,
-          }}
-        />
-      </motion.div>
-
-      <div
-        className={`max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10`}
-      >
-        {/* Text Content Column */}
-        <motion.div
-          className={`text-center ${isRTL ? "lg:text-right" : "lg:text-left"}`}
-        >
-          {/* Profile Avatar */}
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          {/* Left Column - Text Content */}
           <motion.div
-            className={`flex justify-center ${isRTL ? "lg:justify-start" : "lg:justify-start"} mb-8`}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: easeInOut }}
-            style={{ opacity: avatarOpacity, scale: avatarScale }}
-          >
-            <ThreeDImage
-              src="/images/Profile3.png"
-              alt="Morhaf Profile Picture"
-            />
-          </motion.div>
-
-          {/* Title */}
-          <motion.h1
-            className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6"
-            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, ease: easeInOut }}
-            style={{ opacity: titleOpacity, y: titleY }}
-          >
-            <span className="block">{t("hero.title")}</span>
-            <motion.span
-              className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-              animate={{
-                backgroundPosition: isRTL
-                  ? ["100%", "0%", "100%"]
-                  : ["0%", "100%", "0%"],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            >
-              {t("hero.name")}
-            </motion.span>
-          </motion.h1>
-
-          <motion.p
-            className="text-xl md:text-3xl text-gray-300 mb-8"
-            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, ease: easeInOut }}
-            style={{ opacity: subtitleOpacity, y: subtitleY }}
-          >
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: [0, 1, 0],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: easeInOut,
-              }}
-            >
-              {t("hero.frontEndDev")}
-            </motion.span>{" "}
-            &{" "}
-            <motion.span
-              initial={{ opacity: 1 }}
-              animate={{
-                opacity: [1, 0, 1],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: easeInOut,
-              }}
-            >
-              {t("hero.uiuxEngineer")}
-            </motion.span>
-          </motion.p>
-
-          <motion.p
-            className={`text-gray-400 max-w-2xl text-xl mx-auto ${isRTL ? "lg:mr-0 lg:ml-auto" : "lg:ml-0"}`}
-            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, ease: easeInOut }}
-            style={{ opacity: descriptionOpacity }}
-          >
-            {t("hero.description")}
-          </motion.p>
-
-          <motion.div
-            className={`mt-10 flex flex-col sm:flex-row gap-4 justify-center ${isRTL ? "lg:justify-start" : "lg:justify-start"}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: easeInOut }}
-            style={{ opacity: buttonsOpacity, y: buttonsY }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className={isRTL ? "lg:order-2 text-right" : "text-left"}
           >
-            <Button
-              variant="primary"
-              leftIcon={Sparkles}
-              rightIcon={ArrowRight}
-              onClick={handleScrollToWork}
+            {/* Label with Sparkle */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full border border-white/10"
             >
-              {t("nav.work")}
-            </Button>
-
-            <Button
-              variant="secondary"
-              leftIcon={Download}
-              onClick={handleDownloadResume}
-            >
-              {t("cta.downloadResume")}
-            </Button>
-          </motion.div>
-        </motion.div>
-
-        {/* Stats Grid */}
-        <motion.div
-          className="relative mt-8 lg:mt-0 mb-20 sm:mb-24"
-          initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: easeInOut }}
-          style={{ opacity: statsOpacity, scale: statsScale }}
-        >
-          <motion.div
-            className="bg-gradient-to-br from-gray-900 to-gray-950 border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          >
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
-              {/* Years Exp Stat */}
               <motion.div
-                className="text-center"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{
-                  delay: 0.3,
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 17,
-                }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
               >
-                <motion.div
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <Zap className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-yellow-400" />
-                </motion.div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  +3
+                <Sparkles className="w-4 h-4 text-white" />
+              </motion.div>
+              <span className="text-sm tracking-[0.2em] uppercase text-gray-400 font-medium">
+                {t("hero.frontEndDev")}
+              </span>
+            </motion.div>
+
+            {/* Name with Gradient */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-8 text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight"
+            >
+              <span className="text-gradient">{t("hero.name")}</span>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-8 text-xl md:text-2xl text-gray-300 leading-relaxed max-w-xl"
+            >
+              {t("hero.description")}
+            </motion.p>
+
+            {/* Stats with Glass Cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="mt-12 flex gap-6"
+            >
+              <motion.div
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="glass px-6 py-4 rounded-xl relative overflow-hidden group border border-white/10"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="text-4xl font-bold text-white relative z-10">
+                  3+
                 </div>
-                <div className="text-xs sm:text-sm text-gray-400">
+                <div className="mt-1 text-sm text-gray-500 uppercase tracking-wider relative z-10">
                   {t("hero.stats.years")}
                 </div>
               </motion.div>
-
-              {/* Projects Stat */}
               <motion.div
-                className="text-center"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{
-                  delay: 0.4,
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 17,
-                }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="glass px-6 py-4 rounded-xl relative overflow-hidden group border border-white/10"
               >
-                <motion.div
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <Code2 className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-blue-400" />
-                </motion.div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  +{projectsCount}
+                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="text-4xl font-bold text-white relative z-10">
+                  {projectsCount}+
                 </div>
-                <div className="text-xs sm:text-sm text-gray-400">
+                <div className="mt-1 text-sm text-gray-500 uppercase tracking-wider relative z-10">
                   {t("hero.stats.projects")}
                 </div>
               </motion.div>
+            </motion.div>
 
-              {/* Mobile First Stat */}
-              <motion.div
-                className="text-center"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{
-                  delay: 0.5,
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 17,
+            {/* CTA Buttons - Enhanced */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className={`mt-12 flex ${isRTL ? "flex-row-reverse" : ""} gap-4 flex-wrap`}
+            >
+              <motion.button
+                onClick={handleScrollToWork}
+                className="group relative px-8 py-4 rounded-xl font-medium overflow-hidden cursor-pointer bg-white text-black"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(255, 255, 255, 0.2)",
                 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <motion.div
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <Smartphone className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-green-400" />
-                </motion.div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  {t("hero.stats.mobile")}
-                </div>
-                <div className="text-xs sm:text-sm text-gray-400">
-                  {t("hero.stats.mobileFirst")}
-                </div>
-              </motion.div>
+                  className="absolute inset-0 bg-gray-200"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.4 }}
+                />
+                <span className="relative z-10 flex items-center gap-2">
+                  {t("nav.work")}
+                  <motion.div
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-4 h-4" />
+                  </motion.div>
+                </span>
+              </motion.button>
 
-              {/* UI/UX Stat */}
-              <motion.div
-                className="text-center"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{
-                  delay: 0.6,
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 17,
+              <motion.button
+                onClick={handleDownloadResume}
+                className="group relative px-8 py-4 glass rounded-xl text-white font-medium overflow-hidden cursor-pointer border border-white/20"
+                whileHover={{
+                  scale: 1.05,
+                  borderColor: "rgba(255, 255, 255, 0.4)",
                 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <motion.div
-                  className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-xl sm:rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <Palette className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-purple-400" />
-                </motion.div>
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 sm:mb-2">
-                  {t("hero.stats.uiux")}
-                </div>
-                <div className="text-xs sm:text-sm text-gray-400">
-                  {t("hero.stats.design")}
-                </div>
-              </motion.div>
-            </div>
+                  className="absolute inset-0 bg-white/5"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.4 }}
+                />
+                <span className="relative z-10 flex items-center gap-2">
+                  <motion.div
+                    whileHover={{ y: -2 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Download className="w-4 h-4" />
+                  </motion.div>
+                  {t("cta.downloadResume")}
+                </span>
+              </motion.button>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
-        style={{ opacity: scrollIndicatorOpacity, y: scrollIndicatorY }}
-        onClick={handleScrollToAbout}
-      >
-        <span className="text-sm text-gray-400">
-          {t("cta.scrollToExplore")}
-        </span>
-        <motion.div
-          animate={{
-            y: [0, 8, 0],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: easeInOut,
-          }}
-        >
-          <ChevronDown className="w-6 h-6 text-blue-500" />
-        </motion.div>
+          {/* Right Column - Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className={`relative ${isRTL ? "lg:order-1" : ""} perspective`}
+          >
+            <motion.div
+              className="relative aspect-square max-w-lg mx-auto lg:max-w-none group"
+              whileHover={{
+                scale: 1.02,
+                rotateY: 5,
+                rotateX: 5,
+              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              {/* Glow Effect Behind Image */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(163, 163, 163, 0.1))",
+                  transform: "translateZ(-50px)",
+                }}
+              />
+
+              {/* Glass Frame */}
+              <motion.div
+                className="absolute inset-0 glass rounded-2xl"
+                whileHover={{
+                  borderColor: "rgba(255, 255, 255, 0.2)",
+                }}
+                transition={{ duration: 0.3 }}
+              />
+
+              {/* Image container */}
+              <div className="relative overflow-hidden h-full rounded-2xl">
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Image
+                    src="/images/Profile3.png"
+                    alt="Morhaf Ghziel"
+                    width={600}
+                    height={600}
+                    className="w-full h-full object-cover"
+                    priority
+                  />
+                </motion.div>
+
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+
+              {/* Animated Corner Accents */}
+              <motion.div
+                className="absolute -top-4 -left-4 w-24 h-24"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                <motion.div
+                  className="w-full h-full border-t-2 border-l-2 rounded-tl-2xl border-white/50"
+                  animate={{
+                    opacity: [1, 0.5, 1],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                  }}
+                />
+              </motion.div>
+              <motion.div
+                className="absolute -bottom-4 -right-4 w-24 h-24"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+              >
+                <motion.div
+                  className="w-full h-full border-b-2 border-r-2 rounded-br-2xl border-white/50"
+                  animate={{
+                    opacity: [1, 0.5, 1],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: 1.5,
+                  }}
+                />
+              </motion.div>
+
+              {/* Floating Particles */}
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 bg-white/70 rounded-full"
+                  style={{
+                    left: `${20 + i * 30}%`,
+                    top: `${10 + i * 20}%`,
+                  }}
+                  animate={{
+                    y: [0, -20, 0],
+                    opacity: [0.3, 1, 0.3],
+                  }}
+                  transition={{
+                    duration: 3 + i,
+                    repeat: Infinity,
+                    delay: i * 0.5,
+                  }}
+                />
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
       </motion.div>
-    </motion.section>
+    </section>
   );
 };
 

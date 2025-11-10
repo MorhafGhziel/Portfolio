@@ -59,9 +59,9 @@ const Button: React.FC<ButtonProps> = ({
 
   const variants = {
     primary:
-      "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg",
+      "bg-white text-black hover:bg-gray-200 shadow-lg hover:shadow-xl",
     secondary:
-      "border border-gray-600 text-white hover:bg-gray-800 hover:border-gray-500",
+      "border-2 border-white text-white hover:bg-white hover:text-black",
   };
 
   return (

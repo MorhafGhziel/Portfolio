@@ -57,7 +57,7 @@ export default function ParticleBackground() {
           vy: (Math.random() - 0.5) * 0.5,
           size: Math.random() * 2 + 1,
           opacity: Math.random() * 0.5 + 0.2,
-          color: Math.random() > 0.5 ? "#3b82f6" : "#8b5cf6", // Blue and Purple to match your theme
+          color: Math.random() > 0.5 ? "#ffffff" : "#d4d4d8", // White and light gray for elegant look
         });
       }
       particlesRef.current = particles;
@@ -114,7 +114,7 @@ export default function ParticleBackground() {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(59, 130, 246, ${
+            ctx.strokeStyle = `rgba(255, 255, 255, ${
               0.1 * (1 - distance / 80)
             })`;
             ctx.lineWidth = 0.5;

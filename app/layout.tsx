@@ -64,18 +64,19 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <LanguageProvider>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${notoSansArabic.variable} antialiased bg-black min-h-screen font-sans`}
+          className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${notoSansArabic.variable} antialiased min-h-screen font-sans`}
+          style={{ background: "#0f0f0f" }}
         >
           <Toaster position="top-center" theme="dark" />
-          <div className="relative bg-black">
+          <div className="relative" style={{ background: "#0f0f0f" }}>
             {/* Background gradient for header */}
-            <div className="fixed inset-0 h-[20vh] bg-gradient-to-b from-black via-black/50 to-transparent z-10 pointer-events-none" />
+            <div className="fixed inset-0 h-[20vh] bg-gradient-to-b from-[#0f0f0f] via-[#0f0f0f]/50 to-transparent z-10 pointer-events-none" />
 
             {/* Header */}
             <Header />
 
             {/* Main content */}
-            <main className="relative bg-black">{children}</main>
+            <main className="relative" style={{ background: "#0f0f0f" }}>{children}</main>
 
             {/* Footer */}
             <Footer />

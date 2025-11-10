@@ -16,14 +16,23 @@ export function LanguageSwitch() {
   return (
     <motion.button
       onClick={toggleLanguage}
-      className={`px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium cursor-pointer ${
+      className={`relative px-3 py-1.5 rounded-lg bg-white/10 text-sm font-medium cursor-pointer overflow-hidden ${
         isTransitioning ? "pointer-events-none opacity-50" : ""
       }`}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       disabled={isTransitioning}
+      transition={{ duration: 0.3 }}
     >
-      {languages[language === "en" ? "ar" : "en"].name}
+      <motion.div
+        className="absolute inset-0 bg-white/20"
+        initial={{ x: "-100%" }}
+        whileHover={{ x: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      />
+      <span className="relative z-10 text-white">
+        {languages[language === "en" ? "ar" : "en"].name}
+      </span>
     </motion.button>
   );
 }

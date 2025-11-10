@@ -7,12 +7,12 @@ import { useEffect, useState } from "react";
 const ICON_SIZE = 32; // px — rough average icon size
 
 const floatingElements = [
-  { icon: Code, color: "text-blue-400/60", delay: 0, size: "w-8 h-8" },
-  { icon: Palette, color: "text-purple-400/60", delay: 0.5, size: "w-6 h-6" },
-  { icon: Zap, color: "text-yellow-400/60", delay: 1, size: "w-7 h-7" },
-  { icon: Globe, color: "text-green-400/60", delay: 1.5, size: "w-8 h-8" },
-  { icon: Star, color: "text-pink-400/60", delay: 2, size: "w-6 h-6" },
-  { icon: Heart, color: "text-red-400/60", delay: 2.5, size: "w-7 h-7" },
+  { icon: Code, color: "text-white/40", delay: 0, size: "w-8 h-8" },
+  { icon: Palette, color: "text-gray-200/40", delay: 0.5, size: "w-6 h-6" },
+  { icon: Zap, color: "text-white/50", delay: 1, size: "w-7 h-7" },
+  { icon: Globe, color: "text-gray-300/40", delay: 1.5, size: "w-8 h-8" },
+  { icon: Star, color: "text-white/30", delay: 2, size: "w-6 h-6" },
+  { icon: Heart, color: "text-gray-200/50", delay: 2.5, size: "w-7 h-7" },
 ];
 
 type FloatingProps = {

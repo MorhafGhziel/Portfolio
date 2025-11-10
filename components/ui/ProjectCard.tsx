@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { type Project } from "@/constants";
 import { motion } from "framer-motion";
-import { useState } from "react";
-
+import { ExternalLink, Github, Eye } from "lucide-react";
 import { useLanguage } from "../LanguageContext";
 
 interface ProjectCardProps {
@@ -13,7 +12,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const isRTL = language === "ar";
   const {
     title,
@@ -26,129 +25,166 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
     liveUrl,
   } = project;
 
-  // Use Arabic or English content based on language
   const displayTitle = isRTL ? titleAr : title;
   const displayDescription = isRTL ? descriptionAr : description;
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="group perspective"
+    >
+      {/* Image Container */}
       <motion.div
-        className="group h-full"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        whileHover={{ scale: 1.02 }}
-        transition={{
-          duration: 0.3,
-          ease: "easeOut",
-        }}
-        dir={isRTL ? "rtl" : "ltr"}
+        className="relative aspect-[16/10] overflow-hidden rounded-2xl cursor-pointer"
+        onClick={() => onImageClick(image, displayTitle)}
+        whileHover={{ y: -8, scale: 1.02 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
       >
-        <div className="flex flex-col h-full rounded-lg border text-card-foreground shadow-sm bg-gray-900/80 backdrop-blur-sm border-gray-700/50 overflow-hidden hover:bg-gray-800/80 transition-colors duration-300 ease-out relative">
-          <div
-            className="aspect-video bg-gray-800 overflow-hidden relative cursor-pointer"
-            onClick={() => onImageClick(image, displayTitle)}
-          >
-            <Image
-              src={image}
-              alt={displayTitle}
-              width={1920}
-              height={1080}
-              className="w-full h-full object-cover transform group-hover:scale-[1.03] transition-transform duration-700 ease-in-out"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out flex items-center justify-center">
-              <span
-                className={`text-white bg-black/50 px-4 py-2 rounded-full text-sm font-medium opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-out ${isRTL ? "font-arabic" : ""}`}
-              >
-                {t("projects.clickToView")}
-              </span>
-            </div>
+        {/* Glass Frame */}
+        <div className="absolute inset-0 glass rounded-2xl border border-white/10 group-hover:border-white/30 transition-colors duration-300 z-10" />
+        
+        {/* Gradient Overlay on Hover */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
+        />
+
+        {/* Image */}
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.6 }}
+          className="w-full h-full"
+        >
+          <Image
+            src={image}
+            alt={displayTitle}
+            width={800}
+            height={500}
+            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+          />
+        </motion.div>
+
+        {/* Hover Icon */}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center z-20"
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileHover={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="glass rounded-full p-4 border border-white/20">
+            <Eye className="w-6 h-6 text-white" />
           </div>
-
-          <div className="flex flex-col flex-1 p-6">
-            <h3
-              className={`font-semibold tracking-tight text-xl text-white group-hover:text-gray-200 transition-colors duration-300 ease-out mb-3 ${isRTL ? "font-arabic text-right" : "text-left"}`}
-            >
-              {displayTitle}
-            </h3>
-            <p
-              className={`text-gray-400 group-hover:text-gray-300 transition-colors duration-300 ease-out text-sm mb-6 ${isRTL ? "font-arabic text-right" : "text-left"}`}
-            >
-              {displayDescription}
-            </p>
-
-            <div
-              className={`flex flex-wrap gap-2 mb-6 ${isRTL ? "justify-start" : "justify-start"}`}
-            >
-              {techStack.map((tech, index) => (
-                <div
-                  key={index}
-                  className="inline-flex items-center rounded-full border text-xs font-semibold transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 px-3 py-1 bg-gray-800 text-gray-200 border-gray-600 hover:bg-gray-700 hover:border-gray-500 hover:text-white cursor-pointer"
-                >
-                  {tech}
-                </div>
-              ))}
-            </div>
-
-            <div
-              className={`flex gap-3 mt-auto ${isRTL ? "flex-row-reverse" : ""}`}
-            >
-              <div className="flex-1">
-                <a
-                  href={githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center justify-center gap-2 w-full px-4 py-2 text-sm font-medium text-gray-300 bg-gray-800/80 border border-gray-600 rounded-md hover:bg-gray-700 hover:text-white hover:border-gray-500 transition-all duration-200 backdrop-blur-sm ${isRTL ? "font-arabic" : ""}`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-github w-4 h-4"
-                  >
-                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                  </svg>
-                  {t("projects.viewCode")}
-                </a>
-              </div>
-              <div className="flex-1">
-                <a
-                  href={liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center justify-center gap-2 w-full px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-md shadow-lg hover:shadow-xl transition-all duration-200 ${isRTL ? "font-arabic" : ""}`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-external-link w-4 h-4"
-                  >
-                    <path d="M15 3h6v6"></path>
-                    <path d="M10 14 21 3"></path>
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                  </svg>
-                  {t("projects.viewProject")}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+        </motion.div>
       </motion.div>
-    </>
+
+      {/* Content */}
+      <div className="mt-8 space-y-5">
+        {/* Title */}
+        <motion.h3
+          className={`text-2xl font-bold transition-colors ${isRTL ? "text-right" : ""}`}
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
+        >
+          <span className="text-gradient">
+            {displayTitle}
+          </span>
+        </motion.h3>
+
+        {/* Description */}
+        <p className={`text-gray-300 leading-relaxed ${isRTL ? "text-right" : ""}`}>
+          {displayDescription}
+        </p>
+
+        {/* Tech Stack */}
+        <div className={`flex flex-wrap gap-2 ${isRTL ? "justify-start" : ""}`}>
+          {techStack.slice(0, 4).map((tech, index) => (
+            <motion.span
+              key={index}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+              className="relative text-xs font-medium tracking-wider uppercase px-4 py-2 rounded-lg cursor-default overflow-hidden border border-white/20 text-gray-400 bg-white/5"
+              whileHover={{
+                scale: 1.05,
+                y: -2,
+                borderColor: "rgba(255, 255, 255, 0.4)",
+              }}
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "100%" }}
+                transition={{ duration: 0.6 }}
+              />
+              <span className="relative z-10">{tech}</span>
+            </motion.span>
+          ))}
+          {techStack.length > 4 && (
+            <span className="text-xs tracking-wider uppercase text-gray-600 px-4 py-2">
+              +{techStack.length - 4}
+            </span>
+          )}
+        </div>
+
+        {/* Links */}
+        <div className={`flex ${isRTL ? "flex-row-reverse" : ""} gap-4 pt-2`}>
+          <motion.a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glass px-6 py-3 rounded-xl border border-white/20 flex items-center gap-2 text-sm font-medium text-gray-400 cursor-pointer"
+            whileHover={{ 
+              scale: 1.05,
+              y: -2,
+              borderColor: "rgba(255, 255, 255, 0.4)",
+              color: "#ffffff",
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.div
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Github className="w-4 h-4" />
+            </motion.div>
+            <span>Code</span>
+          </motion.a>
+          
+          <motion.a
+            href={liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative px-6 py-3 rounded-xl flex items-center gap-2 text-sm font-medium cursor-pointer overflow-hidden bg-white text-black"
+            whileHover={{ 
+              scale: 1.05,
+              y: -2,
+              boxShadow: "0 10px 30px rgba(255, 255, 255, 0.2)",
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.div
+              className="absolute inset-0 bg-gray-200"
+              initial={{ opacity: 0 }}
+              whileHover={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            />
+            <motion.div
+              className="relative z-10"
+              whileHover={{ x: 2 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ExternalLink className="w-4 h-4" />
+            </motion.div>
+            <span className="relative z-10">Live</span>
+          </motion.a>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 

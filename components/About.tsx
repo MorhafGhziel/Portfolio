@@ -1,154 +1,137 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import Skills from "./ui/Skills";
 import Expertise from "./ui/Expertise";
 import LocationCard from "./ui/LocationCard";
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { useLanguage } from "./LanguageContext";
+import { Code2, Palette, Zap } from "lucide-react";
 
 const About = () => {
   const { t, language } = useLanguage();
   const isRTL = language === "ar";
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress, scrollY } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  // Enhanced scroll animations
-  const aboutY = useTransform(scrollY, [0, 400], [100, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 1], [0, 1, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [0.95, 1]);
-
-  // Parallax effects for different components
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -20]);
-  const cardY = useTransform(scrollYProgress, [0, 1], [0, -30]);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-        duration: 0.8,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "tween",
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const titleVariants: Variants = {
-    hidden: { opacity: 0, y: -50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "tween",
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
 
   return (
-    <motion.section
-      ref={sectionRef}
+    <section
       id="about"
-      className="min-h-screen text-white flex items-center justify-center px-4 flex-col py-12 relative -mt-screen"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-20%" }}
-      variants={containerVariants}
-      style={{
-        y: aboutY,
-      }}
+      className="relative min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-20 py-32 overflow-hidden"
     >
-      <motion.div
-        className="text-center mb-16"
-        variants={containerVariants}
-        style={{ y: titleY }}
-      >
-        <motion.h2 className="text-4xl font-bold mb-4" variants={titleVariants}>
-          {t("about.title")}
-        </motion.h2>
-        <motion.p
-          className="text-gray-400 max-w-2xl mx-auto"
-          variants={itemVariants}
-        >
-          {t("about.subtitle")}
-        </motion.p>
-      </motion.div>
+      {/* Animated Background */}
+      <div className="absolute inset-0 animated-bg" />
+      
+      {/* Grid Pattern */}
+      <div className="absolute inset-0 grid-pattern opacity-10" />
 
+      {/* Floating Gradient Orbs */}
       <motion.div
-        className="space-y-20"
-        variants={containerVariants}
-        style={{ y: contentY }}
-      >
+        className="absolute top-1/4 right-1/4 w-96 h-96 bg-white/3 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          x: [0, 50, 0],
+          y: [0, -30, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-white/3 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.3, 1],
+          x: [0, -50, 0],
+          y: [0, 30, 0],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      <div className="relative max-w-7xl w-full mx-auto z-10">
+        {/* Section Header */}
         <motion.div
-          className="grid lg:grid-cols-3 gap-8 items-start"
-          variants={containerVariants}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-20 text-center"
         >
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 glass px-6 py-3 rounded-full mb-6 border border-white/10"
+          >
+            <Code2 className="w-5 h-5 text-white" />
+            <span className="text-sm tracking-[0.2em] uppercase text-gray-400 font-medium">
+              {t("about.title")}
+            </span>
+          </motion.div>
+          <h2 className="mt-4 text-4xl md:text-6xl font-bold tracking-tight">
+            <span className="text-gradient">
+              {t("about.role")}
+            </span>
+          </h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-6 text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+          >
+            {t("about.description")}
+          </motion.p>
+        </motion.div>
+
+        {/* Content Grid */}
+        <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Main Content */}
           <motion.div
-            className={`lg:col-span-2 ${isRTL ? "lg:order-1" : ""}`}
-            variants={itemVariants}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-2 space-y-8"
           >
-            <motion.h3
-              className="text-3xl font-bold mb-6"
-              variants={itemVariants}
+            {/* Expertise Card */}
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="glass rounded-2xl p-8 border border-white/10 card-hover"
             >
-              <motion.span
-                className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent inline-block"
-                whileHover={{
-                  scale: 1.02,
-                  transition: { type: "tween", duration: 0.2 },
-                }}
-              >
-                {t("about.role")}
-              </motion.span>
-            </motion.h3>
-            <motion.p
-              className={`text-gray-300 text-lg max-w-3xl leading-relaxed mb-8 ${isRTL ? "lg:text-right" : ""}`}
-              variants={itemVariants}
-            >
-              {t("about.description")}
-            </motion.p>
-            <motion.div variants={itemVariants} className="mb-12">
               <Expertise />
             </motion.div>
-            <motion.div variants={itemVariants}>
+
+            {/* Skills Card */}
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="glass rounded-2xl p-8 border border-white/10 card-hover"
+            >
               <Skills />
             </motion.div>
           </motion.div>
 
           {/* Location Card */}
           <motion.div
-            className={isRTL ? "lg:order-2" : ""}
-            variants={itemVariants}
-            whileHover={{
-              scale: 1.02,
-              transition: { type: "tween", duration: 0.2 },
-            }}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <LocationCard />
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="glass rounded-2xl p-8 border border-white/10 card-hover h-full"
+            >
+              <LocationCard />
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </motion.div>
-    </motion.section>
+        </div>
+      </div>
+    </section>
   );
 };
 
