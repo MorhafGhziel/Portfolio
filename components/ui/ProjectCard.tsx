@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { type Project } from "@/constants";
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Eye } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { useLanguage } from "../LanguageContext";
+import { useState } from "react";
 
 interface ProjectCardProps {
   project: Project;
@@ -28,6 +29,10 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
   const displayTitle = isRTL ? titleAr : title;
   const displayDescription = isRTL ? descriptionAr : description;
 
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const remainingTech = techStack.length > 4 ? techStack.slice(4) : [];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -38,45 +43,18 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
     >
       {/* Image Container */}
       <motion.div
-        className="relative aspect-[16/10] overflow-hidden rounded-2xl cursor-pointer"
-        onClick={() => onImageClick(image, displayTitle)}
+        className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10"
         whileHover={{ y: -8, scale: 1.02 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
       >
-        {/* Glass Frame */}
-        <div className="absolute inset-0 glass rounded-2xl border border-white/10 group-hover:border-white/30 transition-colors duration-300 z-10" />
-        
-        {/* Gradient Overlay on Hover */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
-        />
-
         {/* Image */}
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.6 }}
-          className="w-full h-full"
-        >
-          <Image
-            src={image}
-            alt={displayTitle}
-            width={800}
-            height={500}
-            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-          />
-        </motion.div>
-
-        {/* Hover Icon */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center z-20"
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileHover={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="glass rounded-full p-4 border border-white/20">
-            <Eye className="w-6 h-6 text-white" />
-          </div>
-        </motion.div>
+        <Image
+          src={image}
+          alt={displayTitle}
+          width={800}
+          height={500}
+          className="w-full h-full object-cover"
+        />
       </motion.div>
 
       {/* Content */}
@@ -87,13 +65,13 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
         >
-          <span className="text-gradient">
-            {displayTitle}
-          </span>
+          <span className="text-gradient">{displayTitle}</span>
         </motion.h3>
 
         {/* Description */}
-        <p className={`text-gray-300 leading-relaxed ${isRTL ? "text-right" : ""}`}>
+        <p
+          className={`text-gray-300 leading-relaxed ${isRTL ? "text-right" : ""}`}
+        >
           {displayDescription}
         </p>
 
@@ -123,8 +101,37 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
             </motion.span>
           ))}
           {techStack.length > 4 && (
-            <span className="text-xs tracking-wider uppercase text-gray-600 px-4 py-2">
+            <span
+              className="text-xs tracking-wider uppercase text-gray-600 px-4 py-2 cursor-pointer relative"
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+            >
               +{techStack.length - 4}
+              {/* Tooltip */}
+              {showTooltip && remainingTech.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, y: 10 }}
+                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-[8888] pointer-events-none"
+                >
+                  <div className="glass rounded-lg p-3 border border-white/20 shadow-lg min-w-[150px] whitespace-nowrap z-[9999]">
+                    <div className="text-xs font-medium text-white mb-2 uppercase tracking-wider">
+                      More Tech:
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {remainingTech.map((tech, index) => (
+                        <span
+                          key={index}
+                          className="text-xs px-2 py-1 rounded border border-white/20 text-gray-300 bg-white/5"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
             </span>
           )}
         </div>
@@ -136,7 +143,7 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
             target="_blank"
             rel="noopener noreferrer"
             className="glass px-6 py-3 rounded-xl border border-white/20 flex items-center gap-2 text-sm font-medium text-gray-400 cursor-pointer"
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
               y: -2,
               borderColor: "rgba(255, 255, 255, 0.4)",
@@ -153,13 +160,13 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
             </motion.div>
             <span>Code</span>
           </motion.a>
-          
+
           <motion.a
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="relative px-6 py-3 rounded-xl flex items-center gap-2 text-sm font-medium cursor-pointer overflow-hidden bg-white text-black"
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
               y: -2,
               boxShadow: "0 10px 30px rgba(255, 255, 255, 0.2)",
