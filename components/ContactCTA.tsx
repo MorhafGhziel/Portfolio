@@ -2,7 +2,18 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Mail, Phone, MapPin, Github, Linkedin, Twitter, Instagram, Clock, MessageSquare } from "lucide-react";
+import {
+  ArrowRight,
+  Mail,
+  Phone,
+  MapPin,
+  Github,
+  Linkedin,
+  Twitter,
+  Instagram,
+  Clock,
+  MessageSquare,
+} from "lucide-react";
 import { useLanguage } from "./LanguageContext";
 
 const ContactCTA = () => {
@@ -78,7 +89,7 @@ const ContactCTA = () => {
       {/* Background */}
       <div className="absolute inset-0 animated-bg" />
       <div className="absolute inset-0 grid-pattern opacity-10" />
-      
+
       {/* Floating Orb */}
       <motion.div
         className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/3 rounded-full blur-3xl"
@@ -93,7 +104,7 @@ const ContactCTA = () => {
           ease: "easeInOut",
         }}
       />
-      
+
       <div className="relative max-w-7xl w-full mx-auto z-10">
         {/* Header */}
         <motion.div
@@ -130,7 +141,7 @@ const ContactCTA = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {contactMethods.map((method, index) => {
             const Icon = method.icon;
-            
+
             return (
               <motion.div
                 key={index}
@@ -142,7 +153,7 @@ const ContactCTA = () => {
                 whileHover={{ scale: 1.03, y: -6 }}
               >
                 <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
+
                 {method.href ? (
                   <a
                     href={method.href}
@@ -198,11 +209,11 @@ const ContactCTA = () => {
           whileHover={{ borderColor: "rgba(255, 255, 255, 0.2)" }}
         >
           <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          
+
           {/* Decorative corner accents */}
           <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-white/20 group-hover:border-white/40 transition-colors" />
           <div className="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-white/20 group-hover:border-white/40 transition-colors" />
-          
+
           <div className="grid md:grid-cols-2 gap-12 items-center relative z-10">
             {/* Left Side - Text */}
             <div className={isRTL ? "md:order-2" : ""}>
@@ -252,9 +263,11 @@ const ContactCTA = () => {
             </div>
 
             {/* Right Side - Stats */}
-            <div className={`grid grid-cols-2 gap-6 ${isRTL ? "md:order-1" : ""}`}>
+            <div
+              className={`grid grid-cols-2 gap-6 ${isRTL ? "md:order-1" : ""}`}
+            >
               {[
-                { value: "3+", label: t("hero.stats.years") },
+                { value: "5+", label: t("hero.stats.years") },
                 { value: "100%", label: isRTL ? "التواصل" : "Response" },
                 { value: "24h", label: isRTL ? "الرد" : "Reply Time" },
                 { value: "∞", label: isRTL ? "الإبداع" : "Creativity" },
@@ -295,7 +308,7 @@ const ContactCTA = () => {
           <div className="flex justify-center items-center gap-6">
             {socialLinks.map((link, index) => {
               const Icon = link.icon;
-              
+
               return (
                 <motion.a
                   key={link.label}
@@ -307,7 +320,11 @@ const ContactCTA = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 0.1 * index }}
-                  whileHover={{ scale: 1.15, y: -6, borderColor: "rgba(255, 255, 255, 0.3)" }}
+                  whileHover={{
+                    scale: 1.15,
+                    y: -6,
+                    borderColor: "rgba(255, 255, 255, 0.3)",
+                  }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={link.label}
                 >

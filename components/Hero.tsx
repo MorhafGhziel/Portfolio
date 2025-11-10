@@ -172,7 +172,7 @@ const Hero = ({ projectsCount }: HeroProps) => {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="text-4xl font-bold text-white relative z-10">
-                  3+
+                  5+
                 </div>
                 <div className="mt-1 text-sm text-gray-500 uppercase tracking-wider relative z-10">
                   {t("hero.stats.years")}
