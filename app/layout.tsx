@@ -44,14 +44,14 @@ export const metadata: Metadata = {
     title: "Morhaf Ghziel",
     description:
       "Front-End Developer specializing in React, Next.js, and modern web technologies.",
-    images: ["./opengraph-image.jpg"],
+    images: ["./opengraph-image.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Morhaf Ghziel",
     description:
       "Front-End Developer specializing in React, Next.js, and modern web technologies.",
-    images: ["./opengraph-image.jpg"],
+    images: ["./opengraph-image.png"],
   },
 };
 
@@ -67,8 +67,8 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${notoSansArabic.variable} antialiased min-h-screen font-sans`}
           style={{ background: "#0f0f0f" }}
         >
-          <Toaster 
-            position="top-center" 
+          <Toaster
+            position="top-center"
             theme="dark"
             richColors={false}
             closeButton
@@ -89,7 +89,9 @@ export default function RootLayout({
             <Header />
 
             {/* Main content */}
-            <main className="relative" style={{ background: "#0f0f0f" }}>{children}</main>
+            <main className="relative" style={{ background: "#0f0f0f" }}>
+              {children}
+            </main>
 
             {/* Footer */}
             <Footer />
