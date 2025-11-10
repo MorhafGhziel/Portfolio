@@ -30,10 +30,10 @@ const notoSansArabic = Noto_Sans_Arabic({
   display: "swap",
 });
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://morhaf.me";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "https://morhaf.me"
-  ),
+  metadataBase: new URL(baseUrl),
   title: "Morhaf Ghziel",
   description:
     "Front-End Developer specializing in React, Next.js, and modern web technologies.",
@@ -44,14 +44,21 @@ export const metadata: Metadata = {
     title: "Morhaf Ghziel",
     description:
       "Front-End Developer specializing in React, Next.js, and modern web technologies.",
-    images: ["./opengraph-image.png"],
+    images: [
+      {
+        url: `${baseUrl}/opengraph-image.png?v=2`,
+        width: 1200,
+        height: 630,
+        alt: "Morhaf Ghziel",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Morhaf Ghziel",
     description:
       "Front-End Developer specializing in React, Next.js, and modern web technologies.",
-    images: ["./opengraph-image.png"],
+    images: [`${baseUrl}/opengraph-image.png?v=2`],
   },
 };
 
