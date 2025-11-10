@@ -347,27 +347,6 @@ const Hero = ({ projectsCount }: HeroProps) => {
                   }}
                 />
               </motion.div>
-
-              {/* Floating Particles */}
-              {[...Array(3)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-2 h-2 bg-white/70 rounded-full"
-                  style={{
-                    left: `${20 + i * 30}%`,
-                    top: `${10 + i * 20}%`,
-                  }}
-                  animate={{
-                    y: [0, -20, 0],
-                    opacity: [0.3, 1, 0.3],
-                  }}
-                  transition={{
-                    duration: 3 + i,
-                    repeat: Infinity,
-                    delay: i * 0.5,
-                  }}
-                />
-              ))}
             </motion.div>
           </motion.div>
         </div>
