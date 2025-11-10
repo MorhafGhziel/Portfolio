@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { SKILLS } from "@/constants";
 import { useLanguage } from "../LanguageContext";
-import { Sparkles } from "lucide-react";
 
 const Skills = () => {
   const { t, language } = useLanguage();
@@ -11,17 +10,9 @@ const Skills = () => {
 
   return (
     <div className={isRTL ? "text-right" : ""}>
-      <div className="flex items-center gap-3 mb-8">
-        <motion.div
-          animate={{ rotate: [0, 360] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-        >
-          <Sparkles className="w-6 h-6 text-white" />
-        </motion.div>
-        <h3 className="text-2xl font-bold text-white tracking-tight">
-          {t("about.skills")}
-        </h3>
-      </div>
+      <h3 className="text-2xl font-bold text-white tracking-tight mb-8">
+        {t("about.skills")}
+      </h3>
       <div className={`flex flex-wrap gap-3 ${isRTL ? "justify-start" : ""}`}>
         {SKILLS.map((skill, index) => {
           return (

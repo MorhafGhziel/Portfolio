@@ -30,12 +30,12 @@ const LocationCard = () => {
   ];
 
   return (
-    <div>
+    <div className="flex flex-col h-full">
       <h3 className={`text-2xl font-bold text-white mb-8 ${isRTL ? "text-right" : ""}`}>
         {t("about.location.title")}
       </h3>
       
-      <div className="space-y-6">
+      <div className="space-y-6 flex-1">
         {locationItems.map((item, index) => {
           const Icon = item.icon;
           return (
@@ -49,13 +49,9 @@ const LocationCard = () => {
               className="group"
             >
               <div className={`flex ${isRTL ? "flex-row-reverse" : ""} items-start gap-4`}>
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                  className="w-10 h-10 rounded-lg bg-white/5 border border-white/20 flex items-center justify-center flex-shrink-0"
-                >
+                <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/20 flex items-center justify-center flex-shrink-0">
                   <Icon className="w-5 h-5 text-white" />
-                </motion.div>
+                </div>
                 <div className={`flex-1 ${isRTL ? "text-right" : ""}`}>
                   <div className="font-medium text-white group-hover:text-gray-300 transition-all duration-300">
                     {item.title}
@@ -68,30 +64,30 @@ const LocationCard = () => {
             </motion.div>
           );
         })}
-
-        {/* Availability Status */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-8 pt-6 border-t border-white/10"
-        >
-          <div className="flex items-center gap-3 glass rounded-lg p-4 border border-white/10">
-            <motion.div
-              className="w-3 h-3 rounded-full bg-white"
-              animate={{ 
-                opacity: [1, 0.5, 1],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-            <span className="text-sm text-white font-medium uppercase tracking-wider">
-              {t("about.location.status")}
-            </span>
-          </div>
-        </motion.div>
       </div>
+
+      {/* Availability Status - Pushed to bottom */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="mt-auto pt-6 border-t border-white/10"
+      >
+        <div className="flex items-center gap-3 glass rounded-lg p-4 border border-white/10">
+          <motion.div
+            className="w-3 h-3 rounded-full bg-white"
+            animate={{ 
+              opacity: [1, 0.5, 1],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+          <span className="text-sm text-white font-medium uppercase tracking-wider">
+            {t("about.location.status")}
+          </span>
+        </div>
+      </motion.div>
     </div>
   );
 };

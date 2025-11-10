@@ -4,7 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "../LanguageContext";
 import { languages } from "@/constants/languages";
-import { CheckCircle2, Zap } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 const Expertise = () => {
   const { t, language } = useLanguage();
@@ -14,20 +14,9 @@ const Expertise = () => {
 
   return (
     <div className={`space-y-8 ${isRTL ? "text-right" : ""}`}>
-      <div className="flex items-center gap-3">
-        <motion.div
-          animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360]
-          }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Zap className="w-6 h-6 text-white" />
-        </motion.div>
-        <h3 className="text-2xl font-bold text-white tracking-tight">
-          {t("about.expertise.title")}
-        </h3>
-      </div>
+      <h3 className="text-2xl font-bold text-white tracking-tight">
+        {t("about.expertise.title")}
+      </h3>
       <div className="space-y-4">
         {expertiseItems.map((point, index) => {
           return (
