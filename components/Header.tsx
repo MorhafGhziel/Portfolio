@@ -123,7 +123,7 @@ export function Header() {
           <Link
             href="/"
             onClick={(e) => handleNavClick(e, "home")}
-            className="relative group cursor-pointer"
+            className={`relative group cursor-pointer ${isRTL ? "order-last" : ""}`}
           >
             <motion.span
               className="text-xl font-bold tracking-tight text-white"
@@ -141,7 +141,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className={`hidden md:flex items-center gap-8 ${isRTL ? "order-2" : ""}`}>
             {navItems.map((item) => {
               const isActive = getIsActive(item);
               return (
@@ -192,7 +192,7 @@ export function Header() {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className={`hidden md:flex items-center gap-6 ${isRTL ? "order-first" : ""}`}>
             <LanguageSwitch />
           </div>
 
