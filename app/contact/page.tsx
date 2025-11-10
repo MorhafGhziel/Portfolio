@@ -89,7 +89,10 @@ export default function Contact() {
 
       const data = await response.json();
       toast.success(
-        isRTL ? "تم إرسال الرسالة بنجاح!" : "Message sent successfully!"
+        isRTL ? "تم إرسال الرسالة بنجاح" : "Message sent successfully",
+        {
+          duration: 3000,
+        }
       );
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
@@ -100,7 +103,9 @@ export default function Contact() {
           : isRTL
             ? "حدث خطأ. يرجى المحاولة مرة أخرى لاحقاً."
             : "An error occurred. Please try again later.";
-      toast.error(errorMessage);
+      toast.error(errorMessage, {
+        duration: 4000,
+      });
     } finally {
       setIsSubmitting(false);
     }

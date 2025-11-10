@@ -7,7 +7,7 @@
   --font-geist-mono: "";
   --font-orbitron: "";
   --font-noto-sans-arabic: "";
-  
+
   /* Minimalist Gray & White Color Palette */
   --primary: #ffffff;
   --bg-dark: #0f0f0f;
@@ -16,7 +16,7 @@
   --gray-light: #e5e5e5;
   --gray-medium: #a3a3a3;
   --gray-dark: #525252;
-  
+
   /* Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.02);
   --glass-border: rgba(255, 255, 255, 0.08);
@@ -83,7 +83,8 @@ html {
 }
 
 @keyframes gradientShift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -142,7 +143,8 @@ html {
 
 /* Floating Animation */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -256,7 +258,8 @@ body {
 
 /* Pulse Animation */
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
   }
@@ -272,7 +275,8 @@ body {
 
 /* Grid Pattern Background */
 .grid-pattern {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 50px 50px;
 }
@@ -307,4 +311,152 @@ body {
 
 .scale-in {
   animation: scaleIn 0.5s ease-out forwards;
+}
+
+/* Modern Toast Styles - Matching Design System with Depth */
+[data-sonner-toaster] {
+  --width: 420px;
+  --border-radius: 12px;
+}
+
+[data-sonner-toast] {
+  background: rgba(15, 15, 15, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  border-radius: 12px !important;
+  padding: 18px 20px !important;
+  min-height: 56px !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+}
+
+[data-sonner-toast] [data-title] {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+  letter-spacing: -0.01em !important;
+}
+
+[data-sonner-toast] [data-description] {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  margin-top: 4px !important;
+  font-weight: 400 !important;
+}
+
+/* Toast Icon - Larger and More Visible */
+[data-sonner-toast] [data-icon] {
+  color: #ffffff !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin-right: 14px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Success Toast with Depth */
+[data-sonner-toast][data-type="success"] {
+  border-left: 3px solid rgba(255, 255, 255, 0.25) !important;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(15, 15, 15, 0.95) 3%
+  ) !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-icon] {
+  color: #ffffff !important;
+}
+
+/* Error Toast with Depth */
+[data-sonner-toast][data-type="error"] {
+  border-left: 3px solid rgba(255, 255, 255, 0.25) !important;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(15, 15, 15, 0.95) 3%
+  ) !important;
+}
+
+[data-sonner-toast][data-type="error"] [data-icon] {
+  color: #ffffff !important;
+}
+
+/* Toast Close Button - Better Design */
+[data-sonner-toast] [data-close-button] {
+  color: rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  width: 22px !important;
+  height: 22px !important;
+  padding: 0 !important;
+  margin-left: 12px !important;
+  border-radius: 6px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  opacity: 0.7 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  opacity: 1 !important;
+  transform: scale(1.05) !important;
+}
+
+[data-sonner-toast] [data-close-button]:active {
+  transform: scale(0.95) !important;
+}
+
+/* Toast Container */
+[data-sonner-toaster] {
+  gap: 12px !important;
+  padding: 20px !important;
+}
+
+/* Toast Content Layout */
+[data-sonner-toast] > div {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0 !important;
+}
+
+/* Enhanced Animation with Depth */
+[data-sonner-toast][data-styled="true"] {
+  animation: toastSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.94);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Hover effect for more interactivity */
+[data-sonner-toast]:hover {
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 6px 20px rgba(0, 0, 0, 0.5) !important;
+  transform: translateY(-1px) !important;
+  transition: all 0.2s ease !important;
 }

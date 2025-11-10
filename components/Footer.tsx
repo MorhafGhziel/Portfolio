@@ -13,9 +13,13 @@ const Footer = () => {
   const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
-      toast.success(t("footer.copyEmail"));
+      toast.success(t("footer.copyEmail"), {
+        duration: 2000,
+      });
     } catch (err) {
-      toast.error(t("footer.copyEmailError"));
+      toast.error(t("footer.copyEmailError"), {
+        duration: 3000,
+      });
     }
   };
 

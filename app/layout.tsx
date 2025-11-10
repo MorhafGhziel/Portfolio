@@ -67,7 +67,31 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${notoSansArabic.variable} antialiased min-h-screen font-sans`}
           style={{ background: "#0f0f0f" }}
         >
-          <Toaster position="top-center" theme="dark" />
+          <Toaster 
+            position="top-center" 
+            theme="dark"
+            richColors={false}
+            closeButton
+            toastOptions={{
+              style: {
+                background: "rgba(15, 15, 15, 0.95)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                color: "#ffffff",
+              },
+              success: {
+                iconTheme: {
+                  primary: "#ffffff",
+                  secondary: "#0f0f0f",
+                },
+              },
+              error: {
+                iconTheme: {
+                  primary: "#ffffff",
+                  secondary: "#0f0f0f",
+                },
+              },
+            }}
+          />
           <div className="relative" style={{ background: "#0f0f0f" }}>
             {/* Background gradient for header */}
             <div className="fixed inset-0 h-[20vh] bg-gradient-to-b from-[#0f0f0f] via-[#0f0f0f]/50 to-transparent z-10 pointer-events-none" />
