@@ -78,19 +78,8 @@ export default function RootLayout({
                 border: "1px solid rgba(255, 255, 255, 0.1)",
                 color: "#ffffff",
               },
-              success: {
-                iconTheme: {
-                  primary: "#ffffff",
-                  secondary: "#0f0f0f",
-                },
-              },
-              error: {
-                iconTheme: {
-                  primary: "#ffffff",
-                  secondary: "#0f0f0f",
-                },
-              },
             }}
+            expand={false}
           />
           <div className="relative" style={{ background: "#0f0f0f" }}>
             {/* Background gradient for header */}
