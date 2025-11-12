@@ -8,10 +8,6 @@ import {
   Mail,
   Phone,
   MapPin,
-  Github,
-  Linkedin,
-  Twitter,
-  Instagram,
   Clock,
   MessageSquare,
 } from "lucide-react";
@@ -48,29 +44,6 @@ const ContactCTA = () => {
       label: isRTL ? "التوقيت" : "Response Time",
       value: isRTL ? "خلال 24 ساعة" : "Within 24 hours",
       copyable: false,
-    },
-  ];
-
-  const socialLinks = [
-    {
-      icon: Github,
-      href: "https://github.com/MorhafGhziel",
-      label: "GitHub",
-    },
-    {
-      icon: Linkedin,
-      href: "https://www.linkedin.com/in/morhaf-ghziel-a720a72b9/",
-      label: "LinkedIn",
-    },
-    {
-      icon: Twitter,
-      href: "https://x.com/MorhafGhz",
-      label: "Twitter",
-    },
-    {
-      icon: Instagram,
-      href: "https://www.instagram.com/4uee_m/",
-      label: "Instagram",
     },
   ];
 
@@ -320,47 +293,6 @@ const ContactCTA = () => {
                 )}
               </a>
             </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center"
-        >
-          <p className="text-sm text-gray-400 uppercase tracking-wider mb-6 font-medium">
-            {isRTL ? "تابعني على" : "Follow me"}
-          </p>
-          <div className="flex justify-center items-center gap-6">
-            {socialLinks.map((link, index) => {
-              const Icon = link.icon;
-
-              return (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="glass border border-white/10 rounded-xl p-4 cursor-pointer group"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.1 * index }}
-                  whileHover={{
-                    scale: 1.15,
-                    y: -6,
-                    borderColor: "rgba(255, 255, 255, 0.3)",
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label={link.label}
-                >
-                  <Icon className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors relative z-10" />
-                </motion.a>
-              );
-            })}
           </div>
         </motion.div>
       </div>
