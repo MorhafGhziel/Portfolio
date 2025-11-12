@@ -37,7 +37,7 @@ export const PROJECTS: Project[] = [
     title: "eCommerce Clothes Market",
     description:
       "Modern eCommerce platform built with Next.js, featuring real-time cart management, product galleries, advanced search, and Shopify integration. webhook integration, and performance optimization.",
-    titleAr: "متجر مرحف",
+    titleAr: "متجر ملابس",
     descriptionAr:
       "منصة تجارة إلكترونية حديثة مبنية بـ Next.js تتضمن إدارة سلة تسوق فورية ومعارض منتجات وبحث متقدم وتكامل مع Shopify. تتضمن تكامل Webhook وتحسين الأداء.",
     image: "/images/MrhfMarket.png",
