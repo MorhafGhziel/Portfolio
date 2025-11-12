@@ -231,7 +231,7 @@ export default function Contact() {
                           {item.label}
                         </div>
                         <div
-                          className="text-white font-medium"
+                          className={`text-white font-medium ${item.dir === "rtl" && !isRTL ? "text-left" : ""}`}
                           dir={item.dir || undefined}
                         >
                           {item.value}

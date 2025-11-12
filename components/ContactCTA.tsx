@@ -159,7 +159,7 @@ const ContactCTA = () => {
                         <div className="text-xs text-gray-500 uppercase tracking-wider mb-2 group-hover:text-gray-400 transition-colors">
                           {method.label}
                         </div>
-                        <div className="text-white font-medium text-sm" dir={method.dir || undefined}>
+                        <div className={`text-white font-medium text-sm ${method.dir === "rtl" && !isRTL ? "text-left" : ""}`} dir={method.dir || undefined}>
                           {method.value}
                         </div>
                       </div>
@@ -174,7 +174,7 @@ const ContactCTA = () => {
                       <div className="text-xs text-gray-500 uppercase tracking-wider mb-2 group-hover:text-gray-400 transition-colors">
                         {method.label}
                       </div>
-                      <div className="text-white font-medium text-sm" dir={method.dir || undefined}>
+                      <div className={`text-white font-medium text-sm ${method.dir === "rtl" && !isRTL ? "text-left" : ""}`} dir={method.dir || undefined}>
                         {method.value}
                       </div>
                     </div>
