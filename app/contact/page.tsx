@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, MapPin, Send, ArrowLeft } from "lucide-react";
+import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/components/LanguageContext";
-import Link from "next/link";
 
 export default function Contact() {
   const { t, language } = useLanguage();
@@ -137,33 +136,6 @@ export default function Contact() {
       <div className="absolute inset-0 grid-pattern opacity-10" />
 
       <div className="relative w-full max-w-7xl z-10">
-        {/* Back Button */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 glass px-6 py-3 rounded-xl border border-white/10 cursor-pointer"
-          >
-            <motion.div
-              whileHover={{ x: isRTL ? 4 : -4 }}
-              transition={{ duration: 0.2 }}
-            >
-              <ArrowLeft className="w-4 h-4 text-gray-300" />
-            </motion.div>
-            <motion.span
-              className="text-sm text-gray-300"
-              whileHover={{ color: "#ffffff" }}
-              transition={{ duration: 0.2 }}
-            >
-              Back to home
-            </motion.span>
-          </Link>
-        </motion.div>
-
         <div className="grid lg:grid-cols-2 gap-20">
           {/* Left Column - Info */}
           <motion.div
