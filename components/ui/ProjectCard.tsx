@@ -152,12 +152,7 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2 }}
           >
-            <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Github className="w-4 h-4" />
-            </motion.div>
+            <Github className="w-4 h-4" />
             <span>Code</span>
           </motion.a>
 

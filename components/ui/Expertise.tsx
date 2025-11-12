@@ -35,7 +35,6 @@ const Expertise = () => {
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: index * 0.1 + 0.2 }}
-                  whileHover={{ rotate: 360 }}
                   className="mt-1 flex-shrink-0"
                 >
                   <div className="w-6 h-6 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">

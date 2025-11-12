@@ -99,12 +99,7 @@ const Footer = () => {
                 whileTap={{ scale: 0.95 }}
                 aria-label={link.label}
               >
-                <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <link.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-                </motion.div>
+                <link.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
               </motion.a>
             ))}
             <motion.button
@@ -122,12 +117,7 @@ const Footer = () => {
               whileTap={{ scale: 0.95 }}
               aria-label="Email"
             >
-              <motion.div
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Mail className="w-5 h-5 text-gray-400 hover:text-white transition-colors" />
-              </motion.div>
+              <Mail className="w-5 h-5 text-gray-400 hover:text-white transition-colors" />
             </motion.button>
           </motion.div>
         </div>
