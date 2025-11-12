@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import {
   ArrowRight,
+  ArrowLeft,
   Mail,
   Phone,
   MapPin,
@@ -191,7 +192,7 @@ const ContactCTA = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="relative border border-white/10 glass rounded-3xl p-12 md:p-20 mb-12 overflow-hidden group"
+          className="relative border border-white/10 glass rounded-2xl sm:rounded-3xl p-6 sm:p-12 md:p-20 mb-12 overflow-hidden group"
           whileHover={{ borderColor: "rgba(255, 255, 255, 0.2)" }}
         >
           <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -200,57 +201,27 @@ const ContactCTA = () => {
           <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-white/20 group-hover:border-white/40 transition-colors" />
           <div className="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-white/20 group-hover:border-white/40 transition-colors" />
 
-          <div className="grid md:grid-cols-2 gap-12 items-center relative z-10">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
             {/* Left Side - Text */}
             <div className={isRTL ? "md:order-2" : ""}>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 border border-white/20 bg-white/5 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <MessageSquare className="w-6 h-6 text-white" />
+              <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 border border-white/20 bg-white/5 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-white">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
                   {isRTL ? "ابدأ مشروعك" : "Start Your Project"}
                 </h3>
               </div>
-              <p className="text-gray-400 leading-relaxed mb-8 text-lg">
+              <p className="text-gray-400 leading-relaxed text-base sm:text-lg">
                 {isRTL
                   ? "هل لديك مشروع في الاعتبار؟ دعنا نتحدث عنه. أنا متاح للمناقشة ومراجعة متطلباتك."
                   : "Have a project in mind? Let's discuss it. I'm available to talk about your requirements and ideas."}
               </p>
-              <motion.div
-                whileHover={{ x: isRTL ? -8 : 8 }}
-                transition={{ duration: 0.3 }}
-              >
-                <Link
-                  href="/contact"
-                  className="group/link inline-flex items-center gap-3 text-white relative cursor-pointer"
-                >
-                  <motion.span
-                    className="text-lg font-medium relative"
-                    whileHover={{ color: "#d4d4d8" }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {t("contactCta.sendEmail")}
-                    <motion.span
-                      className="absolute bottom-0 left-0 h-[2px] bg-white"
-                      initial={{ width: 0 }}
-                      whileHover={{ width: "100%" }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </motion.span>
-                  <motion.div
-                    whileHover={{ x: 8 }}
-                    transition={{ duration: 0.3 }}
-                    className="text-gray-400 group-hover/link:text-white transition-colors"
-                  >
-                    <ArrowRight className="w-6 h-6" />
-                  </motion.div>
-                </Link>
-              </motion.div>
             </div>
 
             {/* Right Side - Stats */}
             <div
-              className={`grid grid-cols-2 gap-6 ${isRTL ? "md:order-1" : ""}`}
+              className={`grid grid-cols-2 gap-4 sm:gap-6 ${isRTL ? "md:order-1" : ""}`}
             >
               {[
                 { value: "5+", label: t("hero.stats.years") },
@@ -264,19 +235,91 @@ const ContactCTA = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                  className="relative glass border border-white/10 rounded-2xl p-6 group overflow-hidden"
+                  className="relative glass border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 group overflow-hidden"
                   whileHover={{ scale: 1.05, y: -4 }}
                 >
                   <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="text-4xl md:text-5xl font-bold text-white mb-2 relative z-10 group-hover:scale-110 transition-transform duration-300">
+                  <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-1 sm:mb-2 relative z-10 group-hover:scale-110 transition-transform duration-300">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-gray-500 uppercase tracking-wider relative z-10 group-hover:text-gray-400 transition-colors">
+                  <div className="text-xs sm:text-sm text-gray-500 uppercase tracking-wider relative z-10 group-hover:text-gray-400 transition-colors">
                     {stat.label}
                   </div>
                 </motion.div>
               ))}
             </div>
+          </div>
+
+          {/* Buttons Section - Bottom */}
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8 md:mt-12 relative z-10">
+            <motion.div
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              className="w-full sm:flex-1"
+            >
+              <Link
+                href="/contact"
+                className={`group/link glass border border-white/10 rounded-xl px-6 py-4 flex items-center justify-center gap-3 text-white cursor-pointer hover:border-white/20 transition-all duration-300 ${isRTL ? "flex-row-reverse" : ""}`}
+              >
+                {isRTL && (
+                  <motion.div
+                    whileHover={{ x: -4 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-gray-400 group-hover/link:text-white transition-colors"
+                  >
+                    <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </motion.div>
+                )}
+                <span className="text-base sm:text-lg font-medium">
+                  {t("contactCta.sendEmail")}
+                </span>
+                {!isRTL && (
+                  <motion.div
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-gray-400 group-hover/link:text-white transition-colors"
+                  >
+                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </motion.div>
+                )}
+              </Link>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
+              className="w-full sm:flex-1"
+            >
+              <a
+                href="https://www.linkedin.com/in/morhaf-ghziel-a720a72b9/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`group/link glass border border-white/10 rounded-xl px-6 py-4 flex items-center justify-center gap-3 text-white cursor-pointer hover:border-white/20 transition-all duration-300 ${isRTL ? "flex-row-reverse" : ""}`}
+              >
+                {isRTL && (
+                  <motion.div
+                    whileHover={{ x: -4 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-gray-400 group-hover/link:text-white transition-colors"
+                  >
+                    <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </motion.div>
+                )}
+                <span className="text-base sm:text-lg font-medium">
+                  {t("contactCta.connectLinkedIn")}
+                </span>
+                {!isRTL && (
+                  <motion.div
+                    whileHover={{ x: 4 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-gray-400 group-hover/link:text-white transition-colors"
+                  >
+                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </motion.div>
+                )}
+              </a>
+            </motion.div>
           </div>
         </motion.div>
 
