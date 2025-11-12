@@ -18,6 +18,8 @@ const Projects = () => {
   const [selectedImage, setSelectedImage] = useState<{
     url: string;
     alt: string;
+    images?: string[];
+    index?: number;
   } | null>(null);
 
   // Get all unique technologies
@@ -183,7 +185,9 @@ const Projects = () => {
             <ProjectCard
               key={`${project.title}-${index}`}
               project={project}
-              onImageClick={(url, alt) => setSelectedImage({ url, alt })}
+              onImageClick={(url, alt, images, index) => 
+                setSelectedImage({ url, alt, images, index: index || 0 })
+              }
             />
           ))}
         </div>
@@ -255,6 +259,8 @@ const Projects = () => {
         onClose={() => setSelectedImage(null)}
         imageUrl={selectedImage?.url || ""}
         imageAlt={selectedImage?.alt || ""}
+        images={selectedImage?.images}
+        initialIndex={selectedImage?.index || 0}
       />
     </section>
   );

@@ -27,12 +27,105 @@ export type Project = {
   titleAr: string;
   descriptionAr: string;
   image: string;
+  images?: string[]; // Optional array for multiple images
   techStack: string[];
   githubUrl: string;
   liveUrl: string;
 };
 
 export const PROJECTS: Project[] = [
+  {
+    title: "Omdah - Video Production Company Portfolio & CMS",
+    description:
+      "A freelance project that I designed and developed - a comprehensive portfolio website and content management system for Omdah, a Saudi video production company. Built with Next.js 15, featuring a modern Arabic-first design with full RTL support, dynamic content management system with inline editing capabilities, admin authentication via email-based verification codes, complete CRUD operations for portfolio works (with video and image uploads to IDrive e2 S3-compatible storage), client logo management, services management, contact form with Resend email integration, custom video player with fullscreen and playback controls, featured works showcase, dynamic project detail pages, video and image proxy for external content delivery, MongoDB database with optimized connection pooling, responsive design with Framer Motion animations, and a complete admin panel for managing all website content without code changes. The system includes JWT-based authentication, allowed email whitelisting, content versioning, and seamless video streaming from cloud storage.",
+    titleAr: "عُمدة - موقع شركة إنتاج فيديو ونظام إدارة المحتوى",
+    descriptionAr:
+      "مشروع مستقل قمت بتصميمه وتطويره - موقع محفظة أعمال شامل ونظام إدارة محتوى لشركة عُمدة، شركة سعودية لإنتاج الفيديو. مبني بـ Next.js 15، يتميز بتصميم حديث يدعم العربية بالكامل مع دعم RTL، نظام إدارة محتوى ديناميكي مع إمكانيات التحرير المباشر، مصادقة الإدارة عبر رموز التحقق القائمة على البريد الإلكتروني، عمليات CRUD كاملة لأعمال المحفظة (مع رفع الفيديو والصور إلى IDrive e2 S3-compatible storage)، إدارة شعارات العملاء، إدارة الخدمات، نموذج اتصال مع تكامل Resend للبريد الإلكتروني، مشغل فيديو مخصص مع ملء الشاشة وأزرار التحكم، عرض الأعمال المميزة، صفحات تفاصيل المشاريع الديناميكية، وكيل للفيديو والصور لتسليم المحتوى الخارجي، قاعدة بيانات MongoDB مع تجميع الاتصالات المحسّن، تصميم متجاوب مع رسوم متحركة Framer Motion، ولوحة تحكم كاملة لإدارة جميع محتويات الموقع دون تغييرات في الكود. يتضمن النظام مصادقة قائمة على JWT، قائمة بيضاء للبريد الإلكتروني المسموح، إصدارات المحتوى، وبث فيديو سلس من التخزين السحابي.",
+    image: "/images/omdah/1.png",
+    images: [
+      "/images/omdah/1.png",
+      "/images/omdah/2.png",
+      "/images/omdah/3.png",
+      "/images/omdah/6.png",
+      "/images/omdah/4.png",
+      "/images/omdah/5.png",
+    ],
+    techStack: [
+      "MongoDB",
+      "IDrive e2",
+      "AWS SDK",
+      "JWT",
+      "bcryptjs",
+      "Resend",
+      "Zod",
+      "React Hook Form",
+      "Next.js",
+      "TypeScript",
+      "React",
+      "TailwindCSS",
+      "Framer Motion",
+      "Locomotive Scroll",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/OmdahStudio-Landing",
+    liveUrl: "https://www.omdah.sa/",
+  },
+  {
+    title: "IEDAR - Architectural Design Company Website",
+    description:
+      "A freelance project that I designed and developed - a modern, elegant corporate website for IEDAR, an architectural design company based in Saudi Arabia. Built with Next.js and featuring a sophisticated dark-themed design with gold and white gradients, the website showcases the company's story, mission, vision, values, and core pillars. The platform includes RTL (Right-to-Left) Arabic layout support, smooth parallax scrolling effects, interactive animations powered by Framer Motion, responsive navigation with mobile menu, image galleries showcasing architectural projects, social media integration, and contact information. The website emphasizes the company's tagline 'للفكرة دار' (For the idea, a home) and their commitment to transforming ideas into living spaces that inspire belonging, combining authentic Saudi identity with sustainable innovation.",
+    titleAr: "أيدار - موقع شركة التصميم المعماري",
+    descriptionAr:
+      "مشروع مستقل قمت بتصميمه وتطويره - موقع شركة عصري وأنيق لشركة أيدار، وهي شركة تصميم معماري مقرها المملكة العربية السعودية. مبني بـ Next.js ويتميز بتصميم داكن أنيق مع تدرجات ذهبية وبيضاء، يعرض الموقع قصة الشركة ورسالتها ورؤيتها وقيمها وركائزها الأساسية. تتضمن المنصة دعم تخطيط عربي من اليمين لليسار، تأثيرات تمرير بارالاكس سلسة، رسوم متحركة تفاعلية مدعومة بـ Framer Motion، تنقل متجاوب مع قائمة محمولة، معارض صور تعرض المشاريع المعمارية، تكامل وسائل التواصل الاجتماعي، ومعلومات الاتصال. يؤكد الموقع على شعار الشركة 'للفكرة دار' والتزامها بتحويل الأفكار إلى فضاءات حية تلهم الانتماء، جامعاً بين الهوية السعودية الأصيلة والابتكار المستدام.",
+    image: "/images/iedar/11.png",
+    images: [
+      "/images/iedar/11.png",
+      "/images/iedar/iedar-1.png",
+      "/images/iedar/iedar-2.png",
+      "/images/iedar/iedar-3.png",
+      "/images/iedar/iedar-4.png",
+      "/images/iedar/iedar-5.png",
+    ],
+    techStack: [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "TailwindCSS",
+      "Framer Motion",
+      "Next.js Font Optimization",
+      "RTL Layout Support",
+      "Responsive Design",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/Idear_Landing",
+    liveUrl: "https://www.iedar.sa/",
+  },
+
+  {
+    title: "Alpha Factory - Video Production Management System",
+    description:
+      "A freelance project that provides a comprehensive video production management platform built with Next.js, featuring multi-role access control (clients, designers, editors, reviewers), real-time project tracking boards, automated invoice generation with PayPal payment integration, Telegram bot notifications, WhatsApp Business API for client communications, email reminders for overdue projects, voice recording capabilities, video duration detection from Google Drive/YouTube links, and a complete admin panel for account management. The system includes automated billing, payment processing, project status tracking, team collaboration tools, and multi-channel communication integration.",
+    titleAr: "ألفا فاكتوري - نظام إدارة إنتاج الفيديو",
+    descriptionAr:
+      "مشروع مستقل يوفر منصة شاملة لإدارة إنتاج الفيديو مبنية بـ Next.js، تتضمن نظام تحكم متعدد الأدوار (عملاء، مصممون، محررون، مراجعون)، لوحات متابعة المشاريع في الوقت الفعلي، إنشاء فواتير تلقائي مع تكامل دفع PayPal، إشعارات بوت Telegram، تكامل WhatsApp Business API للتواصل مع العملاء، تذكيرات بريد إلكتروني للمشاريع المتأخرة، إمكانيات تسجيل صوتي، كشف مدة الفيديو من روابط Google Drive/YouTube، ولوحة تحكم كاملة لإدارة الحسابات. يتضمن النظام فوترة تلقائية، معالجة المدفوعات، تتبع حالة المشاريع، أدوات تعاون الفريق، وتكامل التواصل متعدد القنوات.",
+    image: "/images/AlphaFactory.png",
+    techStack: [
+      "PayPal API",
+      "Telegram Bot API",
+      "WhatsApp Business API",
+      "Resend",
+      "Next.js",
+      "TypeScript",
+      "React",
+      "TailwindCSS",
+      "Prisma",
+      "PostgreSQL",
+      "Better Auth",
+      "Framer Motion",
+      "bcryptjs",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/Alpha-Factory",
+    liveUrl: "https://www.alphafactory.net/",
+  },
+
   {
     title: "eCommerce Clothes Market",
     description:
