@@ -31,9 +31,10 @@ const ContactCTA = () => {
     {
       icon: Phone,
       label: t("contact.form.phone"),
-      value: "+966 50 714 9775",
+      value: "9775 714 50 966+",
       href: "tel:+966507149775",
       copyable: true,
+      dir: "rtl",
     },
     {
       icon: MapPin,
@@ -158,7 +159,7 @@ const ContactCTA = () => {
                         <div className="text-xs text-gray-500 uppercase tracking-wider mb-2 group-hover:text-gray-400 transition-colors">
                           {method.label}
                         </div>
-                        <div className="text-white font-medium text-sm">
+                        <div className="text-white font-medium text-sm" dir={method.dir || undefined}>
                           {method.value}
                         </div>
                       </div>
@@ -173,7 +174,7 @@ const ContactCTA = () => {
                       <div className="text-xs text-gray-500 uppercase tracking-wider mb-2 group-hover:text-gray-400 transition-colors">
                         {method.label}
                       </div>
-                      <div className="text-white font-medium text-sm">
+                      <div className="text-white font-medium text-sm" dir={method.dir || undefined}>
                         {method.value}
                       </div>
                     </div>

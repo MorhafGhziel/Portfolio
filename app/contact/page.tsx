@@ -202,8 +202,8 @@ export default function Contact() {
                 {
                   icon: Phone,
                   label: t("contact.form.phone"),
-                  value: "+966 50 714 9775",
-                  dir: "ltr",
+                  value: "9775 714 50 966+",
+                  dir: "rtl",
                 },
                 {
                   icon: MapPin,
