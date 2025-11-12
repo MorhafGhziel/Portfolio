@@ -5,6 +5,7 @@ import { ArrowRight, ArrowLeft, Download, Sparkles } from "lucide-react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "./LanguageContext";
+import { getLenis } from "./SmoothScroll";
 
 interface HeroProps {
   projectsCount: number;
@@ -46,8 +47,16 @@ const Hero = ({ projectsCount }: HeroProps) => {
 
   const handleScrollToWork = () => {
     const workSection = document.getElementById("work");
+    const lenis = getLenis();
     if (workSection) {
-      workSection.scrollIntoView({ behavior: "smooth" });
+      if (lenis) {
+        lenis.scrollTo(workSection, {
+          offset: -80,
+          duration: 1.5,
+        });
+      } else {
+        workSection.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 

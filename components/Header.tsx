@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "./LanguageContext";
 import { LanguageSwitch } from "./ui/LanguageSwitch";
+import { getLenis } from "./SmoothScroll";
 
 const navItems = [
   { name: "nav.home", path: "/", sectionId: "home" },
@@ -30,10 +31,10 @@ export function Header() {
       return;
     }
 
-    const handleScroll = () => {
+    const handleScroll = (scrollY: number) => {
       const sections = document.querySelectorAll("section[id]");
       const headerHeight = 80;
-      const scrollPosition = window.scrollY + headerHeight + 150; // Offset to trigger before section top
+      const scrollPosition = scrollY + headerHeight + 150;
 
       let currentSection = "home";
       let closestSection = "";
@@ -44,21 +45,18 @@ export function Header() {
         const sectionTop = element.offsetTop;
         const sectionBottom = sectionTop + element.offsetHeight;
 
-        // If scroll position is within this section
         if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
           currentSection = element.id;
         }
 
-        // Also track which section is closest to the top of viewport
-        const distance = Math.abs(sectionTop - (window.scrollY + headerHeight));
-        if (distance < closestDistance && window.scrollY + headerHeight >= sectionTop - 100) {
+        const distance = Math.abs(sectionTop - (scrollY + headerHeight));
+        if (distance < closestDistance && scrollY + headerHeight >= sectionTop - 100) {
           closestDistance = distance;
           closestSection = element.id;
         }
       });
 
-      // Use the section we're in, or the closest one if at the top
-      if (window.scrollY < 100) {
+      if (scrollY < 100) {
         setActiveSection("home");
       } else if (currentSection && currentSection !== "home") {
         setActiveSection(currentSection);
@@ -67,11 +65,26 @@ export function Header() {
       }
     };
 
-    // Set initial active section
-    handleScroll();
+    // Handle both native scroll and Lenis scroll
+    const handleNativeScroll = () => {
+      handleScroll(window.scrollY);
+    };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleLenisScroll = (e: CustomEvent) => {
+      handleScroll(e.detail.scroll);
+    };
+
+    // Set initial active section
+    handleScroll(window.scrollY);
+
+    // Listen to both events
+    window.addEventListener("scroll", handleNativeScroll, { passive: true });
+    window.addEventListener("lenis-scroll", handleLenisScroll as EventListener);
+
+    return () => {
+      window.removeEventListener("scroll", handleNativeScroll);
+      window.removeEventListener("lenis-scroll", handleLenisScroll as EventListener);
+    };
   }, [pathname]);
 
   const handleNavClick = async (
@@ -81,15 +94,24 @@ export function Header() {
     e.preventDefault();
     setIsMobileMenuOpen(false);
 
+    const lenis = getLenis();
+    
     if (sectionId === "contact" && pathname === "/") {
       const section = document.getElementById("contact");
       if (section) {
-        const headerHeight = 80;
-        const sectionTop = section.offsetTop - headerHeight;
-        window.scrollTo({
-          top: sectionTop,
-          behavior: "smooth",
-        });
+        if (lenis) {
+          lenis.scrollTo(section, {
+            offset: -80,
+            duration: 1.5,
+          });
+        } else {
+          const headerHeight = 80;
+          const sectionTop = section.offsetTop - headerHeight;
+          window.scrollTo({
+            top: sectionTop,
+            behavior: "smooth",
+          });
+        }
       }
     } else if (sectionId === "contact") {
       router.push("/contact");
@@ -101,12 +123,19 @@ export function Header() {
 
       const section = document.getElementById(sectionId);
       if (section) {
-        const headerHeight = 80;
-        const sectionTop = section.offsetTop - headerHeight;
-        window.scrollTo({
-          top: sectionTop,
-          behavior: "smooth",
-        });
+        if (lenis) {
+          lenis.scrollTo(section, {
+            offset: -80,
+            duration: 1.5,
+          });
+        } else {
+          const headerHeight = 80;
+          const sectionTop = section.offsetTop - headerHeight;
+          window.scrollTo({
+            top: sectionTop,
+            behavior: "smooth",
+          });
+        }
       }
     }
   };

@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 import { LanguageProvider } from "@/components/LanguageContext";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -74,6 +75,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${notoSansArabic.variable} antialiased min-h-screen font-sans`}
           style={{ background: "#0f0f0f" }}
         >
+          <SmoothScroll />
           <Toaster
             position="top-center"
             theme="dark"
