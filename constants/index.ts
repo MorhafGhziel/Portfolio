@@ -35,6 +35,27 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    title: "Elsina3ya - Content Creator & Influencer Management Platform",
+    description:
+      "A freelance project I designed and developed — a corporate website for Elsina3ya, a content creator and influencer management agency based in Saudi Arabia. Built with Next.js and featuring a dark theme with orange and amber gradients, the site presents the company's story, mission, vision, values, and services. The platform includes RTL (Right-to-Left) Arabic layout support, smooth scrolling powered by Lenis, interactive animations with Framer Motion, responsive navigation with mobile menu, floating person images with subtle animations, glassmorphism UI effects, and a contact form integrated with Resend API for email delivery. The site emphasizes the company's tagline 'We organize your presence and guarantee your impact' and their mission to gather content creators in 'one workshop,' organizing their digital presence and connecting them with appropriate brands. The website showcases services for both influencers (talent management, content production, performance analysis, brand partnerships, business coordination) and companies (sustainable content creation, brand representation, cinematic content production, influencer matching). It features multiple sections including Hero, Story, Vision, Mission, Values, Services Grid, Why Us, and Contact, all with scroll-triggered animations and modern design patterns. The platform highlights the company's core values of creativity, impact, trust, belonging, and collaboration, positioning them as 'Impact Makers' in the digital content industry.",
+    titleAr: "الصناعية - منصة إدارة صانعي المحتوى والمؤثرين",
+    descriptionAr:
+      "مشروع مستقل قمت بتصميمه وتطويره — موقع شركة للصناعية، وكالة إدارة صانعي المحتوى والمؤثرين مقرها المملكة العربية السعودية. مبني بـ Next.js ويتميز بتصميم داكن مع تدرجات برتقالية وعنبرية، يعرض الموقع قصة الشركة ورسالتها ورؤيتها وقيمها وخدماتها. تتضمن المنصة دعم تخطيط عربي من اليمين لليسار، تمرير سلس مدعوم بـ Lenis، رسوم متحركة تفاعلية مع Framer Motion، تنقل متجاوب مع قائمة محمولة، صور أشخاص عائمة مع رسوم متحركة خفيفة، تأثيرات واجهة زجاجية، ونموذج اتصال متكامل مع Resend API لتسليم البريد الإلكتروني. يؤكد الموقع على شعار الشركة 'ننظم حضورك وضمن تأثيرك' ورسالتها في جمع صانعي المحتوى في 'ورشة واحدة'، وتنظيم حضورهم الرقمي وربطهم بالعلامات التجارية المناسبة. يعرض الموقع خدمات لكل من المؤثرين (إدارة المواهب، إنتاج المحتوى، تحليل الأداء، شراكات العلامات التجارية، تنسيق الأعمال) والشركات (إنشاء محتوى مستدام، تمثيل العلامة التجارية، إنتاج محتوى سينمائي، مطابقة المؤثرين). يتضمن أقساماً متعددة تشمل Hero، القصة، الرؤية، الرسالة، القيم، شبكة الخدمات، لماذا نحن، والاتصال، جميعها مع رسوم متحركة محفزة بالتمرير وأنماط تصميم حديثة. تسلط المنصة الضوء على القيم الأساسية للشركة المتمثلة في الإبداع والتأثير والثقة والانتماء والتعاون، مما يضعهم كـ 'صانعي التأثير' في صناعة المحتوى الرقمي.",
+    image: "/images/snaya.png",
+    techStack: [
+      "Resend",
+      "Three.js",
+      "Lenis",
+      "Next.js",
+      "TypeScript",
+      "React",
+      "TailwindCSS",
+      "Framer Motion",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/elsina3ya",
+    liveUrl: "https://www.snaya.sa/",
+  },
+  {
     title: "Omdah - Video Production Company Portfolio & CMS",
     description:
       "A freelance project that I designed and developed - a comprehensive portfolio website and content management system for Omdah, a Saudi video production company. Built with Next.js 15, featuring a modern Arabic-first design with full RTL support, dynamic content management system with inline editing capabilities, admin authentication via email-based verification codes, complete CRUD operations for portfolio works (with video and image uploads to IDrive e2 S3-compatible storage), client logo management, services management, contact form with Resend email integration, custom video player with fullscreen and playback controls, featured works showcase, dynamic project detail pages, video and image proxy for external content delivery, MongoDB database with optimized connection pooling, responsive design with Framer Motion animations, and a complete admin panel for managing all website content without code changes. The system includes JWT-based authentication, allowed email whitelisting, content versioning, and seamless video streaming from cloud storage.",
