@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Menu, X, ArrowLeft } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "./LanguageContext";
 import { LanguageSwitch } from "./ui/LanguageSwitch";
@@ -24,12 +24,23 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t, language } = useLanguage();
   const isRTL = language === "ar";
+  const wasContactActiveRef = useRef(false);
 
   useEffect(() => {
+    // Always set contact as active when on contact page
     if (pathname === "/contact") {
+      // If contact was already active, don't update state to prevent animation
+      if (wasContactActiveRef.current && activeSection === "contact") {
+        return;
+      }
+      // Mark that contact is now active
+      wasContactActiveRef.current = true;
       setActiveSection("contact");
       return;
     }
+    
+    // Reset the ref when not on contact page
+    wasContactActiveRef.current = false;
 
     const handleScroll = (scrollY: number) => {
       const sections = document.querySelectorAll("section[id]");
@@ -58,10 +69,21 @@ export function Header() {
 
       if (scrollY < 100) {
         setActiveSection("home");
+        if (currentSection === "contact") {
+          wasContactActiveRef.current = false;
+        }
       } else if (currentSection && currentSection !== "home") {
         setActiveSection(currentSection);
+        // Track if contact section is active
+        if (currentSection === "contact") {
+          wasContactActiveRef.current = true;
+        }
       } else if (closestSection) {
         setActiveSection(closestSection);
+        // Track if contact section is active
+        if (closestSection === "contact") {
+          wasContactActiveRef.current = true;
+        }
       }
     };
 
@@ -141,6 +163,14 @@ export function Header() {
   };
 
   const getIsActive = (item: (typeof navItems)[0]) => {
+    // If on contact page, always show contact as active
+    if (pathname === "/contact" && item.sectionId === "contact") {
+      return true;
+    }
+    // If on contact page but not contact item, return false
+    if (pathname === "/contact" && item.sectionId !== "contact") {
+      return false;
+    }
     return activeSection === item.sectionId;
   };
 
@@ -195,6 +225,8 @@ export function Header() {
           <nav className={`hidden md:flex items-center gap-8 ${isRTL ? "order-2" : ""}`}>
             {navItems.map((item) => {
               const isActive = getIsActive(item);
+              // Prevent layout animation for contact when transitioning from section to page
+              const shouldAnimateLayout = !(item.sectionId === "contact" && wasContactActiveRef.current && pathname === "/contact");
               return (
                 <motion.div key={item.name} className="relative">
                   <Link
@@ -206,10 +238,10 @@ export function Header() {
                   >
                     {isActive && (
                       <motion.div
-                        layoutId="activeBg"
+                        layoutId={shouldAnimateLayout ? "activeBg" : undefined}
                         className="absolute inset-0 bg-white/5 rounded-lg"
                         initial={false}
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        transition={shouldAnimateLayout ? { type: "spring", stiffness: 380, damping: 30 } : { duration: 0 }}
                       />
                     )}
                     <motion.span
@@ -224,9 +256,9 @@ export function Header() {
                     </motion.span>
                     {isActive && (
                       <motion.div
-                        layoutId="activeIndicator"
+                        layoutId={shouldAnimateLayout ? "activeIndicator" : undefined}
                         className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-white rounded-full"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        transition={shouldAnimateLayout ? { type: "spring", stiffness: 380, damping: 30 } : { duration: 0 }}
                       />
                     )}
                     {!isActive && (
