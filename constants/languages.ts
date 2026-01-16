@@ -69,6 +69,7 @@ export const languages = {
         showLess: "Show Less",
         viewProject: "Live Demo",
         viewCode: "Code",
+        live: "Live",
         clickToView: "Click to view full image",
       },
       contactCta: {
@@ -181,6 +182,7 @@ export const languages = {
         showLess: "عرض أقل",
         viewProject: "عرض المشروع",
         viewCode: "الكود",
+        live: "عرض مباشر",
         clickToView: "انقر لعرض الصورة كاملة",
       },
       contactCta: {

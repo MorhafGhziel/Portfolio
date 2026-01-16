@@ -24,7 +24,7 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const isRTL = language === "ar";
   const {
     title,
@@ -290,7 +290,7 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
         </div>
 
         {/* Links */}
-        <div className={`flex ${isRTL ? "flex-row-reverse" : ""} gap-4 pt-2`}>
+        <div className={`flex ${isRTL ? "flex-row-reverse justify-end" : ""} gap-4 pt-2`}>
           {githubUrl && (
             <motion.a
               href={githubUrl}
@@ -307,7 +307,7 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
               transition={{ duration: 0.2 }}
             >
               <Github className="w-4 h-4" />
-              <span>Code</span>
+              <span>{t("projects.viewCode")}</span>
             </motion.a>
           )}
 
@@ -338,7 +338,7 @@ const ProjectCard = ({ project, onImageClick }: ProjectCardProps) => {
               >
                 <ExternalLink className="w-4 h-4" />
               </motion.div>
-              <span className="relative z-10">Live</span>
+              <span className="relative z-10">{t("projects.live")}</span>
             </motion.a>
           )}
         </div>
