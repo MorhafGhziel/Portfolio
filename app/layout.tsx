@@ -37,14 +37,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: "Morhaf Ghziel",
   description:
-    "Front-End Developer specializing in React, Next.js, and modern web technologies.",
+    "Full-Stack Developer specializing in React, Next.js, and modern web technologies.",
   icons: {
     icon: "./favicon.ico",
   },
   openGraph: {
     title: "Morhaf Ghziel",
     description:
-      "Front-End Developer specializing in React, Next.js, and modern web technologies.",
+      "Full-Stack Developer specializing in React, Next.js, and modern web technologies.",
     images: [
       {
         url: `${baseUrl}/opengraph-image.png?v=2`,
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Morhaf Ghziel",
     description:
-      "Front-End Developer specializing in React, Next.js, and modern web technologies.",
+      "Full-Stack Developer specializing in React, Next.js, and modern web technologies.",
     images: [`${baseUrl}/opengraph-image.png?v=2`],
   },
 };

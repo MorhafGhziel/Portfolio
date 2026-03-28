@@ -22,7 +22,7 @@ export const languages = {
         name: "Morhaf",
         description:
           "I create exceptional digital experiences by combining clean code with thoughtful design. Specialized in React, Next.js, and modern web technologies.",
-        frontEndDev: "Front-End Developer",
+        frontEndDev: "Full-Stack Developer",
         uiuxEngineer: "UI/UX Engineer",
         stats: {
           years: "Years Exp",
@@ -37,9 +37,9 @@ export const languages = {
         title: "About Me",
         subtitle:
           "Get to know more about my journey, experience, and what drives me as a developer",
-        role: "Front End Developer & UI/UX Designer",
+        role: "Full-Stack Developer",
         description:
-          "I'm Morhaf Ghziel, a passionate Front End Developer and UI/UX Designer based in Saudi Arabia. I specialize in creating modern, responsive web applications using cutting-edge technologies. My journey in web development combines technical expertise with creative design thinking to deliver exceptional digital experiences.",
+          "I'm Morhaf Ghziel, a full-stack developer with 5 years of experience building scalable web applications and user-focused experiences.\n\nMy work is frontend-driven, with strong experience in React and Next.js, where I focus on building performant and maintainable interfaces. I also work on the backend, building APIs and handling data to support complete, end-to-end features.\n\nI focus on solving problems, improving user experience, and turning ideas into clean, reliable solutions. I work on personal projects and explore new technologies.",
         location: {
           title: "Location & Availability",
           based: "Based in Riyadh, Saudi Arabia",
@@ -51,11 +51,11 @@ export const languages = {
         expertise: {
           title: "What I Bring to the Table",
           items: [
-            "Front End Developer with expertise in React and Next.js",
-            "UI/UX Designer creating intuitive and beautiful user interfaces",
-            "Experienced in building scalable web applications",
-            "Strong background in modern JavaScript frameworks",
-            "Passionate about clean code and best practices",
+            "Full-Stack Developer with expertise in React, Next.js, and backend technologies",
+            "Building performant and maintainable user interfaces",
+            "Experienced in building scalable web applications end to end",
+            "Strong background in modern JavaScript/TypeScript frameworks",
+            "Backend experience with APIs, databases, and server-side logic",
             "Committed to continuous learning and staying updated with latest technologies",
           ],
         },
@@ -137,7 +137,7 @@ export const languages = {
         name: "مرهف",
         description:
           "أقوم بإنشاء تجارب رقمية استثنائية من خلال الجمع بين الكود النظيف والتصميم المدروس. متخصص في React و Next.js وتقنيات الويب الحديثة.",
-        frontEndDev: "مطور واجهات أمامية",
+        frontEndDev: "مطور ويب متكامل",
         uiuxEngineer: "مهندس واجهات المستخدم",
         stats: {
           years: "سنوات خبرة",
@@ -151,9 +151,9 @@ export const languages = {
       about: {
         title: "نبذة عني",
         subtitle: "تعرف أكثر على مسيرتي وخبراتي وما يدفعني كمطور",
-        role: "مطور واجهات أمامية ومصمم تجربة المستخدم",
+        role: "مطور ويب متكامل",
         description:
-          "أنا مرهف غزيل، مطور واجهات أمامية ومصمم تجربة مستخدم متحمس مقيم في المملكة العربية السعودية. أتخصص في إنشاء تطبيقات ويب حديثة ومتجاوبة باستخدام أحدث التقنيات. تجمع رحلتي في تطوير الويب بين الخبرة التقنية والتفكير الإبداعي في التصميم لتقديم تجارب رقمية استثنائية.",
+          "أنا مرهف غزيل، مطور ويب متكامل بخبرة 5 سنوات في بناء تطبيقات ويب قابلة للتوسع وتجارب تركز على المستخدم.\n\nعملي يرتكز على الواجهات الأمامية، مع خبرة قوية في React و Next.js، حيث أركز على بناء واجهات عالية الأداء وسهلة الصيانة. كما أعمل على الواجهة الخلفية، أبني واجهات برمجية وأتعامل مع البيانات لدعم ميزات متكاملة من البداية للنهاية.\n\nأركز على حل المشكلات وتحسين تجربة المستخدم وتحويل الأفكار إلى حلول نظيفة وموثوقة. أعمل على مشاريع شخصية وأستكشف تقنيات جديدة.",
         location: {
           title: "الموقع والتوفر",
           based: "مقيم في الرياض، المملكة العربية السعودية",
@@ -165,11 +165,11 @@ export const languages = {
         expertise: {
           title: "ما أقدمه",
           items: [
-            "مطور واجهات أمامية متخصص في React و Next.js",
-            "مصمم واجهات مستخدم يبتكر واجهات بديهية وجميلة",
-            "خبرة في بناء تطبيقات ويب قابلة للتطوير",
-            "خلفية قوية في أطر عمل JavaScript الحديثة",
-            "شغوف بالكود النظيف وأفضل الممارسات",
+            "مطور ويب متكامل متخصص في React و Next.js وتقنيات الواجهة الخلفية",
+            "بناء واجهات مستخدم عالية الأداء وسهلة الصيانة",
+            "خبرة في بناء تطبيقات ويب قابلة للتوسع من البداية للنهاية",
+            "خلفية قوية في أطر عمل JavaScript/TypeScript الحديثة",
+            "خبرة في الواجهة الخلفية مع واجهات برمجية وقواعد بيانات ومنطق الخادم",
             "ملتزم بالتعلم المستمر ومواكبة أحدث التقنيات",
           ],
         },

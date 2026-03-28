@@ -12,11 +12,11 @@ export const SKILLS = [
 ] as const;
 
 export const EXPERTISE_POINTS = [
-  "Front End Developer with expertise in React and Next.js.",
-  "UI/UX Designer creating intuitive and beautiful user interfaces",
-  "Experienced in building scalable web applications",
-  "Strong background in modern JavaScript frameworks",
-  "Passionate about clean code and best practices",
+  "Full-Stack Developer with expertise in React, Next.js, and backend technologies.",
+  "Building performant and maintainable user interfaces",
+  "Experienced in building scalable web applications end to end",
+  "Strong background in modern JavaScript/TypeScript frameworks",
+  "Backend experience with APIs, databases, and server-side logic",
   "Committed to continuous learning and staying updated with latest technologies",
 ] as const;
 
