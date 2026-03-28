@@ -375,4 +375,25 @@ export const PROJECTS: Project[] = [
     githubUrl: "https://github.com/MorhafGhziel/NFT-MarketPlace",
     liveUrl: "https://nft-marketplace-gilt-kappa.vercel.app/",
   },
+  {
+    title: "AI CV Generator - Full-Stack AI-Powered CV Builder",
+    description:
+      "A full-stack AI-powered CV generator built end to end as a personal project. Upload a PDF and let AI extract your data, or build from scratch. Paste a job description and AI tailors your CV to match — right skills, right keywords, ATS-friendly. Features Google sign-in with account & profile management, AI-powered screening question answers, full CV history with view/download/delete, and consistency tracking across applications to the same company.",
+    titleAr: "مولّد السيرة الذاتية بالذكاء الاصطناعي - منشئ سير ذاتية متكامل مدعوم بالذكاء الاصطناعي",
+    descriptionAr:
+      "مولّد سيرة ذاتية متكامل مدعوم بالذكاء الاصطناعي تم بناؤه من الصفر كمشروع شخصي. ارفع ملف PDF ودع الذكاء الاصطناعي يستخرج بياناتك، أو ابنِ سيرتك من الصفر. الصق وصف الوظيفة وسيقوم الذكاء الاصطناعي بتخصيص سيرتك الذاتية لتتوافق مع الدور — المهارات المناسبة والكلمات المفتاحية ومتوافقة مع أنظمة تتبع المتقدمين. يتضمن تسجيل دخول عبر Google مع إدارة الحساب والملف الشخصي، وإجابات على أسئلة الفرز مدعومة بالذكاء الاصطناعي، وسجل كامل للسير الذاتية مع إمكانية العرض والتحميل والحذف، وتتبع التناسق عبر التقديمات لنفس الشركة.",
+    image: "/images/cvai.png",
+    techStack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Google Gemini",
+      "Groq",
+      "MongoDB",
+      "Prisma",
+      "NextAuth",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/ai-cv-generator",
+    liveUrl: "https://ai-cv-generator-opal.vercel.app/",
+  },
 ] as const;
