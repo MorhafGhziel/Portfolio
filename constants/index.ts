@@ -35,6 +35,27 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    title: "AI CV Generator - Full-Stack AI-Powered CV Builder",
+    description:
+      "A full-stack AI-powered CV generator built end to end as a personal project. Upload a PDF and let AI extract your data, or build from scratch. Paste a job description and AI tailors your CV to match — right skills, right keywords, ATS-friendly. Features Google sign-in with account & profile management, AI-powered screening question answers, full CV history with view/download/delete, and consistency tracking across applications to the same company.",
+    titleAr: "مولّد السيرة الذاتية بالذكاء الاصطناعي - منشئ سير ذاتية متكامل مدعوم بالذكاء الاصطناعي",
+    descriptionAr:
+      "مولّد سيرة ذاتية متكامل مدعوم بالذكاء الاصطناعي تم بناؤه من الصفر كمشروع شخصي. ارفع ملف PDF ودع الذكاء الاصطناعي يستخرج بياناتك، أو ابنِ سيرتك من الصفر. الصق وصف الوظيفة وسيقوم الذكاء الاصطناعي بتخصيص سيرتك الذاتية لتتوافق مع الدور — المهارات المناسبة والكلمات المفتاحية ومتوافقة مع أنظمة تتبع المتقدمين. يتضمن تسجيل دخول عبر Google مع إدارة الحساب والملف الشخصي، وإجابات على أسئلة الفرز مدعومة بالذكاء الاصطناعي، وسجل كامل للسير الذاتية مع إمكانية العرض والتحميل والحذف، وتتبع التناسق عبر التقديمات لنفس الشركة.",
+    image: "/images/cvai.png",
+    techStack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Google Gemini",
+      "Groq",
+      "MongoDB",
+      "Prisma",
+      "NextAuth",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/ai-cv-generator",
+    liveUrl: "https://ai-cv-generator-opal.vercel.app/",
+  },
+  {
     title: "Elsina3ya - Content Creator & Influencer Management Platform",
     description:
       "A freelance project I designed and developed — a corporate website for Elsina3ya, a content creator and influencer management agency based in Saudi Arabia. Built with Next.js and featuring a dark theme with orange and amber gradients, the site presents the company's story, mission, vision, values, and services. The platform includes RTL (Right-to-Left) Arabic layout support, smooth scrolling powered by Lenis, interactive animations with Framer Motion, responsive navigation with mobile menu, floating person images with subtle animations, glassmorphism UI effects, and a contact form integrated with Resend API for email delivery. The site emphasizes the company's tagline 'We organize your presence and guarantee your impact' and their mission to gather content creators in 'one workshop,' organizing their digital presence and connecting them with appropriate brands. The website showcases services for both influencers (talent management, content production, performance analysis, brand partnerships, business coordination) and companies (sustainable content creation, brand representation, cinematic content production, influencer matching). It features multiple sections including Hero, Story, Vision, Mission, Values, Services Grid, Why Us, and Contact, all with scroll-triggered animations and modern design patterns. The platform highlights the company's core values of creativity, impact, trust, belonging, and collaboration, positioning them as 'Impact Makers' in the digital content industry.",
@@ -374,26 +395,5 @@ export const PROJECTS: Project[] = [
     ],
     githubUrl: "https://github.com/MorhafGhziel/NFT-MarketPlace",
     liveUrl: "https://nft-marketplace-gilt-kappa.vercel.app/",
-  },
-  {
-    title: "AI CV Generator - Full-Stack AI-Powered CV Builder",
-    description:
-      "A full-stack AI-powered CV generator built end to end as a personal project. Upload a PDF and let AI extract your data, or build from scratch. Paste a job description and AI tailors your CV to match — right skills, right keywords, ATS-friendly. Features Google sign-in with account & profile management, AI-powered screening question answers, full CV history with view/download/delete, and consistency tracking across applications to the same company.",
-    titleAr: "مولّد السيرة الذاتية بالذكاء الاصطناعي - منشئ سير ذاتية متكامل مدعوم بالذكاء الاصطناعي",
-    descriptionAr:
-      "مولّد سيرة ذاتية متكامل مدعوم بالذكاء الاصطناعي تم بناؤه من الصفر كمشروع شخصي. ارفع ملف PDF ودع الذكاء الاصطناعي يستخرج بياناتك، أو ابنِ سيرتك من الصفر. الصق وصف الوظيفة وسيقوم الذكاء الاصطناعي بتخصيص سيرتك الذاتية لتتوافق مع الدور — المهارات المناسبة والكلمات المفتاحية ومتوافقة مع أنظمة تتبع المتقدمين. يتضمن تسجيل دخول عبر Google مع إدارة الحساب والملف الشخصي، وإجابات على أسئلة الفرز مدعومة بالذكاء الاصطناعي، وسجل كامل للسير الذاتية مع إمكانية العرض والتحميل والحذف، وتتبع التناسق عبر التقديمات لنفس الشركة.",
-    image: "/images/cvai.png",
-    techStack: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Google Gemini",
-      "Groq",
-      "MongoDB",
-      "Prisma",
-      "NextAuth",
-    ],
-    githubUrl: "https://github.com/MorhafGhziel/ai-cv-generator",
-    liveUrl: "https://ai-cv-generator-opal.vercel.app/",
   },
 ] as const;
