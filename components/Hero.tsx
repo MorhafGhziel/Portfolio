@@ -38,8 +38,8 @@ const Hero = ({ projectsCount }: HeroProps) => {
 
   const handleDownloadResume = () => {
     const link = document.createElement("a");
-    link.href = "/Morhaf_Ghziel_Resume.pdf";
-    link.download = "Morhaf_Ghziel_Resume.pdf";
+    link.href = "/Morhaf_Ghziel.pdf";
+    link.download = "Morhaf_Ghziel.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
