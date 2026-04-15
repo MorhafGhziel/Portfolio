@@ -35,6 +35,30 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    title: "Lumen - Full-Stack Canvas + Docs Workspace",
+    description:
+      "A workspace that doesn't make you choose between structured docs and freeform thinking. Switch between a block editor and an infinite canvas — same app, same data, zero context switching. The docs side is a full block editor with headings, code blocks, images, todos, callouts, and comments. Every page can be shared publicly with a unique link. Flip to canvas mode and you get an infinite whiteboard with sticky notes, freehand drawing (pen, eraser, highlighter), and smooth pan/zoom. An AI sidebar powered by Gemini handles rewrites, summaries, brainstorming, and grammar fixes without leaving the editor. Auth, database, and row-level security are all Supabase. Updates are optimistic — UI moves first, debounced sync writes to Postgres 300ms later. The canvas drawing system uses raw HTML5 Canvas API with device pixel ratio scaling, no external drawing library. Everything runs on a single Next.js app with the App Router.",
+    titleAr: "Lumen - مساحة عمل متكاملة للمستندات واللوحة البيضاء",
+    descriptionAr:
+      "مساحة عمل لا تجبرك على الاختيار بين المستندات المنظمة والتفكير الحر. انتقل بين محرر الكتل واللوحة اللانهائية — نفس التطبيق، نفس البيانات، بدون تبديل سياق. جانب المستندات هو محرر كتل كامل مع العناوين وكتل الأكواد والصور والمهام والتنبيهات والتعليقات. يمكن مشاركة كل صفحة علنياً برابط فريد. انتقل إلى وضع اللوحة وستحصل على لوحة بيضاء لا نهائية مع ملاحظات لاصقة ورسم حر (قلم، ممحاة، قلم تمييز) وتكبير/تصغير سلس. شريط جانبي للذكاء الاصطناعي مدعوم بـ Gemini يتعامل مع إعادة الكتابة والتلخيص والعصف الذهني وإصلاح القواعد النحوية دون مغادرة المحرر. المصادقة وقاعدة البيانات وأمان مستوى الصفوف كلها عبر Supabase. التحديثات متفائلة — تتحرك الواجهة أولاً، ومزامنة مؤجلة تكتب إلى Postgres بعد 300 مللي ثانية. نظام الرسم على اللوحة يستخدم HTML5 Canvas API الخام مع تحجيم نسبة بكسل الجهاز، بدون مكتبة رسم خارجية. كل شيء يعمل على تطبيق Next.js واحد مع App Router.",
+    image: "/images/lumen/1.png",
+    images: ["/images/lumen/1.png", "/images/lumen/2.png", "/images/lumen/3.png"],
+    techStack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Radix UI",
+      "Supabase",
+      "PostgreSQL",
+      "Google Gemini",
+      "HTML5 Canvas",
+    ],
+    githubUrl: "https://github.com/MorhafGhziel/lumen",
+    liveUrl: "https://lumen-woad-nine.vercel.app/",
+  },
+  {
     title: "AI CV Generator - Full-Stack AI-Powered CV Builder",
     description:
       "A full-stack AI-powered CV generator built end to end as a personal project. Upload a PDF and let AI extract your data, or build from scratch. Paste a job description and AI tailors your CV to match — right skills, right keywords, ATS-friendly. Features Google sign-in with account & profile management, AI-powered screening question answers, full CV history with view/download/delete, and consistency tracking across applications to the same company.",
