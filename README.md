@@ -16,18 +16,38 @@ Everything visual is defined in **`app/globals.css`**. There is no
 `tailwind.config.ts` — Tailwind v4 reads its theme from the `@theme static`
 block at the top of that file.
 
+Token names describe **roles, not colours** — `canvas` is whatever the page
+sits on, `ink` is whatever you read — so both themes share every utility
+class and only the values swap.
+
 | Token group | Notes |
 | --- | --- |
-| `--color-ink` → `--color-line-2` | Surface stack. Depth comes from ~4% luminance steps and 1px hairlines, never from shadows or blur. |
-| `--color-bone`, `--color-mute`, `--color-dim` | Type neutrals. `bone` also serves as the canvas of the one light section. |
-| `--color-copper` | **The only accent.** Change this one value to re-skin the site. `--color-copper-deep` is its accessible counterpart on the light band. |
+| `--color-canvas`, `--color-surface`, `--color-line` | Surface stack. Depth comes from ~4% luminance steps and 1px hairlines, never from shadows or blur. |
+| `--color-ink`, `--color-ink-muted`, `--color-ink-dim` | Type tiers. All three clear WCAG AA against the canvas in both themes. |
+| `--color-accent` | **The only accent.** Change this one value (and its light-theme counterpart) to re-skin the site. |
+| `--color-band`, `--color-band-ink`, `--color-band-accent` | The single contrasting section (About). It inverts against whichever theme is active, so the page keeps its rhythm either way. |
 | `--font-display` | Instrument Serif. Display only, never below 24px. |
 | `--font-sans` / `--font-mono` | Geist and Geist Mono. Mono is reserved for micro-labels and numerals. |
 
 Type primitives: `.display` + `.d-xl/.d-lg/.d-md/.d-sm` for headlines,
 `.eyebrow` for 11px uppercase mono labels, `.body-lg` / `.body-base` for prose.
 
-Two rules worth keeping:
+## Theming
+
+Dark and light. The dark values live in `@theme static`; the light ones
+override them from an **unlayered** `:root[data-theme="light"]` block, which
+beats the `@layer theme` Tailwind emits without needing `!important`.
+
+- `components/ThemeContext.tsx` owns the state and exports `NO_FLASH_SCRIPT`,
+  inlined in `<head>` so `data-theme` is set before first paint. The script
+  and the provider share one storage key, and the provider *reads the
+  attribute back* rather than recomputing, so the two can't disagree.
+- With no stored choice the page follows `prefers-color-scheme` and keeps
+  following it live. Clicking the toggle stores a preference and stops that.
+- The accent darkens to `#9c5a2c` on light — `#cc9166` only reaches 2.5:1
+  there, which fails for text.
+
+Three rules worth keeping:
 
 - **`@theme static` is load-bearing.** Tailwind v4 tree-shakes theme variables
   that no utility class references, and the type primitives read several of
@@ -35,6 +55,9 @@ Two rules worth keeping:
 - **The `next/font` variables live on `<html>`, not `<body>.`** The theme
   tokens are declared on `:root`, and a `var()` there can only resolve
   variables declared on `:root` itself.
+- **Colour tokens are named for their role.** Never reintroduce a name that
+  describes a literal colour — it inverts and lies the moment the theme
+  flips.
 
 ## Content
 
