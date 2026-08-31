@@ -1,112 +1,123 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Orbitron } from "next/font/google";
-import { Noto_Sans_Arabic } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 import { LanguageProvider } from "@/components/LanguageContext";
 import SmoothScroll from "@/components/SmoothScroll";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
+/* Grotesque for UI, serif for display, mono for micro-labels.
+   The serif/grotesque collision is the whole visual signature. */
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const orbitron = Orbitron({
-  variable: "--font-orbitron",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
+  weight: "400",
+  display: "swap",
 });
 
-const notoSansArabic = Noto_Sans_Arabic({
-  variable: "--font-noto-sans-arabic",
+const arabic = IBM_Plex_Sans_Arabic({
+  variable: "--font-plex-arabic",
   subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://morhaf.me";
 
+const description =
+  "Full-stack developer in Riyadh. I design and build web apps end to end — React, Next.js and TypeScript on the front, APIs and databases behind them.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
-  title: "Morhaf Ghziel",
-  description:
-    "Full-Stack Developer specializing in React, Next.js, and modern web technologies.",
-  icons: {
-    icon: "./favicon.ico",
+  title: {
+    default: "Morhaf Ghziel — Full-stack developer",
+    template: "%s — Morhaf Ghziel",
   },
+  description,
+  keywords: [
+    "full-stack developer",
+    "React developer",
+    "Next.js developer",
+    "TypeScript",
+    "Riyadh",
+    "Saudi Arabia",
+  ],
+  authors: [{ name: "Morhaf Ghziel", url: baseUrl }],
+  creator: "Morhaf Ghziel",
+  alternates: { canonical: "/" },
+  icons: { icon: "/favicon.ico" },
   openGraph: {
-    title: "Morhaf Ghziel",
-    description:
-      "Full-Stack Developer specializing in React, Next.js, and modern web technologies.",
-    images: [
-      {
-        url: `${baseUrl}/opengraph-image.png?v=2`,
-        width: 1200,
-        height: 630,
-        alt: "Morhaf Ghziel",
-      },
-    ],
+    type: "website",
+    url: baseUrl,
+    siteName: "Morhaf Ghziel",
+    title: "Morhaf Ghziel — Full-stack developer",
+    description,
+    // The image comes from app/opengraph-image.tsx via the file convention.
   },
   twitter: {
     card: "summary_large_image",
-    title: "Morhaf Ghziel",
-    description:
-      "Full-Stack Developer specializing in React, Next.js, and modern web technologies.",
-    images: [`${baseUrl}/opengraph-image.png?v=2`],
+    title: "Morhaf Ghziel — Full-stack developer",
+    description,
+    creator: "@MorhafGhz",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0b",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <LanguageProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${notoSansArabic.variable} antialiased min-h-screen font-sans`}
-          style={{ background: "#0f0f0f" }}
-        >
+    // The font variables go on <html>: the theme tokens in globals.css live on
+    // :root, and a var() there can only see variables declared on :root itself.
+    <html
+      lang="en"
+      dir="ltr"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${arabic.variable}`}
+    >
+      <body className="font-sans antialiased">
+        <LanguageProvider>
           <SmoothScroll />
+
+          {/* Keyboard users land here first. */}
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-bone focus:text-ink focus:px-4 focus:py-2 focus:text-sm focus:font-medium"
+          >
+            Skip to content
+          </a>
+
+          <Header />
+          <main id="main">{children}</main>
+          <Footer />
+
           <Toaster
-            position="top-center"
+            position="bottom-right"
             theme="dark"
             richColors={false}
-            closeButton
-            toastOptions={{
-              style: {
-                background: "rgba(15, 15, 15, 0.95)",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
-                color: "#ffffff",
-              },
-            }}
-            expand={false}
+            offset={24}
+            duration={3200}
           />
-          <div className="relative" style={{ background: "#0f0f0f" }}>
-            {/* Background gradient for header */}
-            <div className="fixed inset-0 h-[20vh] bg-gradient-to-b from-[#0f0f0f] via-[#0f0f0f]/50 to-transparent z-10 pointer-events-none" />
-
-            {/* Header */}
-            <Header />
-
-            {/* Main content */}
-            <main className="relative" style={{ background: "#0f0f0f" }}>
-              {children}
-            </main>
-
-            {/* Footer */}
-            <Footer />
-          </div>
-        </body>
-      </LanguageProvider>
+        </LanguageProvider>
+      </body>
     </html>
   );
 }
