@@ -1,142 +1,90 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { toast } from "sonner";
+import { ArrowUp, ArrowUpRight } from "lucide-react";
+import { EMAIL, SOCIALS } from "@/constants/social";
 import { useLanguage } from "./LanguageContext";
-import { Github, Linkedin, Twitter, Instagram, Mail } from "lucide-react";
+import { getLenis } from "./SmoothScroll";
 
-const Footer = () => {
-  const { t, language } = useLanguage();
-  const isRTL = language === "ar";
-  const email = "ghzielmorhaf@gmail.com";
+export default function Footer() {
+  const { t } = useLanguage();
+  const year = new Date().getFullYear();
 
-  const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(email);
-      toast.success(t("footer.copyEmail"), {
-        duration: 2000,
-      });
-    } catch (err) {
-      toast.error(t("footer.copyEmailError"), {
-        duration: 3000,
-      });
-    }
+  const toTop = () => {
+    const lenis = getLenis();
+    if (lenis) lenis.scrollTo(0, { duration: 1.2 });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const socialLinks = [
-    {
-      icon: Github,
-      href: "https://github.com/MorhafGhziel",
-      label: "GitHub",
-    },
-    {
-      icon: Linkedin,
-      href: "https://www.linkedin.com/in/morhaf-ghziel-a720a72b9/",
-      label: "LinkedIn",
-    },
-    {
-      icon: Twitter,
-      href: "https://x.com/MorhafGhz",
-      label: "Twitter",
-    },
-    {
-      icon: Instagram,
-      href: "https://www.instagram.com/4uee_m/",
-      label: "Instagram",
-    },
-  ];
-
   return (
-    <footer className="relative border-t border-white/10 overflow-hidden" dir={isRTL ? "rtl" : "ltr"}>
-      {/* Animated Background */}
-      <div className="absolute inset-0 animated-bg" />
-      <div className="absolute inset-0 grid-pattern opacity-5" />
-
-      <div className="relative max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-16 z-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-12">
-          {/* Left Side */}
-          <motion.div 
-            className="space-y-4"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="text-3xl font-bold">
-              <span className="text-gradient">
-                {t("hero.name")}
-              </span>
-            </div>
-            <p className="text-sm text-gray-400 max-w-md">
-              {t("footer.availableWorldwide")}
+    <footer className="grain relative border-t border-line pt-20">
+      <div className="shell">
+        <div className="flex flex-wrap items-start justify-between gap-x-12 gap-y-10">
+          <div>
+            <p className="body-base max-w-[34ch] text-mute">
+              {t("footer.tagline")}
             </p>
-          </motion.div>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="ulink mt-4 inline-block text-[0.9375rem] text-bone hover:text-copper"
+            >
+              {EMAIL}
+            </a>
+          </div>
 
-          {/* Right Side - Social Links */}
-          <motion.div 
-            className="flex items-center gap-4"
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            {socialLinks.map((link, index) => (
-              <motion.a
-                key={link.label}
-                href={link.href}
+          <nav className="flex flex-wrap gap-x-8 gap-y-3">
+            {SOCIALS.map((social) => (
+              <a
+                key={social.key}
+                href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass p-3 rounded-xl border border-white/10 cursor-pointer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                whileHover={{ 
-                  y: -4, 
-                  scale: 1.1,
-                  borderColor: "rgba(255, 255, 255, 0.3)",
-                }}
-                whileTap={{ scale: 0.95 }}
-                aria-label={link.label}
+                className="group inline-flex items-center gap-1.5 text-[0.9375rem] text-mute transition-colors duration-300 hover:text-bone"
               >
-                <link.icon className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-              </motion.a>
+                {social.label}
+                <ArrowUpRight
+                  className="h-3.5 w-3.5 text-dim transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-copper"
+                  aria-hidden
+                />
+              </a>
             ))}
-            <motion.button
-              onClick={handleCopyEmail}
-              className="glass p-3 rounded-xl border border-white/10 cursor-pointer"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: socialLinks.length * 0.1 }}
-              whileHover={{ 
-                y: -4, 
-                scale: 1.1,
-                borderColor: "rgba(255, 255, 255, 0.3)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              aria-label="Email"
-            >
-              <Mail className="w-5 h-5 text-gray-400 hover:text-white transition-colors" />
-            </motion.button>
-          </motion.div>
+          </nav>
         </div>
 
-        {/* Bottom */}
-        <motion.div 
-          className="pt-8 border-t border-white/10 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <p className="text-sm text-gray-500">
-            © {new Date().getFullYear()} {t("footer.copyright")}
+        <div className="mt-16 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-line pt-6">
+          <p className="eyebrow text-dim">
+            © {year} {t("footer.wordmark")} — {t("footer.copyright")}
           </p>
-        </motion.div>
+          <div className="flex items-center gap-8">
+            <p className="eyebrow hidden text-dim sm:block">
+              {t("footer.builtWith")}
+            </p>
+            <button
+              onClick={toTop}
+              className="group inline-flex cursor-pointer items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-mute transition-colors duration-300 hover:text-bone"
+            >
+              {t("footer.toTop")}
+              <ArrowUp
+                className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5"
+                aria-hidden
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Closing signature: the name at page scale, clipped by the viewport
+          edge. Recessive enough to be texture, big enough to be a full stop. */}
+      <div
+        className="mt-16 select-none overflow-hidden px-[max(1.25rem,5vw)]"
+        aria-hidden
+      >
+        <p
+          className="display translate-y-[0.16em] whitespace-nowrap text-center text-line-2"
+          style={{ fontSize: "clamp(3rem, 15.5vw, 15rem)", lineHeight: 0.82 }}
+        >
+          {t("footer.wordmark")}
+        </p>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

@@ -1,330 +1,166 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
-import { ArrowRight, ArrowLeft, Download, Sparkles } from "lucide-react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { ArrowDown, Download } from "lucide-react";
 import { useLanguage } from "./LanguageContext";
-import { getLenis } from "./SmoothScroll";
+import { scrollToId } from "./SmoothScroll";
+import { ActionButton } from "./ui/Action";
+import { RevealWords } from "./ui/Reveal";
 
-interface HeroProps {
-  projectsCount: number;
-}
+type HeroProps = {
+  projectCount: number;
+  clientCount: number;
+  years: number;
+};
 
-const Hero = ({ projectsCount }: HeroProps) => {
-  const { t, language } = useLanguage();
-  const isRTL = language === "ar";
-  const heroRef = useRef<HTMLElement>(null);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const checkIsDesktop = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-
-    checkIsDesktop();
-    window.addEventListener("resize", checkIsDesktop);
-    return () => window.removeEventListener("resize", checkIsDesktop);
-  }, []);
+export default function Hero({ projectCount, clientCount, years }: HeroProps) {
+  const { t } = useLanguage();
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
-    target: heroRef,
+    target: ref,
     offset: ["start start", "end start"],
   });
+  // The headline drifts a little slower than the page. Just enough depth
+  // to feel alive; not enough to notice as an "effect".
+  const drift = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
 
-  // Scroll animation - only on desktop (screens wider than 768px)
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const pad = (n: number) => String(n).padStart(2, "0");
 
-  const handleDownloadResume = () => {
-    const link = document.createElement("a");
-    link.href = "/Morhaf_Ghziel.pdf";
-    link.download = "Morhaf_Ghziel.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const handleScrollToWork = () => {
-    const workSection = document.getElementById("work");
-    const lenis = getLenis();
-    if (workSection) {
-      if (lenis) {
-        lenis.scrollTo(workSection, {
-          offset: -80,
-          duration: 1.5,
-        });
-      } else {
-        workSection.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
+  const ledger = [
+    { value: pad(years), label: t("ledger.years") },
+    { value: pad(projectCount), label: t("ledger.projects") },
+    { value: pad(clientCount), label: t("ledger.clients") },
+    { value: t("ledger.replyValue"), label: t("ledger.reply") },
+  ];
 
   return (
     <section
-      ref={heroRef}
+      ref={ref}
       id="home"
-      className="relative min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-20 py-32 overflow-hidden"
+      className="grain relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24"
     >
-      {/* Animated Background Gradient */}
-      <div className="absolute inset-0 animated-bg" />
+      <div className="shell">
+        {/* Status line */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="eyebrow flex flex-wrap items-center gap-x-3 gap-y-2 text-mute"
+        >
+          <span className="relative inline-flex h-1.5 w-1.5">
+            <span
+              className="dot-live absolute inset-0 rounded-full text-copper"
+              aria-hidden
+            />
+            <span className="relative h-1.5 w-1.5 rounded-full bg-copper" />
+          </span>
+          <span className="text-copper">{t("status.available")}</span>
+          <span className="text-dim" aria-hidden>
+            /
+          </span>
+          <span>{t("status.location")}</span>
+        </motion.div>
 
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 grid-pattern opacity-20" />
-
-      <motion.div
-        className="relative max-w-7xl w-full mx-auto z-10"
-        style={{
-          y: isDesktop ? y : undefined,
-          opacity: isDesktop ? opacity : undefined,
-        }}
-      >
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Left Column - Text Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className={isRTL ? "lg:order-2 text-right" : "text-left"}
-          >
-            {/* Label with Sparkle */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full border border-white/10"
-            >
-              <span className="text-sm tracking-[0.2em] uppercase text-gray-400 font-medium">
-                {t("hero.frontEndDev")}
+        <motion.div style={reduce ? undefined : { y: drift, opacity: fade }}>
+          {/* The headline is ragged and short, which leaves a large void on
+              the outer half. The portrait lives in that void rather than in
+              the text — on narrow screens there is no void, so it drops back
+              into the flow underneath. */}
+          <div className="relative">
+            <h1 className="display d-xl mt-10 text-bone md:mt-14">
+              <span className="block">
+                <RevealWords text={t("hero.line1")} delay={0.15} />
               </span>
-            </motion.div>
+              <span className="block">
+                <RevealWords text={t("hero.line2")} delay={0.25} />
+              </span>
+              <span className="block">
+                <RevealWords text={t("hero.line3")} delay={0.35} />
+              </span>
+            </h1>
 
-            {/* Name with Gradient */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-8 text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight"
-            >
-              <span className="text-gradient">{t("hero.name")}</span>
-            </motion.h1>
-
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-8 text-xl md:text-2xl text-gray-300 leading-relaxed max-w-xl"
-            >
-              {t("hero.description")}
-            </motion.p>
-
-            {/* Stats with Glass Cards */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-6 sm:mt-8 md:mt-12 flex gap-3 sm:gap-4 md:gap-6"
-            >
+            <div className="hero-portrait">
               <motion.div
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="glass px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 rounded-xl relative overflow-hidden group border border-white/10 flex-1 sm:flex-none"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white relative z-10">
-                  5+
-                </div>
-                <div className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-gray-500 uppercase tracking-wider relative z-10">
-                  {t("hero.stats.years")}
-                </div>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="glass px-4 sm:px-5 md:px-6 py-3 sm:py-3.5 md:py-4 rounded-xl relative overflow-hidden group border border-white/10 flex-1 sm:flex-none"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white relative z-10">
-                  {projectsCount}+
-                </div>
-                <div className="mt-0.5 sm:mt-1 text-xs sm:text-sm text-gray-500 uppercase tracking-wider relative z-10">
-                  {t("hero.stats.projects")}
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* CTA Buttons - Enhanced */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className={`mt-6 sm:mt-8 md:mt-12 flex flex-col sm:flex-row ${isRTL ? "sm:flex-row-reverse sm:justify-end" : ""} gap-3 sm:gap-4`}
-            >
-              <motion.button
-                onClick={handleScrollToWork}
-                className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-sm sm:text-base font-medium overflow-hidden cursor-pointer bg-white text-black"
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(255, 255, 255, 0.2)",
+                initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
+                animate={{ opacity: 1, scale: 1, rotate: -2 }}
+                transition={{
+                  duration: 1,
+                  delay: 0.55,
+                  ease: [0.34, 1.4, 0.64, 1],
                 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="hero-portrait-tile tone-hover overflow-hidden rounded-[10px] border border-line"
               >
-                <motion.div
-                  className="absolute inset-0 bg-gray-200"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.4 }}
+                <Image
+                  src="/images/Profile3.png"
+                  alt={t("hero.alt")}
+                  width={560}
+                  height={672}
+                  priority
+                  sizes="(max-width: 768px) 128px, 224px"
+                  className="tone h-full w-full object-cover object-[50%_22%]"
+                  style={{ aspectRatio: "5 / 6" }}
                 />
-                <span
-                  className={`relative z-10 flex items-center gap-2 ${isRTL ? "flex-row-reverse" : ""}`}
-                >
-                  {isRTL && (
-                    <motion.div
-                      animate={{ x: [0, -4, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <ArrowLeft className="w-4 h-4" />
-                    </motion.div>
-                  )}
-                  {t("nav.work")}
-                  {!isRTL && (
-                    <motion.div
-                      animate={{ x: [0, 4, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <ArrowRight className="w-4 h-4" />
-                    </motion.div>
-                  )}
-                </span>
-              </motion.button>
+              </motion.div>
+            </div>
+          </div>
 
-              <motion.button
-                onClick={handleDownloadResume}
-                className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 glass rounded-xl text-white text-sm sm:text-base font-medium overflow-hidden cursor-pointer border border-white/20"
-                whileHover={{
-                  scale: 1.05,
-                  borderColor: "rgba(255, 255, 255, 0.4)",
-                }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-white/5"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.4 }}
-                />
-                <span className="relative z-10 flex items-center gap-2">
-                  <motion.div
-                    whileHover={{ y: -2 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Download className="w-4 h-4" />
-                  </motion.div>
-                  {t("cta.downloadResume")}
-                </span>
-              </motion.button>
-            </motion.div>
-          </motion.div>
-
-          {/* Right Column - Image */}
+          {/* Lead, offset to the outer edge — editorial, and it stops the
+              page reading as one centred column. */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className={`relative hidden lg:block ${isRTL ? "lg:order-1" : ""} perspective`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-12 max-w-[52ch] lg:ms-auto lg:mt-16"
           >
-            <motion.div
-              className="relative aspect-square max-w-lg mx-auto lg:max-w-none group"
-              whileHover={{
-                scale: 1.02,
-                rotateY: 5,
-                rotateX: 5,
-              }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              {/* Glow Effect Behind Image */}
-              <motion.div
-                className="absolute inset-0 rounded-2xl blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(163, 163, 163, 0.1))",
-                  transform: "translateZ(-50px)",
-                }}
-              />
+            <p className="body-lg text-mute">{t("hero.lead")}</p>
 
-              {/* Glass Frame */}
-              <motion.div
-                className="absolute inset-0 glass rounded-2xl"
-                whileHover={{
-                  borderColor: "rgba(255, 255, 255, 0.2)",
-                }}
-                transition={{ duration: 0.3 }}
-              />
-
-              {/* Image container */}
-              <div className="relative overflow-hidden h-full rounded-2xl">
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <Image
-                    src="/images/Profile3.png"
-                    alt="Morhaf Ghziel"
-                    width={600}
-                    height={600}
-                    className="w-full h-full object-cover"
-                    priority
-                  />
-                </motion.div>
-
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-
-              {/* Animated Corner Accents */}
-              <motion.div
-                className="absolute -top-4 -left-4 w-24 h-24"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <ActionButton
+                variant="primary"
+                onClick={() => scrollToId("work")}
               >
-                <motion.div
-                  className="w-full h-full border-t-2 border-l-2 rounded-tl-2xl border-white/50"
-                  animate={{
-                    opacity: [1, 0.5, 1],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                  }}
-                />
-              </motion.div>
-              <motion.div
-                className="absolute -bottom-4 -right-4 w-24 h-24"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
+                {t("cta.seeWork")}
+                <ArrowDown className="h-4 w-4 shrink-0" aria-hidden />
+              </ActionButton>
+
+              <a
+                href="/Morhaf_Ghziel.pdf"
+                download
+                className="group/act inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-[4px] border border-line-2 px-6 py-3.5 text-[0.9375rem] font-medium tracking-[-0.01em] text-bone transition-colors duration-300 hover:border-bone/60 hover:bg-white/[0.03]"
               >
-                <motion.div
-                  className="w-full h-full border-b-2 border-r-2 rounded-br-2xl border-white/50"
-                  animate={{
-                    opacity: [1, 0.5, 1],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    delay: 1.5,
-                  }}
+                <Download
+                  className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover/act:translate-y-0.5"
+                  aria-hidden
                 />
-              </motion.div>
-            </motion.div>
+                {t("cta.downloadResume")}
+              </a>
+            </div>
           </motion.div>
-        </div>
+        </motion.div>
+      </div>
+
+      {/* Ledger — a top rule and generous gaps. Numerals in the display face,
+          so the numbers read as part of the typography. */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.9, delay: 0.9 }}
+        className="shell mt-20 md:mt-28"
+      >
+        <dl className="grid grid-cols-2 gap-x-8 gap-y-9 border-t border-line pt-8 md:grid-cols-4 md:gap-x-12 md:pt-10">
+          {ledger.map((item) => (
+            <div key={item.label}>
+              <dd className="display d-sm text-bone">{item.value}</dd>
+              <dt className="eyebrow mt-3 text-dim">{item.label}</dt>
+            </div>
+          ))}
+        </dl>
       </motion.div>
     </section>
   );
-};
-
-export default Hero;
+}
