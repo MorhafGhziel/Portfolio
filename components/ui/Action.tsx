@@ -15,9 +15,9 @@ const base =
 /* One copper button per screen. Everything else is a hairline. */
 const variants: Record<Variant, string> = {
   primary:
-    "bg-copper text-ink hover:bg-[#dda478] shadow-[0_6px_24px_-8px_rgba(204,145,102,0.55)]",
+    "bg-accent text-canvas hover:bg-accent-hover shadow-[0_6px_24px_-8px_var(--accent-glow)]",
   secondary:
-    "border border-line-2 text-bone hover:border-bone/60 hover:bg-white/[0.03]",
+    "border border-line-2 text-ink hover:border-ink/60 hover:bg-[var(--wash)]",
 };
 
 type ActionProps = {
@@ -104,7 +104,7 @@ export function Chip({
 }: ComponentProps<"span">) {
   return (
     <span
-      className={`inline-flex items-center rounded-full border border-line px-3 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-mute ${className}`}
+      className={`inline-flex items-center rounded-full border border-line px-3 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-muted ${className}`}
       {...props}
     >
       {children}

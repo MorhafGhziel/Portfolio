@@ -42,18 +42,18 @@ export default function Contact({
           {/* Direct routes first — some people will never use a form */}
           <div className="lg:col-span-5">
             <Reveal>
-              <p className="eyebrow text-dim">{t("contact.directTitle")}</p>
+              <p className="eyebrow text-ink-dim">{t("contact.directTitle")}</p>
 
               <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
                 <a
                   href={`mailto:${EMAIL}`}
-                  className="display d-sm ulink text-bone transition-colors duration-300 hover:text-copper"
+                  className="display d-sm ulink text-ink transition-colors duration-300 hover:text-accent"
                 >
                   {EMAIL}
                 </a>
                 <button
                   onClick={copyEmail}
-                  className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-line px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-mute transition-colors duration-300 hover:border-line-2 hover:text-bone"
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-line px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-muted transition-colors duration-300 hover:border-line-2 hover:text-ink"
                 >
                   <Copy className="h-3 w-3" aria-hidden />
                   {t("cta.copyEmail")}
@@ -62,7 +62,7 @@ export default function Contact({
             </Reveal>
 
             <Reveal delay={0.08} className="mt-14">
-              <p className="eyebrow text-dim">{t("contact.elsewhere")}</p>
+              <p className="eyebrow text-ink-dim">{t("contact.elsewhere")}</p>
               <ul className="mt-5 border-t border-line">
                 {SOCIALS.map((social) => (
                   <li key={social.key}>
@@ -70,11 +70,11 @@ export default function Contact({
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center justify-between gap-4 border-b border-line py-4 text-[0.9375rem] text-mute transition-colors duration-300 hover:text-bone"
+                      className="group flex items-center justify-between gap-4 border-b border-line py-4 text-[0.9375rem] text-ink-muted transition-colors duration-300 hover:text-ink"
                     >
                       {social.label}
                       <ArrowUpRight
-                        className="h-4 w-4 text-dim transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-copper"
+                        className="h-4 w-4 text-ink-dim transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-accent"
                         aria-hidden
                       />
                     </a>
@@ -84,13 +84,13 @@ export default function Contact({
             </Reveal>
 
             <Reveal delay={0.14} className="mt-12">
-              <p className="eyebrow flex items-center gap-2.5 text-dim">
+              <p className="eyebrow flex items-center gap-2.5 text-ink-dim">
                 <span className="relative inline-flex h-1.5 w-1.5">
                   <span
-                    className="dot-live absolute inset-0 rounded-full text-copper"
+                    className="dot-live absolute inset-0 rounded-full text-accent"
                     aria-hidden
                   />
-                  <span className="relative h-1.5 w-1.5 rounded-full bg-copper" />
+                  <span className="relative h-1.5 w-1.5 rounded-full bg-accent" />
                 </span>
                 {t("about.facts.statusValue")}
               </p>
@@ -101,10 +101,10 @@ export default function Contact({
           <div className="lg:col-span-7">
             <Reveal delay={0.06}>
               <div className="border-t border-line pt-8">
-                <h3 className="display d-sm text-bone">
+                <h3 className="display d-sm text-ink">
                   {t("contact.formHeading")}
                 </h3>
-                <p className="body-base mt-3 max-w-[46ch] text-mute">
+                <p className="body-base mt-3 max-w-[46ch] text-ink-muted">
                   {t("contact.formLead")}
                 </p>
               </div>

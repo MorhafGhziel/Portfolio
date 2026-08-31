@@ -68,8 +68,8 @@ export default function ContactForm() {
   };
 
   const fieldClass = (field: Field) =>
-    `w-full border-b bg-transparent py-3 text-[0.9375rem] text-bone placeholder:text-dim outline-none transition-colors duration-300 ${
-      errors[field] ? "border-copper" : "border-line focus:border-bone"
+    `w-full border-b bg-transparent py-3 text-[0.9375rem] text-ink placeholder:text-ink-dim outline-none transition-colors duration-300 ${
+      errors[field] ? "border-accent" : "border-line focus:border-ink"
     }`;
 
   const rows: { field: Field; type?: string; help?: string }[] = [
@@ -84,7 +84,7 @@ export default function ContactForm() {
         <div key={field}>
           <label
             htmlFor={`${uid}-${field}`}
-            className="eyebrow block text-dim"
+            className="eyebrow block text-ink-dim"
           >
             {t(`contact.form.${field}`)}
           </label>
@@ -112,12 +112,12 @@ export default function ContactForm() {
             <p
               id={`${uid}-${field}-error`}
               role="alert"
-              className="mt-2 text-[0.8125rem] text-copper"
+              className="mt-2 text-[0.8125rem] text-accent"
             >
               {errors[field]}
             </p>
           ) : help ? (
-            <p id={`${uid}-${field}-help`} className="mt-2 text-[0.8125rem] text-dim">
+            <p id={`${uid}-${field}-help`} className="mt-2 text-[0.8125rem] text-ink-dim">
               {help}
             </p>
           ) : null}
@@ -125,7 +125,7 @@ export default function ContactForm() {
       ))}
 
       <div>
-        <label htmlFor={`${uid}-message`} className="eyebrow block text-dim">
+        <label htmlFor={`${uid}-message`} className="eyebrow block text-ink-dim">
           {t("contact.form.message")}
         </label>
         <textarea
@@ -143,7 +143,7 @@ export default function ContactForm() {
           <p
             id={`${uid}-message-error`}
             role="alert"
-            className="mt-2 text-[0.8125rem] text-copper"
+            className="mt-2 text-[0.8125rem] text-accent"
           >
             {errors.message}
           </p>
@@ -154,7 +154,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="group inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-[4px] bg-copper px-6 py-3.5 text-[0.9375rem] font-medium tracking-[-0.01em] text-ink shadow-[0_6px_24px_-8px_rgba(204,145,102,0.55)] transition-colors duration-300 hover:bg-[#dda478] active:scale-[0.985] disabled:pointer-events-none disabled:opacity-60"
+          className="group inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-[4px] bg-accent px-6 py-3.5 text-[0.9375rem] font-medium tracking-[-0.01em] text-canvas shadow-[0_6px_24px_-8px_var(--accent-glow)] transition-colors duration-300 hover:bg-accent-hover active:scale-[0.985] disabled:pointer-events-none disabled:opacity-60"
         >
           {status === "sending" && (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
@@ -167,9 +167,9 @@ export default function ContactForm() {
         {status === "sent" && (
           <p
             role="status"
-            className="inline-flex items-center gap-2 text-[0.875rem] text-mute"
+            className="inline-flex items-center gap-2 text-[0.875rem] text-ink-muted"
           >
-            <Check className="h-4 w-4 text-copper" aria-hidden />
+            <Check className="h-4 w-4 text-accent" aria-hidden />
             {t("contact.form.sent")}
           </p>
         )}

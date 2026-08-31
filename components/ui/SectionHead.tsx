@@ -26,9 +26,10 @@ export default function SectionHead({
   inverted = false,
   className = "",
 }: Props) {
-  const line = inverted ? "bg-ink/12" : "bg-line";
-  const muted = inverted ? "text-ink/55" : "text-mute";
-  const dot = inverted ? "bg-copper-deep" : "bg-copper";
+  const line = inverted ? "bg-band-ink/12" : "bg-line";
+  const muted = inverted ? "text-band-ink/55" : "text-ink-muted";
+  // The band flips with the theme, so its accent flips too.
+  const dot = inverted ? "bg-band-accent" : "bg-accent";
 
   return (
     <div className={className}>
@@ -40,10 +41,10 @@ export default function SectionHead({
             className={`inline-block h-[5px] w-[5px] rounded-full ${dot}`}
             aria-hidden
           />
-          <span className={inverted ? "text-copper-deep" : "text-copper"}>
+          <span className={inverted ? "text-band-accent" : "text-accent"}>
             {index}
           </span>
-          <span aria-hidden className={inverted ? "text-ink/25" : "text-dim"}>
+          <span aria-hidden className={inverted ? "text-band-ink/25" : "text-ink-dim"}>
             /
           </span>
           {eyebrow}
@@ -54,7 +55,7 @@ export default function SectionHead({
       <Reveal delay={0.06}>
         <h2
           className={`display d-lg mt-8 max-w-[18ch] text-balance ${
-            inverted ? "text-ink" : "text-bone"
+            inverted ? "text-band-ink" : "text-ink"
           }`}
         >
           {heading}

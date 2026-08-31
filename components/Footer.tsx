@@ -20,12 +20,12 @@ export default function Footer() {
       <div className="shell">
         <div className="flex flex-wrap items-start justify-between gap-x-12 gap-y-10">
           <div>
-            <p className="body-base max-w-[34ch] text-mute">
+            <p className="body-base max-w-[34ch] text-ink-muted">
               {t("footer.tagline")}
             </p>
             <a
               href={`mailto:${EMAIL}`}
-              className="ulink mt-4 inline-block text-[0.9375rem] text-bone hover:text-copper"
+              className="ulink mt-4 inline-block text-[0.9375rem] text-ink hover:text-accent"
             >
               {EMAIL}
             </a>
@@ -38,11 +38,11 @@ export default function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1.5 text-[0.9375rem] text-mute transition-colors duration-300 hover:text-bone"
+                className="group inline-flex items-center gap-1.5 text-[0.9375rem] text-ink-muted transition-colors duration-300 hover:text-ink"
               >
                 {social.label}
                 <ArrowUpRight
-                  className="h-3.5 w-3.5 text-dim transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-copper"
+                  className="h-3.5 w-3.5 text-ink-dim transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-accent"
                   aria-hidden
                 />
               </a>
@@ -51,16 +51,16 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-line pt-6">
-          <p className="eyebrow text-dim">
+          <p className="eyebrow text-ink-dim">
             © {year} {t("footer.wordmark")} — {t("footer.copyright")}
           </p>
           <div className="flex items-center gap-8">
-            <p className="eyebrow hidden text-dim sm:block">
+            <p className="eyebrow hidden text-ink-dim sm:block">
               {t("footer.builtWith")}
             </p>
             <button
               onClick={toTop}
-              className="group inline-flex cursor-pointer items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-mute transition-colors duration-300 hover:text-bone"
+              className="group inline-flex cursor-pointer items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted transition-colors duration-300 hover:text-ink"
             >
               {t("footer.toTop")}
               <ArrowUp

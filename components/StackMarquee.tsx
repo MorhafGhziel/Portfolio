@@ -31,10 +31,10 @@ export default function StackMarquee() {
         {run.map((item, i) => (
           <span
             key={`${item}-${i}`}
-            className="eyebrow flex shrink-0 items-center whitespace-nowrap text-dim"
+            className="eyebrow flex shrink-0 items-center whitespace-nowrap text-ink-dim"
           >
             <span className="px-6">{item}</span>
-            <span className="h-[3px] w-[3px] rounded-full bg-copper/60" />
+            <span className="h-[3px] w-[3px] rounded-full bg-accent/60" />
           </span>
         ))}
       </div>

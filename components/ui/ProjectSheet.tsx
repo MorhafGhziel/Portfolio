@@ -91,7 +91,7 @@ export default function ProjectSheet({
           role="dialog"
           aria-modal="true"
           aria-label={name}
-          className="fixed inset-0 z-[60] overflow-y-auto overscroll-contain bg-ink"
+          className="fixed inset-0 z-[60] overflow-y-auto overscroll-contain bg-canvas"
           data-lenis-prevent
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -99,10 +99,10 @@ export default function ProjectSheet({
           transition={{ duration: 0.25 }}
         >
           {/* Sticky bar so the way out is always in the same place */}
-          <div className="sticky top-0 z-10 border-b border-line bg-ink/90 backdrop-blur-md">
+          <div className="sticky top-0 z-10 border-b border-line bg-canvas/90 backdrop-blur-md">
             <div className="shell flex h-16 items-center justify-between gap-4">
-              <p className="eyebrow flex items-center gap-2.5 text-dim">
-                <span className="h-[5px] w-[5px] rounded-full bg-copper" />
+              <p className="eyebrow flex items-center gap-2.5 text-ink-dim">
+                <span className="h-[5px] w-[5px] rounded-full bg-accent" />
                 {t(`work.kind.${data.kind}`)}
                 <span aria-hidden className="text-line-2">
                   /
@@ -111,13 +111,13 @@ export default function ProjectSheet({
               </p>
 
               <div className="flex items-center gap-4">
-                <span className="eyebrow hidden text-dim sm:inline">
+                <span className="eyebrow hidden text-ink-dim sm:inline">
                   {t("work.closeHint")}
                 </span>
                 <button
                   ref={closeRef}
                   onClick={onClose}
-                  className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-line text-mute transition-colors duration-300 hover:border-line-2 hover:text-bone"
+                  className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-line text-ink-muted transition-colors duration-300 hover:border-line-2 hover:text-ink"
                   aria-label={t("nav.close")}
                 >
                   <X className="h-4 w-4" />
@@ -132,9 +132,9 @@ export default function ProjectSheet({
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
             className="shell pt-14 pb-28"
           >
-            <h2 className="display d-lg max-w-[16ch] text-bone">{name}</h2>
+            <h2 className="display d-lg max-w-[16ch] text-ink">{name}</h2>
             {kicker && (
-              <p className="body-lg mt-5 max-w-[46ch] text-mute">{kicker}</p>
+              <p className="body-lg mt-5 max-w-[46ch] text-ink-muted">{kicker}</p>
             )}
 
             <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -159,16 +159,16 @@ export default function ProjectSheet({
             {/* Gallery */}
             <div className="mt-16">
               <div className="flex items-end justify-between gap-6 border-b border-line pb-4">
-                <p className="eyebrow text-dim">{t("work.gallery")}</p>
+                <p className="eyebrow text-ink-dim">{t("work.gallery")}</p>
                 {images.length > 1 && (
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-[0.6875rem] tabular-nums text-dim">
+                    <span className="font-mono text-[0.6875rem] tabular-nums text-ink-dim">
                       {String(shot + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
                     </span>
                     <button
                       onClick={() => step(isRTL ? 1 : -1)}
                       disabled={isRTL ? shot === images.length - 1 : shot === 0}
-                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-line text-mute transition-colors hover:border-line-2 hover:text-bone disabled:opacity-30"
+                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-line text-ink-muted transition-colors hover:border-line-2 hover:text-ink disabled:opacity-30"
                       aria-label="Previous screen"
                     >
                       <ArrowLeft className="h-3.5 w-3.5" />
@@ -176,7 +176,7 @@ export default function ProjectSheet({
                     <button
                       onClick={() => step(isRTL ? -1 : 1)}
                       disabled={isRTL ? shot === 0 : shot === images.length - 1}
-                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-line text-mute transition-colors hover:border-line-2 hover:text-bone disabled:opacity-30"
+                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-line text-ink-muted transition-colors hover:border-line-2 hover:text-ink disabled:opacity-30"
                       aria-label="Next screen"
                     >
                       <ArrowRight className="h-3.5 w-3.5" />
@@ -192,7 +192,7 @@ export default function ProjectSheet({
                 {images.map((src, i) => (
                   <div
                     key={src}
-                    className="w-[88%] shrink-0 snap-center overflow-hidden rounded-[10px] border border-line bg-ink-2 md:w-[70%]"
+                    className="w-[88%] shrink-0 snap-center overflow-hidden rounded-[10px] border border-line bg-surface md:w-[70%]"
                   >
                     <Image
                       src={src}
@@ -210,8 +210,8 @@ export default function ProjectSheet({
             {/* Overview + meta */}
             <div className="mt-20 grid gap-12 border-t border-line pt-12 lg:grid-cols-12 lg:gap-16">
               <div className="lg:col-span-7">
-                <p className="eyebrow text-dim">{t("work.overview")}</p>
-                <p className="body-lg mt-6 whitespace-pre-line text-bone/85">
+                <p className="eyebrow text-ink-dim">{t("work.overview")}</p>
+                <p className="body-lg mt-6 whitespace-pre-line text-ink/85">
                   {ar ? data.descriptionAr : data.description}
                 </p>
               </div>
@@ -223,8 +223,8 @@ export default function ProjectSheet({
                       key={m.label}
                       className="flex items-baseline justify-between gap-6 border-b border-line py-4"
                     >
-                      <dt className="eyebrow text-dim">{m.label}</dt>
-                      <dd className="text-sm text-bone">{m.value}</dd>
+                      <dt className="eyebrow text-ink-dim">{m.label}</dt>
+                      <dd className="text-sm text-ink">{m.value}</dd>
                     </div>
                   ))}
                 </dl>

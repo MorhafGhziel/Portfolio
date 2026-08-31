@@ -31,7 +31,7 @@ export default function FilmStrip({ shots }: { shots: Shot[] }) {
         {shots.map((shot, i) => (
           <figure
             key={shot.src}
-            className="group relative w-[260px] shrink-0 overflow-hidden rounded-[10px] border border-line bg-ink-2 sm:w-[340px] md:w-[420px]"
+            className="group relative w-[260px] shrink-0 overflow-hidden rounded-[10px] border border-line bg-surface sm:w-[340px] md:w-[420px]"
             style={{ transform: `rotate(${i % 2 === 0 ? -1.1 : 0.9}deg)` }}
           >
             <Image
