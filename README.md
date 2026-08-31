@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# morhaf.me
 
-## Getting Started
+Personal portfolio for Morhaf Ghziel — full-stack developer, Riyadh.
 
-First, run the development server:
+Next.js 15 (App Router) · React 19 · TypeScript · Tailwind v4 · Framer Motion.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Design system
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Everything visual is defined in **`app/globals.css`**. There is no
+`tailwind.config.ts` — Tailwind v4 reads its theme from the `@theme static`
+block at the top of that file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Token group | Notes |
+| --- | --- |
+| `--color-ink` → `--color-line-2` | Surface stack. Depth comes from ~4% luminance steps and 1px hairlines, never from shadows or blur. |
+| `--color-bone`, `--color-mute`, `--color-dim` | Type neutrals. `bone` also serves as the canvas of the one light section. |
+| `--color-copper` | **The only accent.** Change this one value to re-skin the site. `--color-copper-deep` is its accessible counterpart on the light band. |
+| `--font-display` | Instrument Serif. Display only, never below 24px. |
+| `--font-sans` / `--font-mono` | Geist and Geist Mono. Mono is reserved for micro-labels and numerals. |
 
-## Learn More
+Type primitives: `.display` + `.d-xl/.d-lg/.d-md/.d-sm` for headlines,
+`.eyebrow` for 11px uppercase mono labels, `.body-lg` / `.body-base` for prose.
 
-To learn more about Next.js, take a look at the following resources:
+Two rules worth keeping:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **`@theme static` is load-bearing.** Tailwind v4 tree-shakes theme variables
+  that no utility class references, and the type primitives read several of
+  them through plain `var()`. Dropping `static` silently kills the serif.
+- **The `next/font` variables live on `<html>`, not `<body>.`** The theme
+  tokens are declared on `:root`, and a `var()` there can only resolve
+  variables declared on `:root` itself.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Content
 
-## Deploy on Vercel
+`SKILL_GROUPS` in `constants/index.ts` lists capabilities, not packages —
+every entry is used in at least one project below.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+All copy lives in `constants/languages.ts` (English + Arabic, with full RTL).
+Projects live in `constants/index.ts`; each entry carries a `kind`
+(`client` / `practice`), `year`, `role` and a one-line `summary`
+that drives the work index and its filters.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+To add a project, append to `PROJECTS` — the counts in the hero ledger and the
+filter chips derive from that array, so nothing else needs updating.
+
+## Structure
+
+```
+app/
+  layout.tsx          fonts, metadata, shell
+  page.tsx            hero → marquee → work → reel → about → contact
+  og.tsx              shared OG/Twitter card renderer
+  api/contact/        Resend-backed contact endpoint
+components/
+  Work.tsx            the editorial index + cursor-following preview
+  ui/ProjectSheet.tsx full-screen project detail
+```
+
+## Environment
+
+`.env.local`:
+
+```
+RESEND_API_KEY=          # required for the contact form
+RESEND_FROM_EMAIL=       # defaults to contact@morhaf.me
+RESEND_TO_EMAIL=         # defaults to ghzielmorhaf@gmail.com
+NEXT_PUBLIC_BASE_URL=    # defaults to https://morhaf.me
+```
+
+## Accessibility & motion
+
+Every animation is gated on `prefers-reduced-motion`: the marquee stops, the
+scroll-driven reel holds still, and Lenis never initialises. The project sheet
+traps Escape and restores scroll; the work index is fully keyboard-reachable
+and its rows reveal previews on focus as well as hover.
