@@ -2,8 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "sonner";
 import { LanguageProvider } from "@/components/LanguageContext";
+import { ThemeProvider, NO_FLASH_SCRIPT } from "@/components/ThemeContext";
+import ThemedToaster from "@/components/ThemedToaster";
 import SmoothScroll from "@/components/SmoothScroll";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -77,8 +78,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0b",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0b" },
+    { media: "(prefers-color-scheme: light)", color: "#faf8f5" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -93,30 +97,30 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${arabic.variable}`}
     >
+      <head>
+        {/* Sets data-theme before first paint so the page never flashes. */}
+        <script dangerouslySetInnerHTML={{ __html: NO_FLASH_SCRIPT }} />
+      </head>
       <body className="font-sans antialiased">
-        <LanguageProvider>
-          <SmoothScroll />
+        <ThemeProvider>
+          <LanguageProvider>
+            <SmoothScroll />
 
-          {/* Keyboard users land here first. */}
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-bone focus:text-ink focus:px-4 focus:py-2 focus:text-sm focus:font-medium"
-          >
-            Skip to content
-          </a>
+            {/* Keyboard users land here first. */}
+            <a
+              href="#main"
+              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-ink focus:text-canvas focus:px-4 focus:py-2 focus:text-sm focus:font-medium"
+            >
+              Skip to content
+            </a>
 
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
+            <Header />
+            <main id="main">{children}</main>
+            <Footer />
 
-          <Toaster
-            position="bottom-right"
-            theme="dark"
-            richColors={false}
-            offset={24}
-            duration={3200}
-          />
-        </LanguageProvider>
+            <ThemedToaster />
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

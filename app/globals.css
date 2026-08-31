@@ -2,28 +2,48 @@
 
 /* ============================================================
    DESIGN TOKENS
-   Accent is a single variable — change --color-copper to
-   re-skin the entire site.
+
+   Names describe roles, not colours: `canvas` is whatever the page sits
+   on and `ink` is whatever you read, so both themes use the same classes
+   and only the values swap.
+
+   Accent is one variable. Change --color-accent (and its light-theme
+   counterpart) to re-skin the whole site.
    ============================================================ */
+
 /* `static` matters: Tailwind v4 tree-shakes theme variables that no
    utility references, and the type primitives below read several of these
-   through plain var() instead of a class. */
+   through plain var() instead of a class.
+
+   The values here are the DARK theme, which is also the fallback for any
+   browser that never runs the no-flash script. */
 @theme static {
   /* Surface stack — each step ~4% luminance, depth without shadows */
-  --color-ink: #0a0a0b;
-  --color-ink-2: #101013;
-  --color-ink-3: #17171b;
+  --color-canvas: #0a0a0b;
+  --color-surface: #101013;
+  --color-surface-2: #17171b;
   --color-line: #232328;
   --color-line-2: #33333a;
 
   /* Type neutrals */
-  --color-bone: #f4f1ec;
-  --color-mute: #8b8b93;
-  --color-dim: #5a5a62;
+  --color-ink: #f4f1ec;
+  --color-ink-muted: #8b8b93;
+  /* 4.6:1 on canvas. This tier carries real information — year, project
+     type, role, section index — at 11px, so it has to clear AA rather than
+     read as decoration. The previous #5a5a62 measured 2.9:1. */
+  --color-ink-dim: #7c7c86;
 
   /* The one accent */
-  --color-copper: #cc9166;
-  --color-copper-deep: #8a5a33;
+  --color-accent: #cc9166;
+  --color-accent-hover: #dda478;
+  --color-accent-deep: #8a5a33;
+
+  /* The single contrasting band (the About section). It inverts against
+     whatever the current theme is, so the page keeps its rhythm in both. */
+  --color-band: #f4f1ec;
+  --color-band-ink: #0a0a0b;
+  /* The band is light here, so its accent must be the dark copper. */
+  --color-band-accent: #8a5a33;
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
@@ -37,12 +57,79 @@
   --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
+/* ------------------------------------------------------------
+   LIGHT THEME
+
+   Unlayered, so it beats the @layer theme block Tailwind emits without
+   needing !important. A warm off-white rather than #fff — the page should
+   still read as paper, not as a screen.
+
+   The accent darkens to #9c5a2c: #cc9166 only reaches 2.5:1 on a light
+   ground, which fails for text. At this value it clears 5.4:1, so the
+   same `text-accent` class stays legible in both themes.
+   ------------------------------------------------------------ */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-canvas: #faf8f5;
+  --color-surface: #f2efe9;
+  --color-surface-2: #eae5dd;
+  --color-line: #e2dcd2;
+  --color-line-2: #cbc3b6;
+
+  --color-ink: #17150f;
+  --color-ink-muted: #5d574c;
+  --color-ink-dim: #736d61;
+
+  --color-accent: #9c5a2c;
+  --color-accent-hover: #82491f;
+  --color-accent-deep: #6f3f1c;
+
+  --color-band: #14130f;
+  --color-band-ink: #f4f1ec;
+  /* Band is dark here, so the accent goes back to the light copper. */
+  --color-band-accent: #cc9166;
+}
+
 /* ============================================================
    BASE
    ============================================================ */
 :root {
   color-scheme: dark;
   --shell: clamp(1.25rem, 5vw, 5rem);
+  /* Alpha washes need a different channel on each ground. */
+  --wash: rgba(255, 255, 255, 0.022);
+  --accent-glow: rgba(204, 145, 102, 0.55);
+}
+
+:root[data-theme="light"] {
+  --wash: rgba(0, 0, 0, 0.028);
+  --accent-glow: rgba(156, 90, 44, 0.32);
+}
+
+/* Theme swaps should feel like a dimmer, not a page reload. Scoped to the
+   painted surfaces so it never fights a transform or a scroll animation. */
+body,
+header,
+section,
+footer,
+input,
+textarea {
+  transition:
+    background-color 0.35s var(--ease-out-quint),
+    border-color 0.35s var(--ease-out-quint),
+    color 0.35s var(--ease-out-quint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  header,
+  section,
+  footer,
+  input,
+  textarea {
+    transition: none;
+  }
 }
 
 * {
@@ -55,8 +142,8 @@ html {
 }
 
 body {
-  background: var(--color-ink);
-  color: var(--color-bone);
+  background: var(--color-canvas);
+  color: var(--color-ink);
   overflow-x: hidden;
   font-feature-settings: "cv11", "ss01";
   text-rendering: optimizeLegibility;
@@ -68,8 +155,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-copper);
-  color: var(--color-ink);
+  background: var(--color-accent);
+  color: var(--color-canvas);
 }
 
 /* Scrollbar — hairline, not a gradient toy */
@@ -77,19 +164,19 @@ body {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-ink);
+  background: var(--color-canvas);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-line-2);
-  border: 3px solid var(--color-ink);
+  border: 3px solid var(--color-canvas);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-dim);
+  background: var(--color-ink-dim);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-copper);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -224,6 +311,10 @@ html.lenis body {
 }
 
 /* Very subtle film grain. Keeps flat black from reading as dead. */
+:root[data-theme="light"] .grain::after {
+  opacity: 0.02;
+}
+
 .grain::after {
   content: "";
   position: absolute;
@@ -252,6 +343,12 @@ html.lenis body {
     saturate(1.35) hue-rotate(-8deg);
   transition: filter 0.6s var(--ease-out-quint);
 }
+
+/* On paper the same image wants to sit lighter, not punch a hole in it. */
+:root[data-theme="light"] .tone {
+  filter: grayscale(1) contrast(0.98) brightness(1.06) sepia(0.14)
+    saturate(1.2) hue-rotate(-8deg);
+}
 .tone-hover:hover .tone,
 .group:hover .tone {
   filter: grayscale(0.2) contrast(1.02) brightness(1) sepia(0.04) saturate(1.05);
@@ -262,6 +359,11 @@ html.lenis body {
   filter: grayscale(1) sepia(0.22) saturate(1.35) hue-rotate(-10deg)
     contrast(1.02) brightness(1.04);
   transition: filter 0.6s var(--ease-out-quint);
+}
+
+:root[data-theme="light"] .tone-warm {
+  filter: grayscale(1) contrast(1.06) brightness(0.92) sepia(0.2)
+    saturate(1.3) hue-rotate(-10deg);
 }
 .group:hover .tone-warm {
   filter: grayscale(0.15) sepia(0.04) saturate(1.05) contrast(1) brightness(1);
@@ -355,9 +457,9 @@ html.lenis body {
 }
 
 [data-sonner-toast] {
-  background: var(--color-ink-2) !important;
+  background: var(--color-surface) !important;
   border: 1px solid var(--color-line) !important;
-  color: var(--color-bone) !important;
+  color: var(--color-ink) !important;
   border-radius: 4px !important;
   box-shadow: none !important;
   padding: 14px 16px !important;
@@ -371,7 +473,7 @@ html.lenis body {
 }
 
 [data-sonner-toast] [data-icon] {
-  color: var(--color-copper) !important;
+  color: var(--color-accent) !important;
 }
 
 [data-sonner-toast] [data-close-button] {

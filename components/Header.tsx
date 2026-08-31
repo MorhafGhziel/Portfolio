@@ -8,6 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "./LanguageContext";
 import { getLenis, scrollToId } from "./SmoothScroll";
 import { languages } from "@/constants/languages";
+import ThemeToggle from "./ui/ThemeToggle";
 
 const NAV = [
   { key: "nav.home", id: "home" },
@@ -23,9 +24,9 @@ export default function Header() {
 
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
-  // The About section is the one light band on the page; the bar inverts
-  // over it rather than sitting on top as a dark slab.
-  const [onLight, setOnLight] = useState(false);
+  // The About section is the one contrasting band on the page; the bar
+  // takes on its palette there rather than sitting over it as a slab.
+  const [onBand, setOnBand] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const onHome = pathname === "/";
@@ -61,11 +62,11 @@ export default function Header() {
   useEffect(() => {
     const onScroll = (y: number) => {
       setScrolled(y > 24);
-      const light = document.querySelector<HTMLElement>("[data-band=\"light\"]");
-      if (!light) return setOnLight(false);
+      const light = document.querySelector<HTMLElement>("[data-band]");
+      if (!light) return setOnBand(false);
       const r = light.getBoundingClientRect();
       const barMid = 40;
-      setOnLight(r.top <= barMid && r.bottom >= barMid);
+      setOnBand(r.top <= barMid && r.bottom >= barMid);
     };
     const native = () => onScroll(window.scrollY);
     const lenis = (e: Event) =>
@@ -113,26 +114,28 @@ export default function Header() {
 
   const otherLang = language === "en" ? "ar" : "en";
 
-  const skin = onLight
+  /* Over the band the bar borrows the band's own palette, so it inverts
+     correctly in either theme without knowing which one is active. */
+  const skin = onBand
     ? {
-        bar: "border-b border-ink/10 bg-bone/90 backdrop-blur-md",
-        strong: "text-ink",
-        muted: "text-ink/55 hover:text-ink",
-        faint: "text-ink/40",
-        accent: "bg-copper-deep",
-        accentText: "text-copper-deep",
-        chip: "border-ink/15 text-ink/60 hover:border-ink/30 hover:text-ink",
-        bar2: "bg-ink",
+        bar: "border-b border-band-ink/10 bg-band/90 backdrop-blur-md",
+        strong: "text-band-ink",
+        muted: "text-band-ink/55 hover:text-band-ink",
+        faint: "text-band-ink/40",
+        accent: "bg-band-accent",
+        accentText: "text-band-accent",
+        chip: "border-band-ink/15 text-band-ink/60 hover:border-band-ink/30 hover:text-band-ink",
+        bar2: "bg-band-ink",
       }
     : {
-        bar: "border-b border-line bg-ink/85 backdrop-blur-md",
-        strong: "text-bone",
-        muted: "text-mute hover:text-bone",
-        faint: "text-dim",
-        accent: "bg-copper",
-        accentText: "text-copper",
-        chip: "border-line text-mute hover:border-line-2 hover:text-bone",
-        bar2: "bg-bone",
+        bar: "border-b border-line bg-canvas/85 backdrop-blur-md",
+        strong: "text-ink",
+        muted: "text-ink-muted hover:text-ink",
+        faint: "text-ink-dim",
+        accent: "bg-accent",
+        accentText: "text-accent",
+        chip: "border-line text-ink-muted hover:border-line-2 hover:text-ink",
+        bar2: "bg-ink",
       };
 
   return (
@@ -216,6 +219,8 @@ export default function Header() {
               {t("status.available")}
             </span>
 
+<ThemeToggle className={skin.chip} />
+
             <button
               onClick={() => setLanguage(otherLang)}
               className={`cursor-pointer rounded-full border px-3 py-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.14em] transition-colors duration-500 ${skin.chip}`}
@@ -233,14 +238,14 @@ export default function Header() {
             >
               <span className="relative block h-3 w-5">
                 <motion.span
-                  className={`absolute left-0 block h-px w-5 ${menuOpen ? "bg-bone" : skin.bar2}`}
+                  className={`absolute left-0 block h-px w-5 ${menuOpen ? "bg-ink" : skin.bar2}`}
                   animate={
                     menuOpen ? { top: 6, rotate: 45 } : { top: 1, rotate: 0 }
                   }
                   transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
                 />
                 <motion.span
-                  className={`absolute left-0 block h-px w-5 ${menuOpen ? "bg-bone" : skin.bar2}`}
+                  className={`absolute left-0 block h-px w-5 ${menuOpen ? "bg-ink" : skin.bar2}`}
                   animate={
                     menuOpen ? { top: 6, rotate: -45 } : { top: 11, rotate: 0 }
                   }
@@ -256,7 +261,7 @@ export default function Header() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-ink md:hidden"
+            className="fixed inset-0 z-40 bg-canvas md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -275,9 +280,9 @@ export default function Header() {
                     duration: 0.55,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="display d-md flex items-baseline gap-4 py-2 text-bone"
+                  className="display d-md flex items-baseline gap-4 py-2 text-ink"
                 >
-                  <span className="eyebrow text-dim">
+                  <span className="eyebrow text-ink-dim">
                     0{i + 1}
                   </span>
                   {t(item.key)}
@@ -288,9 +293,9 @@ export default function Header() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.34 }}
-                className="eyebrow mt-10 flex items-center gap-2 text-dim"
+                className="eyebrow mt-10 flex items-center gap-2 text-ink-dim"
               >
-                <span className="h-[5px] w-[5px] rounded-full bg-copper" />
+                <span className="h-[5px] w-[5px] rounded-full bg-accent" />
                 {t("status.available")} · {t("status.location")}
               </motion.p>
             </nav>
