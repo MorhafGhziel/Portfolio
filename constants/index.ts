@@ -277,11 +277,11 @@ export const PROJECTS: Project[] = [
     image: "/images/omdah/1.png",
     images: [
       "/images/omdah/1.png",
-      "/images/omdah/2.png",
       "/images/omdah/3.png",
+      "/images/omdah/2.png",
+      "/images/omdah/5.png",
       "/images/omdah/6.png",
       "/images/omdah/4.png",
-      "/images/omdah/5.png",
     ],
     techStack: [
       "Next.js",
