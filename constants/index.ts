@@ -178,8 +178,15 @@ export const PROJECTS: Project[] = [
     roleAr: "تصميم + تطوير متكامل",
     summary: "Docs and an infinite canvas in one workspace, with an AI sidebar.",
     summaryAr: "مستندات ولوحة لا نهائية في مساحة عمل واحدة، مع مساعد ذكاء اصطناعي.",
-    image: "/images/lumen/1.png",
-    images: ["/images/lumen/1.png", "/images/lumen/2.png", "/images/lumen/3.png"],
+    image: "/images/lumen/image.png",
+    images: [
+      "/images/lumen/image.png",
+      "/images/lumen/2.png",
+      "/images/lumen/4.png",
+      "/images/lumen/6.png",
+      "/images/lumen/5.png",
+      "/images/lumen/3.png",
+    ],
     techStack: [
       "Next.js",
       "React",
