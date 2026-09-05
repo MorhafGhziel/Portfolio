@@ -268,8 +268,8 @@ export const PROJECTS: Project[] = [
     slug: "omdah",
     kind: "client",
     year: "2026",
-    role: "Design + Full-stack — solo",
-    roleAr: "تصميم + تطوير متكامل — منفرداً",
+    role: "Design + Full-stack",
+    roleAr: "تصميم + تطوير متكامل",
     summary:
       "A bilingual, RTL-first landing site and custom CMS for a Saudi visual-production studio — built as a screening room.",
     summaryAr:
