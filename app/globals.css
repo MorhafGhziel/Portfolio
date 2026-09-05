@@ -376,28 +376,6 @@ html.lenis body {
   .on-coarse { display: none; }
 }
 
-/* Marquee */
-@keyframes marquee-x {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee-x var(--marquee-duration, 40s) linear infinite;
-}
-.marquee-track[data-reverse="true"] {
-  animation-direction: reverse;
-}
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-
 /* Edge fade for full-bleed strips */
 .edge-fade {
   -webkit-mask-image: linear-gradient(
@@ -442,10 +420,6 @@ html.lenis body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-  }
-  .marquee-track {
-    animation: none;
-    transform: none;
   }
 }
 

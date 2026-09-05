@@ -1,6 +1,5 @@
 import { PROJECTS } from "@/constants";
 import Hero from "@/components/Hero";
-import StackMarquee from "@/components/StackMarquee";
 import Work from "@/components/Work";
 import FilmStrip from "@/components/FilmStrip";
 import About from "@/components/About";
@@ -34,7 +33,6 @@ export default function Home() {
         clientCount={clientCount}
         years={YEARS_SHIPPING}
       />
-      <StackMarquee />
       <Work projects={PROJECTS} />
       <FilmStrip shots={REEL.map((src) => ({ src, alt: "" }))} />
       <About />
