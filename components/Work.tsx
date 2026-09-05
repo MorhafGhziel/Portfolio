@@ -17,7 +17,7 @@ import ProjectSheet, { splitTitle } from "./ui/ProjectSheet";
 import Reveal from "./ui/Reveal";
 
 type Filter = "all" | ProjectKind;
-const FILTERS: Filter[] = ["all", "client", "practice"];
+const FILTERS: Filter[] = ["all", "client", "job", "practice"];
 const INITIAL_ROWS = 8;
 
 export default function Work({ projects }: { projects: Project[] }) {
@@ -46,6 +46,7 @@ export default function Work({ projects }: { projects: Project[] }) {
     const base: Record<Filter, number> = {
       all: projects.length,
       client: 0,
+      job: 0,
       practice: 0,
     };
     projects.forEach((p) => (base[p.kind] += 1));

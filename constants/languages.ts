@@ -58,10 +58,12 @@ export const languages = {
         filters: {
           all: "All",
           client: "Client work",
+          job: "Full-time",
           practice: "Practice",
         },
         kind: {
           client: "Client",
+          job: "Full-time",
           practice: "Practice",
         },
         empty: "Nothing in this filter yet.",
@@ -198,10 +200,12 @@ export const languages = {
         filters: {
           all: "الكل",
           client: "أعمال العملاء",
+          job: "دوام كامل",
           practice: "تدريب",
         },
         kind: {
           client: "عميل",
+          job: "دوام كامل",
           practice: "تدريب",
         },
         empty: "لا يوجد شيء في هذا التصنيف بعد.",
