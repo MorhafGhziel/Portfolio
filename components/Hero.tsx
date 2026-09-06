@@ -129,7 +129,7 @@ export default function Hero({ projectCount, clientCount, years }: HeroProps) {
               </ActionButton>
 
               <a
-                href="/Morhaf-Gh.pdf"
+                href="/Morhaf_cv.pdf"
                 download
                 className="group/act inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-[4px] border border-line-2 px-6 py-3.5 text-[0.9375rem] font-medium tracking-[-0.01em] text-ink transition-colors duration-300 hover:border-ink/60 hover:bg-[var(--wash)]"
               >
