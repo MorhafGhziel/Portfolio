@@ -254,7 +254,13 @@ export const PROJECTS: Project[] = [
     roleAr: "تصميم + تطوير متكامل",
     summary: "Upload a PDF, paste a job post, get an ATS-ready CV tailored to it.",
     summaryAr: "ارفع ملفك، الصق وصف الوظيفة، واحصل على سيرة ذاتية مخصصة ومتوافقة مع أنظمة التوظيف.",
-    image: "/images/cvai.png",
+    image: "/images/aicv/1.png",
+    images: [
+      "/images/aicv/1.png",
+      "/images/aicv/2.png",
+      "/images/aicv/3.png",
+      "/images/aicv/4.png",
+    ],
     techStack: [
       "Next.js",
       "React",
