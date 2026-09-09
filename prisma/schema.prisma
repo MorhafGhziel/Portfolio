@@ -1,0 +1,150 @@
+// Analytics + admin schema.
+//
+// Four concerns, deliberately kept apart: one denormalised Event table for
+// everything the site records, three small tables for who may sign in, and
+// one for contact messages.
+
+datasource db {
+  provider = "postgresql"
+  // Serverless functions open many short-lived connections, which is exactly
+  // what Neon's pooled endpoint is for.
+  url       = env("DATABASE_URL")
+  // Migrations need a real session; PgBouncer in transaction mode cannot hold
+  // the advisory locks `migrate` takes out, so those go to the compute endpoint.
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+/// One row per recorded action. Denormalised on purpose: every question the
+/// dashboard asks is a GROUP BY over this table, so there are no joins on the
+/// read path and no aggregation job that can silently stop running.
+///
+/// Note what is NOT here: no IP address, no user agent string, no name, no
+/// email. `visitorId` is a one-way hash that rotates daily (see lib/analytics
+/// /visitor.ts), so this table cannot identify a person even if it leaks.
+model Event {
+  id String @id @default(cuid())
+
+  /// SHA-256(ip + ua + salt + yyyy-mm-dd), truncated. Stable for one day,
+  /// which is what makes "unique visitors today" meaningful and "unique
+  /// visitors across months" deliberately impossible.
+  visitorId String
+  /// Client-generated, resets after 30 minutes of inactivity.
+  sessionId String
+
+  /// pageview | cv_download | project_open | outbound_click | contact_submit
+  type String
+  path String
+  /// Free-form label for the event: a project slug, an outbound host.
+  name String?
+
+  /// Host only ("linkedin.com"), never the full referring URL, which can carry
+  /// search terms and other personal data.
+  referrerHost String?
+  utmSource    String?
+  utmMedium    String?
+  utmCampaign  String?
+
+  /// From Vercel's edge headers — no IP geolocation lookup involved.
+  country String?
+  city    String?
+
+  device  String? // mobile | tablet | desktop
+  browser String?
+  os      String?
+  /// Which language the visitor was reading: en | ar.
+  locale  String?
+
+  createdAt DateTime @default(now())
+
+  // The dashboard filters by time first, always. Every other index is a
+  // narrower version of that so the range scan stays on an index.
+  @@index([createdAt])
+  @@index([type, createdAt])
+  @@index([path, createdAt])
+  @@index([country, createdAt])
+  @@index([referrerHost, createdAt])
+  @@index([visitorId, createdAt])
+  @@index([sessionId])
+}
+
+/// Who is allowed to sign in. Seeded from ADMIN_EMAILS; a code is only ever
+/// sent to an address with a row here.
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  lastLogin DateTime?
+
+  sessions AdminSession[]
+}
+
+/// A one-time sign-in code. The code itself is never stored — only its hash,
+/// so a database leak cannot be replayed into a login.
+model LoginCode {
+  id        String    @id @default(cuid())
+  email     String
+  codeHash  String
+  expiresAt DateTime
+  /// Wrong guesses. The code dies at MAX_CODE_ATTEMPTS, so a 6-digit code
+  /// cannot be brute-forced within its 10-minute life.
+  attempts  Int       @default(0)
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([email, createdAt])
+  @@index([expiresAt])
+}
+
+/// Sessions live in the database rather than in a self-contained JWT, so that
+/// signing out actually revokes access instead of merely dropping a cookie.
+model AdminSession {
+  id        String   @id @default(cuid())
+  userId    String
+  /// SHA-256 of the cookie value. The cookie is the only place the raw token
+  /// exists.
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  /// Shown in the dashboard so an unfamiliar session is recognisable.
+  userAgent String?
+
+  user AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+/// Contact form submissions. The email send remains the primary delivery path;
+/// this table exists so messages are also readable, searchable and markable in
+/// the dashboard rather than living only in an inbox.
+model ContactMessage {
+  id      String @id @default(cuid())
+  name    String
+  email   String
+  subject String
+  message String @db.Text
+
+  read    Boolean @default(false)
+  replied Boolean @default(false)
+
+  country String?
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([read])
+}
+
+/// Fixed-window counters for the public /api/track endpoint. One row per
+/// (key, minute); rows older than the window are pruned opportunistically.
+model RateLimit {
+  key       String   @id
+  count     Int      @default(0)
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}

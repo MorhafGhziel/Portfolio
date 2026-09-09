@@ -4,10 +4,6 @@ import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageContext";
 import { ThemeProvider, NO_FLASH_SCRIPT } from "@/components/ThemeContext";
-import ThemedToaster from "@/components/ThemedToaster";
-import SmoothScroll from "@/components/SmoothScroll";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 /* Grotesque for UI, serif for display, mono for micro-labels.
    The serif/grotesque collision is the whole visual signature. */
@@ -103,23 +99,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
         <ThemeProvider>
-          <LanguageProvider>
-            <SmoothScroll />
-
-            {/* Keyboard users land here first. */}
-            <a
-              href="#main"
-              className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-ink focus:text-canvas focus:px-4 focus:py-2 focus:text-sm focus:font-medium"
-            >
-              Skip to content
-            </a>
-
-            <Header />
-            <main id="main">{children}</main>
-            <Footer />
-
-            <ThemedToaster />
-          </LanguageProvider>
+          <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

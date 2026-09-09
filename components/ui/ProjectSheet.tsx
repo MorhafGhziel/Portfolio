@@ -8,11 +8,21 @@ import type { Project } from "@/constants";
 import { useLanguage } from "../LanguageContext";
 import { getLenis } from "../SmoothScroll";
 import { ActionLink, Chip } from "./Action";
+import { track } from "@/lib/analytics/client";
 
 /** Titles are stored as "Name - What it is". Split them for display. */
 export function splitTitle(title: string) {
   const [name, ...rest] = title.split(" - ");
   return { name, kicker: rest.join(" - ") };
+}
+
+/** Bare host of a URL, so outbound clicks group by destination. */
+function hostOf(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "unknown";
+  }
 }
 
 export default function ProjectSheet({
@@ -144,12 +154,18 @@ export default function ProjectSheet({
                   external
                   variant="primary"
                   arrow
+                  onClick={() => track("outbound_click", { name: hostOf(data.liveUrl) })}
                 >
                   {t("work.visitLive")}
                 </ActionLink>
               )}
               {data.githubUrl && (
-                <ActionLink href={data.githubUrl} external variant="secondary">
+                <ActionLink
+                  href={data.githubUrl}
+                  external
+                  variant="secondary"
+                  onClick={() => track("outbound_click", { name: hostOf(data.githubUrl) })}
+                >
                   <Github className="h-4 w-4" aria-hidden />
                   {t("work.readCode")}
                 </ActionLink>

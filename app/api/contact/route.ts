@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/db";
 
 // Initialize Resend lazily to avoid build-time errors
 const getResend = () => {
@@ -62,6 +63,24 @@ export async function POST(request: NextRequest) {
     const fromEmail =
       process.env.RESEND_FROM_EMAIL || "Portfolio Contact <contact@morhaf.me>";
     const toEmail = process.env.RESEND_TO_EMAIL || "ghzielmorhaf@gmail.com";
+
+    // Store the message before sending. The two paths are independent on
+    // purpose: if Resend is down the message is still in the dashboard, and
+    // if the database is down the email still arrives. Losing a lead because
+    // one of them failed is the outcome worth engineering against.
+    await prisma.contactMessage
+      .create({
+        data: {
+          name: String(name).slice(0, 200),
+          email: String(email).slice(0, 200),
+          subject: String(subject).slice(0, 300),
+          message: String(message).slice(0, 10000),
+          country: request.headers.get("x-vercel-ip-country"),
+        },
+      })
+      .catch((dbError) => {
+        console.error("[contact] could not store message:", dbError);
+      });
 
     const resend = getResend();
     const { data, error } = await resend.emails.send({

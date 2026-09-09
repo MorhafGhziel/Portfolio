@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import { toast } from "sonner";
 import { Check, Loader2 } from "lucide-react";
 import { useLanguage } from "./LanguageContext";
+import { track } from "@/lib/analytics/client";
 
 type Field = "name" | "email" | "subject" | "message";
 type Values = Record<Field, string>;
@@ -61,6 +62,7 @@ export default function ContactForm() {
       setStatus("sent");
       setValues(EMPTY);
       toast.success(t("contact.form.sent"));
+      track("contact_submit");
     } catch {
       setStatus("idle");
       toast.error(t("contact.form.failed"));

@@ -15,6 +15,7 @@ import { useLanguage } from "./LanguageContext";
 import SectionHead from "./ui/SectionHead";
 import ProjectSheet, { splitTitle } from "./ui/ProjectSheet";
 import Reveal from "./ui/Reveal";
+import { track } from "@/lib/analytics/client";
 
 type Filter = "all" | ProjectKind;
 const FILTERS: Filter[] = ["all", "client", "job", "practice"];
@@ -125,7 +126,10 @@ export default function Work({ projects }: { projects: Project[] }) {
                   className="border-b border-line"
                 >
                   <button
-                    onClick={() => setOpen(project)}
+                    onClick={() => {
+                      setOpen(project);
+                      track("project_open", { name: project.slug });
+                    }}
                     onMouseEnter={() => setHovered(project)}
                     onFocus={() => setHovered(project)}
                     className="group relative block w-full cursor-pointer py-7 text-start transition-colors duration-500 md:py-9"
