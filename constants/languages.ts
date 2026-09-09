@@ -35,12 +35,12 @@ export const languages = {
         copyFailed: "Couldn't copy — the address is ghzielmorhaf@gmail.com",
       },
       hero: {
-        fullName: "Morhaf Ghziel",
+        fullName: "Murhaf Ghziel",
         line1: "Full-stack",
         line2: "developer",
         line3: "who ships.",
-        lead: "I'm Morhaf. I design and build web apps end to end — React, Next.js and TypeScript on the front, APIs and databases behind them. Five years in, 15 projects shipped, 6 of them paid client builds.",
-        alt: "Portrait of Morhaf Ghziel",
+        lead: "I'm Murhaf. I design and build web apps end to end — React, Next.js and TypeScript on the front, APIs and databases behind them. Five years in, 15 projects shipped, 6 of them paid client builds.",
+        alt: "Portrait of Murhaf Ghziel",
       },
       ledger: {
         years: "Years shipping",
@@ -142,7 +142,7 @@ export const languages = {
         },
       },
       footer: {
-        wordmark: "Morhaf Ghziel",
+        wordmark: "Murhaf Ghziel",
         tagline: "Full-stack developer. Riyadh, working worldwide.",
         builtWith: "Built with Next.js, Tailwind and Framer Motion.",
         copyright: "All rights reserved.",

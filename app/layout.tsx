@@ -41,8 +41,8 @@ const description =
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Morhaf Ghziel — Full-stack developer",
-    template: "%s — Morhaf Ghziel",
+    default: "Murhaf Ghziel — Full-stack developer",
+    template: "%s — Murhaf Ghziel",
   },
   description,
   keywords: [
@@ -53,21 +53,21 @@ export const metadata: Metadata = {
     "Riyadh",
     "Saudi Arabia",
   ],
-  authors: [{ name: "Morhaf Ghziel", url: baseUrl }],
-  creator: "Morhaf Ghziel",
+  authors: [{ name: "Murhaf Ghziel", url: baseUrl }],
+  creator: "Murhaf Ghziel",
   alternates: { canonical: "/" },
   icons: { icon: "/favicon.ico" },
   openGraph: {
     type: "website",
     url: baseUrl,
-    siteName: "Morhaf Ghziel",
-    title: "Morhaf Ghziel — Full-stack developer",
+    siteName: "Murhaf Ghziel",
+    title: "Murhaf Ghziel — Full-stack developer",
     description,
     // The image comes from app/opengraph-image.tsx via the file convention.
   },
   twitter: {
     card: "summary_large_image",
-    title: "Morhaf Ghziel — Full-stack developer",
+    title: "Murhaf Ghziel — Full-stack developer",
     description,
     creator: "@MorhafGhz",
   },

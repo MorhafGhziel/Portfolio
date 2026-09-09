@@ -133,11 +133,11 @@ export default function Hero({ projectCount, clientCount, years }: HeroProps) {
                   encoding; `download` sets the name the recruiter actually
                   saves, which is the one worth reading in a downloads folder. */}
               <a
-                href="/Morhaf-Ghziel-Full-Stack-Developer.pdf"
-                download="Morhaf Ghziel — Full-Stack Developer.pdf"
+                href="/Murhaf-Ghziel-Full-Stack-Developer.pdf"
+                download="Murhaf Ghziel — Full-Stack Developer.pdf"
                 onClick={() =>
                   track("cv_download", {
-                    name: "Morhaf-Ghziel-Full-Stack-Developer.pdf",
+                    name: "Murhaf-Ghziel-Full-Stack-Developer.pdf",
                   })
                 }
                 className="group/act inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-[4px] border border-line-2 px-6 py-3.5 text-[0.9375rem] font-medium tracking-[-0.01em] text-ink transition-colors duration-300 hover:border-ink/60 hover:bg-[var(--wash)]"

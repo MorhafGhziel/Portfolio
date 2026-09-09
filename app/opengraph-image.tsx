@@ -4,4 +4,4 @@ export { default } from "./og";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Morhaf Ghziel — full-stack developer";
+export const alt = "Murhaf Ghziel — full-stack developer";

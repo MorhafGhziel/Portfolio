@@ -43,7 +43,7 @@ const LEDGER = [
 ];
 
 export default async function OgImage() {
-  const fontData = await loadDisplayFont(HEADLINE + "MorhafGhziel0123456789");
+  const fontData = await loadDisplayFont(HEADLINE + "MurhafGhziel0123456789");
   const display = fontData ? "Instrument Serif" : "serif";
 
   return new ImageResponse(
@@ -117,7 +117,7 @@ export default async function OgImage() {
           }}
         >
           <div style={{ display: "flex", fontSize: 30, color: BONE }}>
-            Morhaf Ghziel
+            Murhaf Ghziel
           </div>
 
           <div style={{ display: "flex", gap: 64 }}>

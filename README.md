@@ -1,6 +1,6 @@
 # morhaf.me
 
-Personal portfolio for Morhaf Ghziel — full-stack developer, Riyadh.
+Personal portfolio for Murhaf Ghziel — full-stack developer, Riyadh.
 
 Next.js 15 (App Router) · React 19 · TypeScript · Tailwind v4 · Framer Motion.
 
