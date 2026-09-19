@@ -33,7 +33,7 @@ const arabic = IBM_Plex_Sans_Arabic({
   display: "swap",
 });
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://morhaf.me";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://murhaf.site";
 
 const description =
   "Full-stack developer in Riyadh. I design and build web apps end to end — React, Next.js and TypeScript on the front, APIs and databases behind them.";

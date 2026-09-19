@@ -1,4 +1,4 @@
-# morhaf.me
+# murhaf.site
 
 Personal portfolio for Murhaf Ghziel — full-stack developer, Riyadh.
 
@@ -91,9 +91,9 @@ components/
 
 ```
 RESEND_API_KEY=          # required for the contact form
-RESEND_FROM_EMAIL=       # defaults to contact@morhaf.me
+RESEND_FROM_EMAIL=       # defaults to contact@murhaf.site
 RESEND_TO_EMAIL=         # defaults to ghzielmorhaf@gmail.com
-NEXT_PUBLIC_BASE_URL=    # defaults to https://morhaf.me
+NEXT_PUBLIC_BASE_URL=    # defaults to https://murhaf.site
 ```
 
 ## Accessibility & motion

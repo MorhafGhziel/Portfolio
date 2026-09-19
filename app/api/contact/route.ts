@@ -59,9 +59,9 @@ export async function POST(request: NextRequest) {
     const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
 
     // Send email using Resend
-    // Using verified domain morhaf.me for production
+    // Sends from the murhaf.site domain, which must be verified in Resend
     const fromEmail =
-      process.env.RESEND_FROM_EMAIL || "Portfolio Contact <contact@morhaf.me>";
+      process.env.RESEND_FROM_EMAIL || "Portfolio Contact <contact@murhaf.site>";
     const toEmail = process.env.RESEND_TO_EMAIL || "ghzielmorhaf@gmail.com";
 
     // Store the message before sending. The two paths are independent on

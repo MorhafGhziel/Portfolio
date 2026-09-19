@@ -73,7 +73,7 @@ describe("normalisePath", () => {
 });
 
 describe("referrerHost", () => {
-  const self = "morhaf.me";
+  const self = "murhaf.site";
 
   it("returns null for direct traffic", () => {
     expect(referrerHost(null, self)).toBeNull();
@@ -81,8 +81,8 @@ describe("referrerHost", () => {
   });
 
   it("returns null for internal navigation, with or without www", () => {
-    expect(referrerHost("https://morhaf.me/work", self)).toBeNull();
-    expect(referrerHost("https://www.morhaf.me/work", self)).toBeNull();
+    expect(referrerHost("https://murhaf.site/work", self)).toBeNull();
+    expect(referrerHost("https://www.murhaf.site/work", self)).toBeNull();
   });
 
   it("keeps only the host, never the path or query", () => {

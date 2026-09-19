@@ -92,7 +92,7 @@ Beyond page views, four things are recorded:
 Add UTM parameters to the URL you put in an application:
 
 ```
-https://morhaf.me/?utm_source=linkedin&utm_campaign=acme-frontend
+https://murhaf.site/?utm_source=linkedin&utm_campaign=acme-frontend
 ```
 
 Opens of that exact link appear under **Sources → Campaigns**, so you can tell

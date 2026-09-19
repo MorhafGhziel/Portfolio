@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
     const { error } = await resend.emails.send({
       from:
         process.env.RESEND_FROM_EMAIL ||
-        "Portfolio Admin <contact@morhaf.me>",
+        "Portfolio Admin <contact@murhaf.site>",
       to: [email],
       subject: `${code} is your dashboard sign-in code`,
       html: signInEmail(code),
