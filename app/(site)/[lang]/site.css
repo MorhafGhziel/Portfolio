@@ -730,6 +730,34 @@ html[dir="rtl"] .horizon--dusk .horizon__l img {
   to { opacity: 0.2; }
 }
 
+/* The hero sets its stage on load: the sky fades up, then each layer of
+   land rises into place, far to near. `translate` is animated so the
+   parallax `transform` keeps working underneath. */
+.hero .horizon__l {
+  animation: landRise 1.8s var(--ease) both;
+  animation-delay: calc(0.1s + var(--d) * 0.55s);
+}
+.hero .horizon__l--sky {
+  animation-name: skyIn;
+  animation-duration: 1.4s;
+}
+@keyframes landRise {
+  from {
+    translate: 0 calc(6vh + var(--d) * 16vh);
+    opacity: 0;
+  }
+}
+@keyframes skyIn {
+  from { opacity: 0; }
+}
+.hero .horizon__stars {
+  animation: skyIn 2s var(--ease-q) 1.2s both;
+}
+/* Dusk stars stay faint: the sky is still light near the horizon. */
+.horizon--dusk .horizon__stars i {
+  opacity: 0.5;
+}
+
 /* A soft shade behind the headline so it stays readable over the bright horizon. */
 .hero::before {
   content: "";

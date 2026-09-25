@@ -11,7 +11,8 @@ import { useEffect, useRef } from "react";
  * depth: the pointer (or a finger) shifts them a few pixels apart, and scrolling
  * sinks the land faster than the sky. The mist drifts on its own.
  *
- * variant="night" is the same land after dark, for Contact.
+ * variant="night" is the same land after dark, for Contact. Both dark skies
+ * carry stars; at dusk only the high, darker sky has them.
  * The light theme swaps in the same land by day (dusk → day, night → dawn).
  * Both sets are in the markup; CSS hides the other theme's set, and lazy
  * loading means a hidden set is never downloaded.
@@ -109,13 +110,11 @@ export default function Horizon({ variant = "dusk", className, priority }: Props
           ))}
         </div>
       ))}
-      {variant === "night" && (
-        <div className="horizon__stars horizon__set--dark" style={{ zIndex: 1 }}>
-          {STARS.map(([x, y, s, d], i) => (
-            <i key={i} style={{ left: `${x}%`, top: `${y}%`, width: s, height: s, animationDelay: `${d}s` }} />
-          ))}
-        </div>
-      )}
+      <div className="horizon__stars horizon__set--dark" style={{ zIndex: 1 }}>
+        {(variant === "night" ? STARS : STARS.filter(([, y]) => y < 30)).map(([x, y, s, d], i) => (
+          <i key={i} style={{ left: `${x}%`, top: `${y}%`, width: s, height: s, animationDelay: `${d}s` }} />
+        ))}
+      </div>
     </div>
   );
 }
