@@ -1,4 +1,4 @@
-import { Bricolage_Grotesque, Geist_Mono, Instrument_Serif, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Almarai, Bricolage_Grotesque, Fraunces, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
 /* Self-hosted at build time by next/font, with size-adjusted fallbacks so
@@ -10,19 +10,20 @@ export const sans = Bricolage_Grotesque({ variable: "--f-sans", subsets: ["latin
 // Metadata only; never in the first paint's critical path.
 export const mono = Geist_Mono({ variable: "--f-mono", subsets: ["latin"], display: "swap", preload: false });
 
-// Only the italic is used (the accent words).
-export const serif = Instrument_Serif({
+// Only the italic is used (the accent words). Soft and "wonky" to match
+// Bricolage's quirks instead of fighting them.
+export const serif = Fraunces({
   variable: "--f-serif",
   subsets: ["latin"],
-  weight: "400",
   style: "italic",
+  axes: ["SOFT", "WONK", "opsz"],
   display: "swap",
 });
 
-export const arSans = IBM_Plex_Sans_Arabic({
+export const arSans = Almarai({
   variable: "--f-ar-sans",
   subsets: ["arabic"],
-  weight: ["400", "500"],
+  weight: ["400", "700"],
   display: "swap",
   preload: false,
 });
