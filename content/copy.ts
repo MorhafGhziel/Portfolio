@@ -8,7 +8,7 @@ import type { Locale } from "./types";
  */
 const en = {
   meta: {
-    title: "Murhaf Ghziel: websites people remember",
+    title: "Murhaf Ghziel · Full-Stack Developer (Next.js, React)",
     description:
       "Full-stack developer who also designs. SaaS, websites and stores, from first sketch to launch.",
     workTitle: "Work",
@@ -208,7 +208,7 @@ type Copy = typeof en;
 
 const ar: Copy = {
   meta: {
-    title: "مرهف غزيل: مواقع تبقى في الذاكرة",
+    title: "مرهف غزيل · مطوّر ويب متكامل (Next.js, React)",
     description: "مطوّر ويب متكامل يصمّم كمان. منصات SaaS ومواقع ومتاجر، من أول فكرة إلى الإطلاق.",
     workTitle: "الأعمال",
     workDescription: "مواقع ومتاجر وتطبيقات ويب صمّمها وبناها مرهف غزيل.",
