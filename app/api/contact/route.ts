@@ -34,7 +34,10 @@ export async function POST(request: NextRequest) {
   }
   const parsed = schema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid fields" }, { status: 400 });
+    // Name the fields so the form can point at them instead of a generic error.
+    const fields = [...new Set(parsed.error.issues.map((i) => String(i.path[0])))];
+    console.warn("[contact] invalid fields:", fields.join(", "));
+    return NextResponse.json({ error: "Invalid fields", fields }, { status: 400 });
   }
   const d = parsed.data;
 

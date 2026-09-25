@@ -70,6 +70,18 @@ export default function Contact({ lang, copy }: Props) {
           locale: lang,
         }),
       });
+      if (res.status === 400) {
+        // The server is stricter than the checks above (e.g. "a@b.c"); show it on the field.
+        const { fields = [] } = (await res.json().catch(() => ({}))) as { fields?: string[] };
+        const map: Record<string, keyof Errors> = { name: "name", email: "email", message: "message", projectType: "type" };
+        const bad: Errors = {};
+        for (const f of fields) if (map[f]) bad[map[f]] = copy.errors[map[f]];
+        if (Object.keys(bad).length) {
+          setErrors(bad);
+          setStatus("idle");
+          return;
+        }
+      }
       if (!res.ok) throw new Error(String(res.status));
       setStatus("sent");
       track("contact_submit", { locale: lang });
