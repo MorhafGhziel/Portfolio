@@ -418,151 +418,115 @@ html[dir="rtl"] .svc[data-open="1"] .svc__name {
 
 /* ---- process -------------------------------------------------------------- */
 
-/* A timeline: the line draws across, each stop lights up as it passes,
-   and every step sits on its own card below its stop. */
-.process {
+/* The steps climb a dune ridge; a small sun walks it as you scroll. */
+.process__ridge {
   position: relative;
+  height: clamp(110px, 11vw, 170px);
+  margin-bottom: 28px;
+}
+.process__ridge svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.process__ridge path {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+.process__track {
+  stroke: var(--line-2);
+  stroke-dasharray: 2 6;
+}
+.process__line {
+  stroke: var(--accent);
+}
+.process__stop,
+.process__sun {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: calc(var(--y) * 1%);
+  border-radius: 50%;
+  translate: -50% -50%;
+}
+.process__stop {
+  width: 9px;
+  height: 9px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1.5px var(--line-2);
+}
+.process__sun {
+  --x: 0;
+  --y: 93.75;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent),
+    0 0 36px 8px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+/* Without the walk (reduced motion, no JS) the sun rests on the crest. */
+html:not(.js) .process__sun,
+.process[data-static] .process__sun {
+  --x: 100;
+  --y: 6.25;
+}
+html[dir="rtl"] .process__ridge {
+  scale: -1 1;
+}
+.process__steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
 }
-.process::before,
-.process::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  inset-inline-start: 0;
-  width: 100%;
-  height: 1px;
-  background: var(--line-2);
+/* Each step starts under its stop on the ridge (the quarter lines). */
+.process__step {
+  padding-inline-end: 32px;
+  transition: opacity 0.6s var(--ease-q);
 }
-.process::after {
-  background: linear-gradient(90deg, var(--accent), var(--ink));
-  transform: scaleX(0);
-  transform-origin: left;
-}
-html[dir="rtl"] .process::after {
-  background: linear-gradient(-90deg, var(--accent), var(--ink));
-  transform-origin: right;
-}
-html:not(.js) .process::after,
-.process[data-in]::after {
-  transform: scaleX(1);
-  transition: transform 1.8s var(--ease);
-}
-.process li {
-  position: relative;
-  display: flex;
-  padding-top: 36px;
-}
-.process__node {
-  position: absolute;
-  top: -5px;
-  inset-inline-start: 22px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--bg);
-  box-shadow: inset 0 0 0 1px var(--ink-2);
-  transition: background-color 0.5s var(--ease-q), box-shadow 0.5s var(--ease-q);
-}
-html:not(.js) .process__node,
-.process[data-in] .process__node {
-  background: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent), 0 0 0 6px color-mix(in srgb, var(--accent) 16%, transparent);
-  transition-delay: calc(0.2s + var(--i) * 0.28s);
-}
-.process__card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 48px;
-  min-height: 270px;
-  padding: clamp(22px, 2vw, 30px);
-  border-radius: calc(var(--r) - 6px);
-  background: var(--surface);
-  box-shadow: inset 0 0 0 1px var(--line);
-  transition: box-shadow 0.4s var(--ease-q), transform 0.5s var(--ease);
-}
-.process li:hover .process__card {
-  box-shadow: inset 0 0 0 1px var(--line-2);
-  transform: translateY(-3px);
-}
-.process__n {
-  font-size: clamp(48px, 4.4vw, 72px);
-  line-height: 1;
+.process__step .mono {
   color: var(--ink-3);
-  transition: color 0.4s var(--ease-q);
+  transition: color 0.6s var(--ease-q);
 }
-.process li:hover .process__n {
+.process__step h3 {
+  margin: 10px 0 12px;
+  font-size: clamp(30px, 3vw, 48px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+html[lang="ar"] .process__step h3 {
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+.process__step p {
+  color: var(--ink-2);
+  max-width: 26ch;
+}
+/* Before the sun arrives, a step waits in the dusk. */
+html.js .process:not([data-static]) .process__step:not([data-lit]) {
+  opacity: 0.32;
+}
+.process__step[data-lit] .mono {
   color: var(--accent);
 }
-.process h3 {
-  margin-bottom: 10px;
-  font-size: clamp(22px, 1.9vw, 30px);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-}
-html[lang="ar"] .process h3 {
-  letter-spacing: 0;
-  line-height: 1.4;
-}
-.process p {
-  color: var(--ink-2);
-  max-width: 30ch;
-}
-html.js .process li {
-  opacity: 0;
-  transform: translateY(12px);
-}
-html.js .process[data-in] li {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.8s var(--ease-q), transform 0.8s var(--ease-q);
-  transition-delay: calc(0.25s + var(--i) * 0.28s);
-}
-/* Narrower screens: the same timeline, standing up. */
 @media (max-width: 860px) {
-  .process {
+  .process__ridge {
+    display: none;
+  }
+  .process__steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 24px;
+  }
+  .process__step {
+    padding: 0;
+  }
+  html.js .process:not([data-static]) .process__step:not([data-lit]) {
+    opacity: 1;
+  }
+}
+@media (max-width: 520px) {
+  .process__steps {
     grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  .process::before,
-  .process::after {
-    inset-inline-start: 5px;
-    width: 1px;
-    height: 100%;
-  }
-  .process::after,
-  html[dir="rtl"] .process::after {
-    background: linear-gradient(180deg, var(--accent), var(--ink));
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-  html:not(.js) .process::after,
-  .process[data-in]::after {
-    transform: scaleY(1);
-  }
-  .process li {
-    padding-top: 0;
-    padding-inline-start: 30px;
-  }
-  .process__node {
-    top: 28px;
-    inset-inline-start: 0;
-  }
-  .process__card {
-    min-height: 0;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 20px;
-  }
-  .process__n {
-    font-size: 40px;
-    min-width: 1.4em;
+    row-gap: 36px;
   }
 }
 

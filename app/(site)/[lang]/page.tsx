@@ -7,6 +7,7 @@ import Hero from "@/components/site/Hero";
 import Reel from "@/components/site/Reel";
 import Title from "@/components/site/Title";
 import WorkGrid from "@/components/site/WorkGrid";
+import Process from "@/components/site/Process";
 import Services from "@/components/site/Services";
 import Contact from "@/components/site/Contact";
 import Horizon from "@/components/site/Horizon";
@@ -72,22 +73,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <div className="section__head">
             <Title id="process-title" text={c.process.title} />
           </div>
-          <ol className="process" data-reveal="">
-            {c.process.steps.map((s, i) => (
-              <li key={s.name} style={{ ["--i" as string]: i }}>
-                <i className="process__node" aria-hidden="true" />
-                <div className="process__card">
-                  <span className="process__n serif" aria-hidden="true">
-                    0{i + 1}
-                  </span>
-                  <div>
-                    <h3>{s.name}</h3>
-                    <p>{s.line}</p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <Process steps={c.process.steps} />
         </div>
       </section>
 
