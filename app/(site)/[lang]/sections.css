@@ -104,7 +104,7 @@
 }
 .card__badge {
   position: absolute;
-  top: 16px;
+  bottom: 16px;
   inset-inline-start: 16px;
   z-index: 1;
   padding: 7px 11px;

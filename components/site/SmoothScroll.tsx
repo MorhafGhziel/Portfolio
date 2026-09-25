@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 let lenis: Lenis | null = null;
+let fromHistory = false;
 /** Shared so the menu and the reel player can pause the page. */
 export const getLenis = () => lenis;
 
@@ -40,8 +41,21 @@ export default function SmoothScroll() {
     };
   }, []);
 
-  // New page: re-measure once it has painted.
+  // Remember whether a navigation came from back/forward, where the browser
+  // restores the old position. Anything else starts at the top.
   useEffect(() => {
+    const onPop = () => (fromHistory = true);
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  // New page: start at the top (unless going back), then re-measure.
+  useEffect(() => {
+    if (!fromHistory && !window.location.hash) {
+      lenis?.scrollTo(0, { immediate: true, force: true });
+      window.scrollTo(0, 0);
+    }
+    fromHistory = false;
     const id = requestAnimationFrame(() => {
       lenis?.resize();
       ScrollTrigger.refresh();
