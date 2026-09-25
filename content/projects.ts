@@ -64,6 +64,7 @@ export const PROJECTS: Project[] = [
       "Vercel"
     ],
     "liveUrl": "https://www.simastudio.it.com/",
+    "codeUrl": "https://github.com/MorhafGhziel/SimaStudio",
     "cover": "/images/sima/1.png",
     "gallery": [
       "/images/sima/1.png",
