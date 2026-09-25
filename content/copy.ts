@@ -127,7 +127,9 @@ const en = {
     messagePh: "What are you building, and what would success look like?",
     send: "Send message",
     sending: "Sending…",
-    success: "Message sent. I'll reply",
+    sentTitle: "Message sent.",
+    sentLine: "Thanks. I'll reply {time} at",
+    sendAnother: "Send another message",
     errors: {
       name: "Please enter your name.",
       email: "Please enter a valid email.",
@@ -286,7 +288,9 @@ const ar: Copy = {
     messagePh: "وش تبني؟ وكيف تعرف إنه نجح؟",
     send: "أرسل",
     sending: "جارٍ الإرسال…",
-    success: "وصلت رسالتك. أرد عليك",
+    sentTitle: "وصلت رسالتك.",
+    sentLine: "شكراً لك. أرد عليك {time} على",
+    sendAnother: "أرسل رسالة ثانية",
     errors: {
       name: "اكتب اسمك.",
       email: "اكتب بريد صحيح.",

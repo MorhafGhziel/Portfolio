@@ -20,6 +20,7 @@ export default function Contact({ lang, copy }: Props) {
   const [timeline, setTimeline] = useState<string>("");
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<Status>("idle");
+  const [sentTo, setSentTo] = useState("");
 
   const wa = `https://wa.me/${SETTINGS.whatsapp}?text=${encodeURIComponent(copy.whatsappText)}`;
 
@@ -83,6 +84,7 @@ export default function Contact({ lang, copy }: Props) {
         }
       }
       if (!res.ok) throw new Error(String(res.status));
+      setSentTo(email);
       setStatus("sent");
       track("contact_submit", { locale: lang });
       form.reset();
@@ -156,13 +158,24 @@ export default function Contact({ lang, copy }: Props) {
       </div>
 
       <form className="form" noValidate onSubmit={submit}>
-        <h3 className="form__title">{copy.formTitle}</h3>
         {status === "sent" ? (
-          <p className="form__done" role="status">
-            {copy.success} {SETTINGS.responseTime[lang]}.
-          </p>
+          <div className="form__done" role="status">
+            <svg className="form__check" viewBox="0 0 52 52" aria-hidden="true">
+              <circle cx="26" cy="26" r="24" />
+              <path d="M16 26.5l7 7 13-14" />
+            </svg>
+            <h3>{copy.sentTitle}</h3>
+            <p>
+              {copy.sentLine.replace("{time}", SETTINGS.responseTime[lang])}{" "}
+              <b dir="ltr">{sentTo}</b>
+            </p>
+            <button type="button" className="btn btn--ghost" onClick={() => setStatus("idle")}>
+              {copy.sendAnother}
+            </button>
+          </div>
         ) : (
           <>
+            <h3 className="form__title">{copy.formTitle}</h3>
             <div className="form__row">
               <label className="field">
                 <span>{copy.name}</span>
