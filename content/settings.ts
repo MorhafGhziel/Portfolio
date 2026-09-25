@@ -14,12 +14,13 @@ export const SETTINGS: Settings = {
     label: { en: "Available for new projects", ar: "متاح لمشاريع جديدة" },
   },
   responseTime: { en: "within 24 hours", ar: "خلال ٢٤ ساعة" },
-  // Placeholder ranges: confirm or change. See CONTENT-NEEDED.md.
+  // Ranges follow SIMA's published packages: Starter from 2,500, Signature
+  // 4,500, Immersive from 8,000 SAR; SaaS builds sit above that.
   budgets: [
-    { id: "lt10", label: { en: "Under 10k SAR", ar: "أقل من ١٠ آلاف ريال" } },
+    { id: "lt5", label: { en: "Under 5k SAR", ar: "أقل من ٥ آلاف ريال" } },
+    { id: "5-10", label: { en: "5–10k SAR", ar: "٥–١٠ آلاف ريال" } },
     { id: "10-25", label: { en: "10–25k SAR", ar: "١٠–٢٥ ألف ريال" } },
-    { id: "25-60", label: { en: "25–60k SAR", ar: "٢٥–٦٠ ألف ريال" } },
-    { id: "60plus", label: { en: "60k+ SAR", ar: "أكثر من ٦٠ ألف ريال" } },
+    { id: "25plus", label: { en: "25k+ SAR", ar: "أكثر من ٢٥ ألف ريال" } },
     { id: "unsure", label: { en: "Not sure yet", ar: "ما حددت بعد" } },
   ],
   timelines: [

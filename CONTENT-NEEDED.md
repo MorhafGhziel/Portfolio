@@ -7,7 +7,7 @@ hidden or marked here. Nothing was invented.
 
 | What | Where | Why |
 |---|---|---|
-| **Budget ranges** | `content/settings.ts` → `budgets` | Placeholder ranges: under 10k / 10–25k / 25–60k / 60k+ SAR. Set your own. |
+| **Budget ranges** | `content/settings.ts` → `budgets` | Now based on SIMA's real packages: under 5k / 5–10k / 10–25k / 25k+ SAR. Change if your personal rates differ. |
 | **Response time** | `content/settings.ts` → `responseTime` | "within 24 hours", carried over from the old site. |
 | **Availability** | `content/settings.ts` → `availability` | `open: true`. Set to `false` to hide the status line. |
 | **Challenge / idea texts** | `content/projects.ts` | Written from your existing build notes, then shortened. Read them once. |
