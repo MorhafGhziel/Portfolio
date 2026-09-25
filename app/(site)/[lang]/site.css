@@ -463,7 +463,6 @@ html[dir="rtl"] .nav__pill {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-inline-end: 18px;
   font-weight: 600;
   font-size: 15px;
   letter-spacing: -0.02em;
@@ -480,6 +479,13 @@ html[lang="ar"] .nav__logo {
 }
 .nav__links {
   display: flex;
+}
+.nav__sep {
+  flex: none;
+  width: 1px;
+  height: 18px;
+  margin-inline: 12px;
+  background: var(--line-2);
 }
 .nav__links a,
 .nav__lang {
@@ -499,7 +505,6 @@ html[lang="ar"] .nav__logo {
   background: var(--tint-2);
 }
 .nav__lang {
-  margin-inline-start: 4px;
   min-width: 40px;
   justify-content: center;
   box-shadow: inset 0 0 0 1px var(--line);
@@ -605,7 +610,8 @@ html[lang="ar"] .nav__logo {
 
 @media (max-width: 900px) {
   .nav__links,
-  .nav__lang {
+  .nav__lang,
+  .nav__sep--end {
     display: none;
   }
   .nav__pill {

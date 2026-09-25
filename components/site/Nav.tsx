@@ -57,6 +57,7 @@ export default function Nav({ lang, copy }: Props) {
           <span>{lang === "ar" ? "مرهف" : "Murhaf"}</span>
           <i aria-hidden="true" />
         </Link>
+        <i className="nav__sep" aria-hidden="true" />
         <nav className="nav__links" aria-label="Primary">
           {links.map((l) =>
             onHome ? (
@@ -70,6 +71,7 @@ export default function Nav({ lang, copy }: Props) {
             ),
           )}
         </nav>
+        <i className="nav__sep nav__sep--end" aria-hidden="true" />
         <a className="nav__lang" href={switchHref} hrefLang={other} lang={other} aria-label={copy.langSwitchLabel}>
           {copy.langSwitch}
         </a>
