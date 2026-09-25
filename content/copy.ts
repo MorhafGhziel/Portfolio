@@ -26,6 +26,8 @@ const en = {
     home: "Home",
     langSwitch: "ع",
     langSwitchLabel: "اقرأ بالعربية",
+    toLight: "Switch to light mode",
+    toDark: "Switch to dark mode",
   },
   hero: {
     title: "I design and build\nwebsites people\n*remember*.",
@@ -183,6 +185,8 @@ const ar: Copy = {
     home: "الرئيسية",
     langSwitch: "EN",
     langSwitchLabel: "Read in English",
+    toLight: "الوضع الفاتح",
+    toDark: "الوضع الداكن",
   },
   hero: {
     title: "أصمّم وأبني مواقع\n*تبقى* في الذاكرة.",

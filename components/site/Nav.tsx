@@ -8,6 +8,7 @@ import type { Locale } from "@/content/types";
 import { SETTINGS } from "@/content/settings";
 import { getLenis } from "./SmoothScroll";
 import Magnetic from "./Magnetic";
+import ThemeToggle from "./ThemeToggle";
 
 type Props = { lang: Locale; copy: Copy["nav"] };
 
@@ -72,6 +73,7 @@ export default function Nav({ lang, copy }: Props) {
         <a className="nav__lang" href={switchHref} hrefLang={other} lang={other} aria-label={copy.langSwitchLabel}>
           {copy.langSwitch}
         </a>
+        <ThemeToggle toLight={copy.toLight} toDark={copy.toDark} />
       </div>
       <Magnetic>
         <a className="btn btn--solid nav__cta" href={sec("contact")}>

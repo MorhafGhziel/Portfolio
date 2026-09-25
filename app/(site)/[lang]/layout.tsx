@@ -14,6 +14,7 @@ import SmoothScroll from "@/components/site/SmoothScroll";
 import Cursor from "@/components/site/Cursor";
 import Analytics from "@/components/site/Analytics";
 import Reveals from "@/components/site/Reveals";
+import { SITE_THEME_SCRIPT } from "@/components/site/ThemeToggle";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
 export const viewport: Viewport = {
   themeColor: "#120E17",
-  colorScheme: "dark",
+  colorScheme: "dark light",
 };
 
 export default async function LangLayout({
@@ -83,6 +84,7 @@ export default async function LangLayout({
         <head>
           {/* Marks JS-capable browsers before paint, so reveal styles never hide content without JS. */}
           <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+          <script dangerouslySetInnerHTML={{ __html: SITE_THEME_SCRIPT }} />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(org) }}
