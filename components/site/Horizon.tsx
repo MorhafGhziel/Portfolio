@@ -38,19 +38,38 @@ const STARS: [number, number, number, number][] = [
 
 const LIGHT = { dusk: "day", night: "dawn" } as const;
 
+// The dusk sky: a denser field, placed by a seeded generator so the server
+// and the browser draw the same sky. [x %, y %, size px, delay s]
+const DUSK_STARS: [number, number, number, number][] = (() => {
+  let seed = 11;
+  const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+  return Array.from({ length: 46 }, () => {
+    const y = rnd() * 36;
+    return [rnd() * 100, y, y < 18 && rnd() > 0.6 ? 2.6 : 1.4 + rnd() * 1.2, rnd() * 4] as [number, number, number, number];
+  });
+})();
+// Shooting stars: [start x %, start y %, seconds per cycle, delay s]
+const METEORS: [number, number, number, number][] = [
+  [22, 4, 9, 1.5],
+  [64, 2, 13, 5],
+  [44, 10, 17, 10],
+];
+
 // The day sky: soft clouds drifting and a few birds gliding across (hero only).
 // [top %, width vw, seconds to cross, start offset %]
 const CLOUDS: [number, number, number, number][] = [
-  [8, 26, 150, 10],
-  [18, 18, 190, 55],
-  [4, 14, 170, 80],
-  [26, 22, 210, 30],
+  [7, 30, 150, 12],
+  [17, 22, 190, 55],
+  [3, 18, 170, 82],
+  [25, 26, 210, 34],
 ];
 // [top %, size px, seconds to cross, start offset %]
 const BIRDS: [number, number, number, number][] = [
-  [20, 18, 70, 25],
-  [23, 13, 70, 29],
-  [14, 15, 95, 70],
+  [19, 28, 60, 22],
+  [22.5, 22, 60, 26],
+  [17, 20, 60, 27.5],
+  [12, 24, 85, 68],
+  [28, 18, 110, 48],
 ];
 
 type Props = { variant?: "dusk" | "night"; className?: string; priority?: boolean };
@@ -149,8 +168,11 @@ export default function Horizon({ variant = "dusk", className, priority }: Props
         </div>
       )}
       <div className="horizon__stars horizon__set--dark" style={{ zIndex: 1 }}>
-        {(variant === "night" ? STARS : STARS.filter(([, y]) => y < 30)).map(([x, y, s, d], i) => (
+        {(variant === "night" ? STARS : DUSK_STARS).map(([x, y, s, d], i) => (
           <i key={i} style={{ left: `${x}%`, top: `${y}%`, width: s, height: s, animationDelay: `${d}s` }} />
+        ))}
+        {METEORS.map(([x, y, t, d], i) => (
+          <b key={i} className="horizon__meteor" style={{ left: `${x}%`, top: `${y}%`, animationDuration: `${t}s`, animationDelay: `${d}s` }} />
         ))}
       </div>
     </div>
