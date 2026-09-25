@@ -54,7 +54,7 @@ export default function Process({ steps }: { steps: Step[] }) {
       return lo / total;
     });
     const items = el.querySelectorAll<HTMLElement>(".process__step");
-    p.style.strokeDasharray = `${total}`;
+    p.style.strokeDasharray = "1";
 
     let cur = 0;
     let raf = 0;
@@ -67,7 +67,7 @@ export default function Process({ steps }: { steps: Step[] }) {
       // 0 as the ridge enters the lower screen, 1 once it sits in the upper third.
       const target = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (vh * 0.55)));
       cur += (target - cur) * 0.08;
-      p.style.strokeDashoffset = `${total * (1 - cur)}`;
+      p.style.strokeDashoffset = `${1 - cur}`;
       const pt = p.getPointAtLength(total * cur);
       s.style.setProperty("--x", `${pt.x / 10}`);
       s.style.setProperty("--y", `${pt.y / 1.6}`);
@@ -86,8 +86,9 @@ export default function Process({ steps }: { steps: Step[] }) {
     <div ref={root} className="process">
       <div className="process__ridge" aria-hidden="true">
         <svg viewBox="0 0 1000 160" preserveAspectRatio="none">
-          <path className="process__track" d={RIDGE} vectorEffect="non-scaling-stroke" />
-          <path ref={path} className="process__line" d={RIDGE} vectorEffect="non-scaling-stroke" />
+          <path className="process__track" d={RIDGE} />
+          {/* pathLength="1": the draw-in is a share of the line, whatever size it's shown at. */}
+          <path ref={path} className="process__line" d={RIDGE} pathLength={1} />
         </svg>
         {STOPS.map(([x, y], i) => (
           <i key={i} className="process__stop" style={{ ["--x" as string]: x / 10, ["--y" as string]: y / 1.6 }} />

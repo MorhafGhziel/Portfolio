@@ -429,14 +429,15 @@ html[dir="rtl"] .svc[data-open="1"] .svc__name {
   height: 100%;
   overflow: visible;
 }
+/* The box stretches to the section, so widths are in its own units:
+   about 1.5px on screen. */
 .process__ridge path {
   fill: none;
-  stroke-width: 1.5;
+  stroke-width: 1.6;
   stroke-linecap: round;
 }
 .process__track {
   stroke: var(--line-2);
-  stroke-dasharray: 2 6;
 }
 .process__line {
   stroke: var(--accent);
