@@ -54,6 +54,7 @@ export default function Process({ steps }: { steps: Step[] }) {
       return lo / total;
     });
     const items = el.querySelectorAll<HTMLElement>(".process__step");
+    const stops = el.querySelectorAll<HTMLElement>(".process__stop");
     p.style.strokeDasharray = "1";
 
     let cur = 0;
@@ -71,7 +72,11 @@ export default function Process({ steps }: { steps: Step[] }) {
       const pt = p.getPointAtLength(total * cur);
       s.style.setProperty("--x", `${pt.x / 10}`);
       s.style.setProperty("--y", `${pt.y / 0.4}`);
-      items.forEach((it, i) => it.toggleAttribute("data-lit", cur >= at[i] - 0.01));
+      items.forEach((it, i) => {
+        const lit = cur >= at[i] - 0.01;
+        it.toggleAttribute("data-lit", lit);
+        stops[i]?.toggleAttribute("data-lit", lit);
+      });
     };
     const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
     io.observe(el);
