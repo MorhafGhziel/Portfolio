@@ -19,7 +19,8 @@ const STOPS: [number, number][] = [
   [508, 20],
   [758, 20],
 ];
-const RIDGE = "M0 20 H 1000";
+// The line ends at the last stop, so the sun comes to rest on it.
+const RIDGE = "M0 20 H 758";
 
 export default function Process({ steps }: { steps: Step[] }) {
   const root = useRef<HTMLDivElement>(null);

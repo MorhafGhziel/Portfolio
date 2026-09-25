@@ -471,10 +471,10 @@ html:not(.js) .process__stop,
   box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent),
     0 0 36px 8px color-mix(in srgb, var(--accent) 45%, transparent);
 }
-/* Without the walk (reduced motion, no JS) the sun rests at the end. */
+/* Without the walk (reduced motion, no JS) the sun rests on the last stop. */
 html:not(.js) .process__sun,
 .process[data-static] .process__sun {
-  --x: 100;
+  --x: 75.8;
   --y: 50;
 }
 html[dir="rtl"] .process__ridge {
