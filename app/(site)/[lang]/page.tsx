@@ -112,23 +112,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             </dl>
           </div>
         </div>
-        <div className="wrap history">
-          <h3 className="mono history__title">{c.about.historyTitle}</h3>
-          <ol>
-            {c.about.history.map((h) => (
-              <li key={h.org + h.role} className="history__row" data-fade="" data-reveal="">
-                <span className="mono history__when">{h.when}</span>
-                <div>
-                  <p className="history__role">
-                    {h.role} <span>· {h.org}</span>
-                  </p>
-                  <p className="history__line">{h.line}</p>
-                </div>
-                <span className="mono history__where">{h.where}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
       </section>
 
       {/* 07 — Contact: the horizon again, after dark */}
