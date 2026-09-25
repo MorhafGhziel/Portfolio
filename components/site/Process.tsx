@@ -73,7 +73,7 @@ export default function Process({ steps }: { steps: Step[] }) {
       s.style.setProperty("--x", `${pt.x / 10}`);
       s.style.setProperty("--y", `${pt.y / 0.4}`);
       items.forEach((it, i) => {
-        const lit = cur >= at[i] - 0.01;
+        const lit = cur >= at[i];
         it.toggleAttribute("data-lit", lit);
         stops[i]?.toggleAttribute("data-lit", lit);
       });
