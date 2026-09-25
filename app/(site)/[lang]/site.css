@@ -333,29 +333,41 @@ html[dir="rtl"] .btn:hover::before {
   left: 0;
   z-index: 150;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.cursor[data-on="1"] {
+  opacity: 1;
+}
+.cursor[data-hidden="1"] {
+  opacity: 0;
 }
 .cursor span {
-  display: inline-flex;
-  align-items: center;
-  height: 30px;
-  padding: 0 14px;
-  border-radius: 999px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
   background: var(--ink);
   color: var(--bg);
   font-family: var(--f-mono), monospace;
-  font-size: 11px;
+  font-size: 0;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-  opacity: 0;
-  transform: scale(0.6);
-  transform-origin: 0 0;
-  transition: opacity 0.2s var(--ease-q), transform 0.3s var(--ease);
+  transition: width 0.3s var(--ease-q), height 0.3s var(--ease-q), margin 0.3s var(--ease-q), font-size 0.2s;
 }
-.cursor[data-on="1"] span {
-  opacity: 1;
-  transform: none;
+.cursor[data-label="1"] span {
+  width: 84px;
+  height: 84px;
+  margin: -42px 0 0 -42px;
+  font-size: 11px;
+}
+html.has-cursor [data-cursor],
+html.has-cursor [data-cursor] * {
+  cursor: none;
 }
 
 /* ---- nav ------------------------------------------------------------------ */
