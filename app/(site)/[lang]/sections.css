@@ -463,7 +463,7 @@ html:not(.js) .process__stop,
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
 }
 .process__sun {
-  --x: 0;
+  --x: 12.5;
   --y: 50;
   width: 16px;
   height: 16px;
@@ -474,7 +474,7 @@ html:not(.js) .process__stop,
 /* Without the walk (reduced motion, no JS) the sun rests on the last stop. */
 html:not(.js) .process__sun,
 .process[data-static] .process__sun {
-  --x: 75.8;
+  --x: 87.5;
   --y: 50;
 }
 html[dir="rtl"] .process__ridge {
@@ -484,9 +484,10 @@ html[dir="rtl"] .process__ridge {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
-/* Each step starts under its stop on the ridge (the quarter lines). */
+/* Each step is centred under its stop. */
 .process__step {
-  padding-inline-end: 32px;
+  padding-inline: 16px;
+  text-align: center;
   transition: opacity 0.6s var(--ease-q);
 }
 .process__step .mono {
@@ -507,6 +508,7 @@ html[lang="ar"] .process__step h3 {
 .process__step p {
   color: var(--ink-2);
   max-width: 26ch;
+  margin-inline: auto;
 }
 /* Before the sun arrives, a step waits in the dusk. */
 html.js .process:not([data-static]) .process__step:not([data-lit]) {
@@ -525,6 +527,10 @@ html.js .process:not([data-static]) .process__step:not([data-lit]) {
   }
   .process__step {
     padding: 0;
+    text-align: start;
+  }
+  .process__step p {
+    margin-inline: 0;
   }
   html.js .process:not([data-static]) .process__step:not([data-lit]) {
     opacity: 1;

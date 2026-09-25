@@ -11,16 +11,15 @@ type Step = { name: string; line: string };
  * Reduced motion (or no JS): the whole ridge is drawn and every step is lit.
  */
 
-// The line, in a 1000 × 40 box. Stops sit at the start of each quarter,
-// so every step reads from its stop.
+// The line, in a 1000 × 40 box. Stops sit over the centre of each quarter,
+// above their centred step; the line runs from the first to the last.
 const STOPS: [number, number][] = [
-  [8, 20],
-  [258, 20],
-  [508, 20],
-  [758, 20],
+  [125, 20],
+  [375, 20],
+  [625, 20],
+  [875, 20],
 ];
-// The line ends at the last stop, so the sun comes to rest on it.
-const RIDGE = "M0 20 H 758";
+const RIDGE = "M125 20 H 875";
 
 export default function Process({ steps }: { steps: Step[] }) {
   const root = useRef<HTMLDivElement>(null);
