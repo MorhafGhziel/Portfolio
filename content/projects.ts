@@ -240,7 +240,7 @@ export const PROJECTS: Project[] = [
     "slug": "inno",
     "name": {
       "en": "INNO",
-      "ar": "إنو"
+      "ar": "اينو"
     },
     "headline": {
       "en": "Bilingual Company Website for a Saudi Web Agency",
@@ -253,7 +253,7 @@ export const PROJECTS: Project[] = [
     "kind": "job",
     "client": {
       "en": "INNO",
-      "ar": "إنو"
+      "ar": "اينو"
     },
     "categories": [
       "websites"
@@ -306,7 +306,7 @@ export const PROJECTS: Project[] = [
     },
     "notes": {
       "en": "The company website for INNO, a web development agency in Riyadh, built in a full-time frontend role. Bilingual Arabic and English and RTL-first — Arabic is the real layout rather than a mirrored English one — with a full brand design system, seven hand-coded animated SVG scenes, and a WhatsApp lead funnel that prefills the selected plan and its price so a visitor lands in the chat with the context already filled in.\n\nI rebuilt the site from scratch and cut runtime dependencies from eleven to four, replacing Three.js, GSAP and Framer Motion with hand-written CSS and SVG animation. That removed roughly 47MB of 3D assets and fixed the scroll performance problems that earlier mitigations had not solved.\n\nThe Arabic work goes past a direction flip: CSS logical properties throughout, bidirectional text isolation, tabular numerals, direction-aware icons and locale-appropriate digit systems. The design system lives in Tailwind v4 — brand tokens, a typographic scale and 22 hand-written animations, every one of them honouring prefers-reduced-motion. Content is a typed bilingual architecture driven by useSyncExternalStore, so the server and client render deterministically and a language change syncs across tabs. Scroll parallax runs off a single listener on one requestAnimationFrame loop, image assets came down from 190KB to about 2KB, and contrast meets WCAG AA throughout.",
-      "ar": "موقع شركة إنو، وكالة تطوير ويب في الرياض، بُني ضمن وظيفة بدوام كامل كمطوّر واجهات أمامية. الموقع ثنائي اللغة بالعربية والإنجليزية ويبدأ من اتجاه اليمين لليسار — العربية هي التخطيط الحقيقي لا نسخة معكوسة عن الإنجليزية — مع نظام هوية بصرية كامل، وسبعة مشاهد SVG متحركة مكتوبة يدوياً، ومسار تواصل عبر واتساب يعبّئ الباقة المختارة وسعرها مسبقاً ليصل الزائر إلى المحادثة والسياق جاهز.\n\nأعدت بناء الموقع من الصفر وخفّضت اعتمادات وقت التشغيل من أحد عشر إلى أربعة، باستبدال Three.js و GSAP و Framer Motion بحركة مكتوبة يدوياً بـ CSS و SVG. أزال ذلك نحو ٤٧ ميغابايت من أصول ثلاثية الأبعاد وأصلح مشاكل أداء التمرير التي لم تحلّها المعالجات السابقة.\n\nوالعمل على العربية يتجاوز قلب الاتجاه: خصائص CSS المنطقية في كل مكان، وعزل النص ثنائي الاتجاه، وأرقام متساوية العرض، وأيقونات تراعي الاتجاه، وأنظمة أرقام مناسبة لكل لغة. نظام التصميم مبني في Tailwind v4: رموز الهوية، وسلّم طباعي، و٢٢ حركة مكتوبة يدوياً تحترم جميعها تفضيل تقليل الحركة. المحتوى بمعمارية ثنائية اللغة مُحكمة الأنواع تعتمد على useSyncExternalStore، فيتطابق عرض الخادم والعميل، ويتزامن تبديل اللغة بين التبويبات. حركة التمرير الموازية تعمل من مستمع واحد على حلقة requestAnimationFrame واحدة، ونزلت أصول الصور من ١٩٠ كيلوبايت إلى نحو ٢ كيلوبايت، ويستوفي التباين معيار WCAG AA في كامل الموقع."
+      "ar": "موقع شركة اينو، وكالة تطوير ويب في الرياض، بُني ضمن وظيفة بدوام كامل كمطوّر واجهات أمامية. الموقع ثنائي اللغة بالعربية والإنجليزية ويبدأ من اتجاه اليمين لليسار — العربية هي التخطيط الحقيقي لا نسخة معكوسة عن الإنجليزية — مع نظام هوية بصرية كامل، وسبعة مشاهد SVG متحركة مكتوبة يدوياً، ومسار تواصل عبر واتساب يعبّئ الباقة المختارة وسعرها مسبقاً ليصل الزائر إلى المحادثة والسياق جاهز.\n\nأعدت بناء الموقع من الصفر وخفّضت اعتمادات وقت التشغيل من أحد عشر إلى أربعة، باستبدال Three.js و GSAP و Framer Motion بحركة مكتوبة يدوياً بـ CSS و SVG. أزال ذلك نحو ٤٧ ميغابايت من أصول ثلاثية الأبعاد وأصلح مشاكل أداء التمرير التي لم تحلّها المعالجات السابقة.\n\nوالعمل على العربية يتجاوز قلب الاتجاه: خصائص CSS المنطقية في كل مكان، وعزل النص ثنائي الاتجاه، وأرقام متساوية العرض، وأيقونات تراعي الاتجاه، وأنظمة أرقام مناسبة لكل لغة. نظام التصميم مبني في Tailwind v4: رموز الهوية، وسلّم طباعي، و٢٢ حركة مكتوبة يدوياً تحترم جميعها تفضيل تقليل الحركة. المحتوى بمعمارية ثنائية اللغة مُحكمة الأنواع تعتمد على useSyncExternalStore، فيتطابق عرض الخادم والعميل، ويتزامن تبديل اللغة بين التبويبات. حركة التمرير الموازية تعمل من مستمع واحد على حلقة requestAnimationFrame واحدة، ونزلت أصول الصور من ١٩٠ كيلوبايت إلى نحو ٢ كيلوبايت، ويستوفي التباين معيار WCAG AA في كامل الموقع."
     },
     "results": {
       "en": [
