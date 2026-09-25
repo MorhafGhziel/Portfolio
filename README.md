@@ -1,6 +1,6 @@
 # murhaf.site
 
-Portfolio of Murhaf Ghziel, designer and full-stack developer in Riyadh.
+Portfolio of Murhaf Ghziel, full-stack developer in Riyadh.
 *The work is the hero. The site is the proof.*
 
 Next.js 15 (App Router) · React 19 · TypeScript · GSAP + ScrollTrigger + Flip · Lenis ·

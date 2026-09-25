@@ -10,9 +10,9 @@ const en = {
   meta: {
     title: "Murhaf Ghziel: websites people remember",
     description:
-      "Designer and full-stack developer in Riyadh. Websites, stores and web apps, from first sketch to launch.",
+      "Full-stack developer in Riyadh. Websites, stores and web apps, from first sketch to launch.",
     workTitle: "Work",
-    workDescription: "Websites, stores and web apps designed and built by Murhaf Ghziel in Riyadh.",
+    workDescription: "Websites, stores and web apps built by Murhaf Ghziel in Riyadh.",
   },
   skip: "Skip to content",
   nav: {
@@ -30,8 +30,8 @@ const en = {
     toDark: "Switch to dark mode",
   },
   hero: {
-    title: "I design and build\nwebsites people\n*remember*.",
-    lead: "I'm Murhaf, a designer and full-stack developer in Riyadh, crafting websites, stores and web apps from first sketch to launch.",
+    title: "I build websites\npeople *remember*.",
+    lead: "I'm Murhaf, a full-stack developer in Riyadh, building websites, stores and web apps from first sketch to launch.",
     viewWork: "View work",
     start: "Start a project",
     city: "Riyadh",
@@ -97,7 +97,7 @@ const en = {
   about: {
     title: "Behind the *work*",
     lines: [
-      "I'm Murhaf, a designer and full-stack developer based in Riyadh.",
+      "I'm Murhaf, a full-stack developer based in Riyadh.",
       "Most of my paid work is whole sites for Saudi companies, from design to deployment, usually as the only developer on the project.",
       "In my work Arabic is never a mirror of the English. It's designed first.",
       "I care how fast a thing feels, and how easy it stays to change six months later.",
@@ -171,7 +171,7 @@ type Copy = typeof en;
 const ar: Copy = {
   meta: {
     title: "مرهف غزيل: مواقع تبقى في الذاكرة",
-    description: "مصمّم ومطوّر ويب في الرياض. مواقع ومتاجر وتطبيقات ويب، من أول فكرة إلى الإطلاق.",
+    description: "مطوّر ويب متكامل في الرياض. مواقع ومتاجر وتطبيقات ويب، من أول فكرة إلى الإطلاق.",
     workTitle: "الأعمال",
     workDescription: "مواقع ومتاجر وتطبيقات ويب صمّمها وبناها مرهف غزيل في الرياض.",
   },
@@ -191,8 +191,8 @@ const ar: Copy = {
     toDark: "الوضع الداكن",
   },
   hero: {
-    title: "أصمّم وأبني مواقع\n*تبقى* في الذاكرة.",
-    lead: "أنا مرهف، مصمّم ومطوّر ويب في الرياض. أبني مواقع ومتاجر وتطبيقات ويب، من أول فكرة إلى يوم الإطلاق.",
+    title: "أبني مواقع\n*تبقى* في الذاكرة.",
+    lead: "أنا مرهف، مطوّر ويب متكامل في الرياض. أبني مواقع ومتاجر وتطبيقات ويب، من أول فكرة إلى يوم الإطلاق.",
     viewWork: "شوف الأعمال",
     start: "ابدأ مشروعك",
     city: "الرياض",
@@ -258,7 +258,7 @@ const ar: Copy = {
   about: {
     title: "ورا *الشغل*",
     lines: [
-      "أنا مرهف، مصمّم ومطوّر ويب متكامل في الرياض.",
+      "أنا مرهف، مطوّر ويب متكامل في الرياض.",
       "أغلب شغلي المدفوع مواقع كاملة لشركات سعودية، من التصميم للنشر، وغالباً أكون المطوّر الوحيد في المشروع.",
       "العربي عندي مو نسخة معكوسة من الإنجليزي. أصمّمه أول.",
       "يهمّني الموقع كيف يحسّ بالسرعة، وكيف يظل سهل التعديل بعد ستة أشهر.",

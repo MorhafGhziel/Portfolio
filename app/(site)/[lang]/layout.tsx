@@ -68,7 +68,7 @@ export default async function LangLayout({
     alternateName: SETTINGS.name.ar,
     url: BASE_URL,
     email: `mailto:${SETTINGS.email}`,
-    jobTitle: "Designer and full-stack developer",
+    jobTitle: "Full-stack developer",
     address: { "@type": "PostalAddress", addressLocality: "Riyadh", addressCountry: "SA" },
     sameAs: SETTINGS.socials.map((s) => s.href),
   };
