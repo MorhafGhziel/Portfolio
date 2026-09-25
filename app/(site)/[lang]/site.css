@@ -365,9 +365,14 @@ html[dir="rtl"] .btn:hover::before {
   margin: -42px 0 0 -42px;
   font-size: 11px;
 }
-html.has-cursor [data-cursor],
-html.has-cursor [data-cursor] * {
-  cursor: none;
+/* The smooth cursor replaces the default one everywhere (fine pointers only);
+   text fields keep the normal text caret. */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+html.has-cursor :is(input, textarea, select, [contenteditable]) {
+  cursor: text !important;
 }
 
 /* ---- nav ------------------------------------------------------------------ */
