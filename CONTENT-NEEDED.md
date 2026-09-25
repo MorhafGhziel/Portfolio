@@ -7,7 +7,6 @@ hidden or marked here. Nothing was invented.
 
 | What | Where | Why |
 |---|---|---|
-| **WhatsApp number** | `content/settings.ts` → `whatsapp` | Set to `966582737120`, the SIMA Studio line. Change it if you want a personal number on murhaf.site. |
 | **Budget ranges** | `content/settings.ts` → `budgets` | Placeholder ranges: under 10k / 10–25k / 25–60k / 60k+ SAR. Set your own. |
 | **Response time** | `content/settings.ts` → `responseTime` | "within 24 hours", carried over from the old site. |
 | **Availability** | `content/settings.ts` → `availability` | `open: true`. Set to `false` to hide the status line. |

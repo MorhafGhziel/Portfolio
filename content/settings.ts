@@ -7,8 +7,7 @@ import type { Settings } from "./types";
 export const SETTINGS: Settings = {
   name: { en: "Murhaf Ghziel", ar: "مرهف غزيل" },
   email: "ghzielmorhaf@gmail.com",
-  // Confirm: this is the SIMA Studio WhatsApp line. See CONTENT-NEEDED.md.
-  whatsapp: "966582737120",
+  whatsapp: "966507149775",
   cvUrl: "/Murhaf.pdf",
   availability: {
     open: true,
