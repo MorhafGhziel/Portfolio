@@ -2,7 +2,7 @@
 Renders the desert as separate RGBA layers (sky, far, mid, near, front),
 ready for the stroke painter (strokes.py, from the AZAL project).
 
-    uv run --python 3.12 --with numpy --with pillow python scripts/paint/desert.py <out_dir> <dusk|night> <W> <H>
+    uv run --python 3.12 --with numpy --with pillow python scripts/paint/desert.py <out_dir> <dusk|night|day|dawn> <W> <H>
 
 Each dune layer is a silhouette with form: lit on the side facing the low sun,
 a warm rim on the crest, falling into shadow below. The painter follows that
@@ -20,6 +20,7 @@ mood = sys.argv[2]
 W, H = int(sys.argv[3]), int(sys.argv[4])
 out.mkdir(parents=True, exist_ok=True)
 night = mood == "night"
+bright = mood in ("day", "dawn")  # light sky: additive light would burn out to white
 portrait = H > W
 
 rng = np.random.default_rng(7)
@@ -37,19 +38,31 @@ def hexc(h):
     return np.array([int(h[i : i + 2], 16) / 255 for i in (0, 2, 4)], np.float32)
 
 
-P = (
-    dict(
+PALETTES = dict(
+    dusk=dict(
         top="#0a0a14", high="#1c1a2e", mid="#4a3d62", low="#9c6f84", hor="#f2b27c",
         glow="#ffd9a8", haze="#8f6a82", dune=["#7a5872", "#5a3f57", "#3a2839", "#1a1219"],
         lit="#e7a07e", shade="#241a2c", rim="#ffc79a",
-    )
-    if not night
-    else dict(
+    ),
+    night=dict(
         top="#05050a", high="#0b0b16", mid="#161628", low="#262339", hor="#3d3048",
         glow="#6b5566", haze="#221f33", dune=["#1d1b2c", "#161523", "#100f19", "#0b0a11"],
         lit="#3b3550", shade="#08080d", rim="#6e5f7c",
-    )
+    ),
+    # The light theme: the same land by day (hero) and at first light (contact).
+    # Dunes fade toward the page colour (#f3ece2) so the front mound can carry dark type.
+    day=dict(
+        top="#7fa6c6", high="#a9c5d9", mid="#d4e0e3", low="#f1e4d2", hor="#fbe3c1",
+        glow="#fff7e3", haze="#ecd9c6", dune=["#d9ab86", "#d7a37b", "#e2bc98", "#f0e2d0"],
+        lit="#fff0d8", shade="#c69a7c", rim="#fff9ec",
+    ),
+    dawn=dict(
+        top="#aab4d4", high="#c9c6de", mid="#e6d3dc", low="#f6d9cb", hor="#fde5cc",
+        glow="#fff3df", haze="#eddcd6", dune=["#d8b8b0", "#d2aca2", "#e0c4b6", "#f0e4d8"],
+        lit="#fde9dc", shade="#b2939a", rim="#fff5ea",
+    ),
 )
+P = PALETTES[mood]
 C = {k: (hexc(v) if isinstance(v, str) else [hexc(c) for c in v]) for k, v in P.items()}
 
 
@@ -79,7 +92,7 @@ sky = mix(sky, np.broadcast_to(C["top"], (H, W, 3)), smooth(0.82, 1.0, y))
 dx = (X - SUN_X) * max(asp, 0.8)
 dy = (y - 0.455) * 2.6
 d2 = dx * dx + dy * dy
-sky += C["glow"] * (np.exp(-d2 * 10)[..., None] * (0.55 if not night else 0.25) + np.exp(-d2 * 1.8)[..., None] * 0.15)
+sky += C["glow"] * (np.exp(-d2 * 10)[..., None] * (0.25 if night else 0.3 if bright else 0.55) + np.exp(-d2 * 1.8)[..., None] * 0.15)
 # a few long, thin cloud bands for the painter to find
 for cy, amp, w in ([(0.62, 0.05, 0.010), (0.70, 0.035, 0.008), (0.575, 0.06, 0.006)] if not night else [(0.64, 0.03, 0.01)]):
     band = np.exp(-(((y - cy) / w) ** 2)) * (0.5 + 0.5 * np.sin(X * 9 + cy * 40)) * smooth(0.0, 0.3, X) * smooth(1.0, 0.7, X)
@@ -142,7 +155,7 @@ for k, (name, base, amp, freq, seed) in enumerate(layers):
     # rim light
     near_sun = np.exp(-(((xs - SUN_X) * (2.4 - 1.2 * kk)) ** 2))[None, :]
     rim = np.exp(-depth / (0.004 + 0.012 * kk)) * (0.3 + 0.7 * near_sun)
-    body += C["rim"] * rim[..., None] * (0.5 - 0.1 * kk) * (0.5 if night else 1)
+    body += C["rim"] * rim[..., None] * (0.5 - 0.1 * kk) * (0.5 if night else 0.45 if bright else 1)
     save(name, body, inside)
 
 # ---- mist: soft low bands that drift between the dune layers ---------------
