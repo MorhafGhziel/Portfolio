@@ -61,11 +61,9 @@ export default function Services({ copy, projects }: Props) {
                     ))}
                   </ul>
                   <ul className="svc__tags mono">
-                    {s.projects
-                      .filter((p) => projects[p])
-                      .map((p) => (
-                        <li key={p}>{projects[p].name}</li>
-                      ))}
+                    {s.projects.map((p) => (
+                      <li key={p}>{projects[p]?.name ?? p}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
