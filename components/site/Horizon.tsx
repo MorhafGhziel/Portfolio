@@ -12,6 +12,9 @@ import { useEffect, useRef } from "react";
  * sinks the land faster than the sky. The mist drifts on its own.
  *
  * variant="night" is the same land after dark, for Contact.
+ * The light theme swaps in the same land by day (dusk → day, night → dawn).
+ * Both sets are in the markup; CSS hides the other theme's set, and lazy
+ * loading means a hidden set is never downloaded.
  * Reduced motion: the layers simply stay still.
  */
 
@@ -31,6 +34,8 @@ const STARS: [number, number, number, number][] = [
   [66, 33, 1, 2.9], [72, 7, 2, 0.3], [78, 24, 1, 1.7], [84, 13, 1.5, 3.3], [90, 29, 1, 0.9],
   [95, 17, 1.5, 2.4], [9, 36, 1, 3.9], [28, 40, 1, 1.2], [58, 38, 1, 2.8], [82, 41, 1, 0.6],
 ];
+
+const LIGHT = { dusk: "day", night: "dawn" } as const;
 
 type Props = { variant?: "dusk" | "night"; className?: string; priority?: boolean };
 
@@ -81,24 +86,31 @@ export default function Horizon({ variant = "dusk", className, priority }: Props
     };
   }, []);
 
-  const base = `/media/desert/${variant}`;
+  const sets = [
+    { mood: variant, theme: "dark" },
+    { mood: LIGHT[variant], theme: "light" },
+  ];
   return (
     <div ref={wrap} className={`horizon horizon--${variant} ${className ?? ""}`} aria-hidden="true">
-      {LAYERS.map((l, i) => (
-        <picture key={l.name} className={`horizon__l horizon__l--${l.name}`} style={{ ["--d" as string]: l.depth, zIndex: i * 2 }}>
-          <source media="(max-aspect-ratio: 4/5)" srcSet={`${base}/tall/${l.name}.webp`} />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={`${base}/wide/${l.name}.webp`}
-            alt=""
-            decoding="async"
-            loading={priority ? "eager" : "lazy"}
-            fetchPriority={priority && (i === 0 || i === LAYERS.length - 1) ? "high" : "auto"}
-          />
-        </picture>
+      {sets.map(({ mood, theme }) => (
+        <div key={mood} className={`horizon__set horizon__set--${theme}`}>
+          {LAYERS.map((l, i) => (
+            <picture key={l.name} className={`horizon__l horizon__l--${l.name}`} style={{ ["--d" as string]: l.depth, zIndex: i * 2 }}>
+              <source media="(max-aspect-ratio: 4/5)" srcSet={`/media/desert/${mood}/tall/${l.name}.webp`} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/media/desert/${mood}/wide/${l.name}.webp`}
+                alt=""
+                decoding="async"
+                loading="lazy"
+                fetchPriority={priority && (i === 0 || i === LAYERS.length - 1) ? "high" : "auto"}
+              />
+            </picture>
+          ))}
+        </div>
       ))}
       {variant === "night" && (
-        <div className="horizon__stars" style={{ zIndex: 1 }}>
+        <div className="horizon__stars horizon__set--dark" style={{ zIndex: 1 }}>
           {STARS.map(([x, y, s, d], i) => (
             <i key={i} style={{ left: `${x}%`, top: `${y}%`, width: s, height: s, animationDelay: `${d}s` }} />
           ))}

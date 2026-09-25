@@ -3,7 +3,9 @@
    Dark and cinematic, one accent, big type, small precise labels.
    ========================================================================== */
 
-:root {
+:root,
+/* Blocks that sit on photos or video stay dark in both themes. */
+html[data-theme="light"] :is(.case__hero, .reel__frame, .player, .card__badge) {
   /* The ground colour of the painted desert: every section sits on it. */
   --bg: #120e17;
   --surface: #1b1621;
@@ -14,6 +16,21 @@
   --line: rgba(242, 240, 235, 0.12);
   --line-2: rgba(242, 240, 235, 0.22);
   --accent: #f2a76b;
+  --ink-soft: #d4d0c9; /* lead copy */
+  --ink-nav: #d8d5cf;
+  --ink-meta: #b9b5ae;
+  --glass: rgba(27, 22, 33, 0.62);
+  --glass-2: rgba(27, 22, 33, 0.8);
+  --tint: rgba(242, 240, 235, 0.05); /* fields, hovers */
+  --tint-2: rgba(242, 240, 235, 0.07);
+  --veil: 18, 14, 23; /* rgb of the shade behind the hero headline */
+  --btn-hover: #d9d5cc;
+  --err: #f0a192;
+  --err-line: #e07a6a;
+  --scrollbar: #2a2a2e;
+  color-scheme: dark;
+}
+:root {
 
   --sans: var(--f-sans), "Helvetica Neue", Arial, sans-serif;
   --mono: var(--f-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -25,6 +42,32 @@
   --ease: cubic-bezier(0.16, 1, 0.3, 1); /* expo-ish out */
   --ease-q: cubic-bezier(0.25, 1, 0.5, 1); /* quart out */
   --nav-h: 64px;
+}
+
+/* Light: the same desert by day. */
+html[data-theme="light"] {
+  --bg: #f3ece2;
+  --surface: #e9dfd2;
+  --surface-2: #e0d4c5;
+  --ink: #1d1822;
+  --ink-2: #5f5850;
+  --ink-3: #6e665d; /* 5:1 on --bg */
+  --line: rgba(29, 24, 34, 0.12);
+  --line-2: rgba(29, 24, 34, 0.22);
+  --accent: #b8612a; /* the same apricot, deep enough to read on sand */
+  --ink-soft: #3d3640;
+  --ink-nav: #3d3640;
+  --ink-meta: #4d4640;
+  --glass: rgba(250, 245, 238, 0.66);
+  --glass-2: rgba(250, 245, 238, 0.82);
+  --tint: rgba(29, 24, 34, 0.04);
+  --tint-2: rgba(29, 24, 34, 0.06);
+  --veil: 243, 236, 226;
+  --btn-hover: #3d3640;
+  --err: #a8402f;
+  --err-line: #c2533f;
+  --scrollbar: #cfc3b3;
+  color-scheme: light;
 }
 
 html[lang="ar"] {
@@ -43,7 +86,7 @@ html {
   color: var(--ink);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scrollbar-color: #2a2a2e var(--bg);
+  scrollbar-color: var(--scrollbar) var(--bg);
 }
 
 html.lenis,
@@ -293,12 +336,12 @@ html[dir="rtl"] .btn:hover::before {
 }
 .btn--light::before,
 .btn--solid::before {
-  background: #d9d5cc;
+  background: var(--btn-hover);
 }
 .btn--ghost {
   color: var(--ink);
   box-shadow: inset 0 0 0 1px var(--line-2);
-  background: rgba(18, 14, 23, 0.18);
+  background: rgba(var(--veil), 0.18);
 }
 .btn--ghost::before {
   background: var(--ink);
@@ -398,7 +441,7 @@ html.has-cursor :is(input, textarea, select, [contenteditable]) {
   height: 48px;
   padding: 0 6px 0 18px;
   border-radius: 999px;
-  background: rgba(27, 22, 33, 0.62);
+  background: var(--glass);
   box-shadow: inset 0 0 0 1px var(--line);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   backdrop-filter: blur(14px) saturate(1.2);
@@ -437,13 +480,13 @@ html[lang="ar"] .nav__logo {
   padding: 0 14px;
   border-radius: 999px;
   font-size: 14px;
-  color: #d8d5cf;
+  color: var(--ink-nav);
   transition: color 0.2s, background-color 0.2s;
 }
 .nav__links a:hover,
 .nav__lang:hover {
   color: var(--ink);
-  background: rgba(242, 240, 235, 0.07);
+  background: var(--tint-2);
 }
 .nav__lang {
   margin-inline-start: 4px;
@@ -451,6 +494,21 @@ html[lang="ar"] .nav__logo {
   justify-content: center;
   box-shadow: inset 0 0 0 1px var(--line);
   font-family: var(--f-ar-sans), var(--f-sans), sans-serif;
+}
+.nav__theme {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-inline-start: 4px;
+  border-radius: 50%;
+  color: var(--ink-nav);
+  box-shadow: inset 0 0 0 1px var(--line);
+  transition: color 0.2s, background-color 0.2s;
+}
+.nav__theme:hover {
+  color: var(--ink);
+  background: var(--tint-2);
 }
 .nav__cta {
   height: 48px;
@@ -461,7 +519,7 @@ html[lang="ar"] .nav__logo {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(27, 22, 33, 0.62);
+  background: var(--glass);
   box-shadow: inset 0 0 0 1px var(--line);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
@@ -541,7 +599,10 @@ html[lang="ar"] .nav__logo {
     display: none;
   }
   .nav__pill {
-    padding: 0 18px;
+    padding: 0 6px 0 18px;
+  }
+  html[dir="rtl"] .nav__pill {
+    padding: 0 18px 0 6px;
   }
   .nav__logo {
     margin: 0;
@@ -582,6 +643,14 @@ html[lang="ar"] .nav__logo {
   --mx: 0;
   --my: 0;
   --sy: 0;
+}
+.horizon__set {
+  position: absolute;
+  inset: 0;
+}
+html[data-theme="light"] .horizon__set--dark,
+html:not([data-theme="light"]) .horizon__set--light {
+  display: none;
 }
 .horizon__l {
   position: absolute;
@@ -649,13 +718,13 @@ html[dir="rtl"] .horizon--dusk .horizon__l img {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(70% 60% at 18% 62%, rgba(18, 14, 23, 0.55), transparent 70%);
+  background: radial-gradient(70% 60% at 18% 62%, rgba(var(--veil), 0.55), transparent 70%);
 }
 html[dir="rtl"] .hero::before {
-  background: radial-gradient(70% 60% at 82% 62%, rgba(18, 14, 23, 0.55), transparent 70%);
+  background: radial-gradient(70% 60% at 82% 62%, rgba(var(--veil), 0.55), transparent 70%);
 }
 .hero__title {
-  text-shadow: 0 2px 30px rgba(18, 14, 23, 0.35);
+  text-shadow: 0 2px 30px rgba(var(--veil), 0.35);
 }
 .hero__body {
   position: absolute;
@@ -690,7 +759,7 @@ html[lang="ar"] .hero__title {
   margin-top: clamp(20px, 2.4vw, 32px);
   font-size: clamp(16px, 1.25vw, 19px);
   line-height: 1.5;
-  color: #d4d0c9;
+  color: var(--ink-soft);
   animation: fadeUp 1s var(--ease-q) 0.45s both;
 }
 .hero__actions {
@@ -708,7 +777,7 @@ html[lang="ar"] .hero__title {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  color: #b9b5ae;
+  color: var(--ink-meta);
   animation: fade 1.2s var(--ease-q) 0.9s both;
 }
 .hero__status {
