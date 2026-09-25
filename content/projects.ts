@@ -22,8 +22,8 @@ export const PROJECTS: Project[] = [
       "ar": "موقع استوديو بالعربي والإنجليزي، بتجارب ثلاثية الأبعاد وباقات واضحة"
     },
     "summary": {
-      "en": "My studio's own site: websites and 3D product experiences for Saudi companies, in Arabic and English.",
-      "ar": "موقع استوديوي الخاص: مواقع وتجارب منتجات ثلاثية الأبعاد لشركات سعودية، بالعربي والإنجليزي."
+      "en": "My studio's own site: websites, online stores and 3D product experiences, in Arabic and English.",
+      "ar": "موقع استوديوي الخاص: مواقع ومتاجر وتجارب منتجات ثلاثية الأبعاد، بالعربي والإنجليزي."
     },
     "kind": "studio",
     "client": {
@@ -76,8 +76,8 @@ export const PROJECTS: Project[] = [
       "ar": "موقع استوديو مبني عشان يبيع: أعمال عملاء حقيقية في الواجهة، وباقات واضحة بالريال، وضغطة وحدة للواتساب. بالعربي والإنجليزي، مع تجربة منتج ثلاثية الأبعاد تثبت وش يقدر يبني الاستوديو."
     },
     "notes": {
-      "en": "SIMA (سِمة) is my design and web studio in Riyadh. Its site is Arabic-first and bilingual, built with Next.js, Tailwind CSS, GSAP, Motion and Three.js. It shows live client work, packages with prices in SAR, and a WhatsApp link with a ready message, so a visitor can go from looking to asking in one step.",
-      "ar": "سِمة استوديو تصميم ومواقع أسسته في الرياض. موقعه يبدأ من العربي وثنائي اللغة، مبني بـ Next.js و Tailwind CSS و GSAP و Motion و Three.js. يعرض أعمال عملاء حقيقية، وباقات بأسعارها بالريال، ورابط واتساب برسالة جاهزة، فيقدر الزائر ينتقل من التصفح للسؤال بخطوة وحدة."
+      "en": "SIMA (سِمة) is my design and web studio. Its site is bilingual, Arabic and English, built with Next.js, Tailwind CSS, GSAP, Motion and Three.js. It shows live client work, packages with prices in SAR, and a WhatsApp link with a ready message, so a visitor can go from looking to asking in one step.",
+      "ar": "سِمة استوديو تصميم ومواقع أسسته. موقعه ثنائي اللغة، بالعربي والإنجليزي، مبني بـ Next.js و Tailwind CSS و GSAP و Motion و Three.js. يعرض أعمال عملاء حقيقية، وباقات بأسعارها بالريال، ورابط واتساب برسالة جاهزة، فيقدر الزائر ينتقل من التصفح للسؤال بخطوة وحدة."
     }
   },
   {

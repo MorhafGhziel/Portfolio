@@ -10,9 +10,9 @@ const en = {
   meta: {
     title: "Murhaf Ghziel: websites people remember",
     description:
-      "Full-stack developer in Riyadh who also designs. SaaS, websites and stores, from first sketch to launch.",
+      "Full-stack developer who also designs. SaaS, websites and stores, from first sketch to launch.",
     workTitle: "Work",
-    workDescription: "Websites, stores and web apps built by Murhaf Ghziel in Riyadh.",
+    workDescription: "Websites, stores and web apps built by Murhaf Ghziel.",
   },
   skip: "Skip to content",
   nav: {
@@ -31,7 +31,7 @@ const en = {
   },
   hero: {
     title: "I build websites\npeople *remember*.",
-    lead: "I'm Murhaf, a full-stack developer in Riyadh who designs what he builds: SaaS, websites and stores, from first sketch to launch.",
+    lead: "I'm Murhaf, a full-stack developer who designs what he builds: SaaS, websites and stores, from first sketch to launch.",
     viewWork: "View work",
     start: "Start a project",
     city: "Riyadh",
@@ -67,7 +67,7 @@ const en = {
       },
       {
         name: "Websites & landing pages",
-        line: "Company sites and launch pages, Arabic-first and fast.",
+        line: "Company sites and launch pages that load fast and read well in any language.",
         deliverables: ["English and Arabic build", "CMS so you can edit", "Motion and interaction", "SEO and analytics"],
         projects: ["sima", "omdah", "inno", "iedar", "elsina3ya"],
       },
@@ -97,8 +97,8 @@ const en = {
   about: {
     title: "Behind the *work*",
     lines: [
-      "I'm Murhaf, a full-stack developer based in Riyadh, with a designer's eye.",
-      "Most of my paid work is SaaS platforms and whole sites for Saudi companies, from the first screen to deployment, usually as the only developer on the project.",
+      "I'm Murhaf, a full-stack developer with a designer's eye.",
+      "Most of my paid work is SaaS platforms and whole sites, from the first screen to deployment.",
       "In my work Arabic is never a mirror of the English. It's designed first.",
       "I care how fast a thing feels, and how easy it stays to change six months later.",
     ],
@@ -113,7 +113,7 @@ const en = {
         org: "SIMA Studio",
         when: "2026 – now",
         where: "Riyadh",
-        line: "My studio: websites, stores and 3D product experiences for Saudi brands, including MERIT and NASAQ.",
+        line: "My studio: websites, stores and 3D product experiences, including MERIT and NASAQ.",
       },
       {
         role: "Frontend Lead",
@@ -133,7 +133,7 @@ const en = {
         role: "Freelance Full-Stack Developer",
         org: "Independent",
         when: "2024 – now",
-        where: "Saudi Arabia · Remote",
+        where: "Remote",
         line: "7 paid client builds, including Etar, Alpha Factory, IEDAR, Omdah and Snaya.",
       },
     ],
@@ -202,9 +202,9 @@ type Copy = typeof en;
 const ar: Copy = {
   meta: {
     title: "مرهف غزيل: مواقع تبقى في الذاكرة",
-    description: "مطوّر ويب متكامل في الرياض يصمّم كمان. منصات SaaS ومواقع ومتاجر، من أول فكرة إلى الإطلاق.",
+    description: "مطوّر ويب متكامل يصمّم كمان. منصات SaaS ومواقع ومتاجر، من أول فكرة إلى الإطلاق.",
     workTitle: "الأعمال",
-    workDescription: "مواقع ومتاجر وتطبيقات ويب صمّمها وبناها مرهف غزيل في الرياض.",
+    workDescription: "مواقع ومتاجر وتطبيقات ويب صمّمها وبناها مرهف غزيل.",
   },
   skip: "انتقل إلى المحتوى",
   nav: {
@@ -223,7 +223,7 @@ const ar: Copy = {
   },
   hero: {
     title: "أبني مواقع\n*تبقى* في الذاكرة.",
-    lead: "أنا مرهف، مطوّر ويب متكامل في الرياض، وأصمّم اللي أبنيه: منصات SaaS ومواقع ومتاجر، من أول فكرة إلى يوم الإطلاق.",
+    lead: "أنا مرهف، مطوّر ويب متكامل، وأصمّم اللي أبنيه: منصات SaaS ومواقع ومتاجر، من أول فكرة إلى يوم الإطلاق.",
     viewWork: "شوف الأعمال",
     start: "ابدأ مشروعك",
     city: "الرياض",
@@ -259,7 +259,7 @@ const ar: Copy = {
       },
       {
         name: "مواقع وصفحات هبوط",
-        line: "مواقع شركات وصفحات إطلاق، تبدأ من العربي وسريعة.",
+        line: "مواقع شركات وصفحات إطلاق، سريعة وتنقرأ صح بأي لغة.",
         deliverables: ["بناء بالعربي والإنجليزي", "لوحة محتوى تعدّل منها", "حركة وتفاعل", "تهيئة لمحركات البحث وتحليلات"],
         projects: ["sima", "omdah", "inno", "iedar", "elsina3ya"],
       },
@@ -289,8 +289,8 @@ const ar: Copy = {
   about: {
     title: "ورا *الشغل*",
     lines: [
-      "أنا مرهف، مطوّر ويب متكامل في الرياض، وعندي عين مصمّم.",
-      "أغلب شغلي المدفوع منصات SaaS ومواقع كاملة لشركات سعودية، من أول شاشة للنشر، وغالباً أكون المطوّر الوحيد في المشروع.",
+      "أنا مرهف، مطوّر ويب متكامل وعندي عين مصمّم.",
+      "أغلب شغلي المدفوع منصات SaaS ومواقع كاملة، من أول شاشة للنشر.",
       "العربي عندي مو نسخة معكوسة من الإنجليزي. أصمّمه أول.",
       "يهمّني الموقع كيف يحسّ بالسرعة، وكيف يظل سهل التعديل بعد ستة أشهر.",
     ],
@@ -305,7 +305,7 @@ const ar: Copy = {
         org: "سِمة",
         when: "٢٠٢٦ – الآن",
         where: "الرياض",
-        line: "استوديوي: مواقع ومتاجر وتجارب منتجات ثلاثية الأبعاد لعلامات سعودية، منها MERIT و NASAQ.",
+        line: "استوديوي: مواقع ومتاجر وتجارب منتجات ثلاثية الأبعاد، منها MERIT و NASAQ.",
       },
       {
         role: "قائد فريق الواجهات",
@@ -325,7 +325,7 @@ const ar: Copy = {
         role: "مطوّر ويب متكامل مستقل",
         org: "مستقل",
         when: "٢٠٢٤ – الآن",
-        where: "السعودية · عن بُعد",
+        where: "عن بُعد",
         line: "٧ مشاريع مدفوعة لعملاء، منها إطار وألفا فاكتوري وأيدار وعُمدة والصناعية.",
       },
     ],
