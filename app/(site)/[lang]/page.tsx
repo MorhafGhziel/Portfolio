@@ -75,9 +75,16 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <ol className="process" data-reveal="">
             {c.process.steps.map((s, i) => (
               <li key={s.name} style={{ ["--i" as string]: i }}>
-                <span className="mono">0{i + 1}</span>
-                <h3>{s.name}</h3>
-                <p>{s.line}</p>
+                <i className="process__node" aria-hidden="true" />
+                <div className="process__card">
+                  <span className="process__n serif" aria-hidden="true">
+                    0{i + 1}
+                  </span>
+                  <div>
+                    <h3>{s.name}</h3>
+                    <p>{s.line}</p>
+                  </div>
+                </div>
               </li>
             ))}
           </ol>
