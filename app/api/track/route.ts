@@ -6,7 +6,7 @@ import { referrerHost } from "@/lib/analytics/referrer";
 import { parseUa } from "@/lib/analytics/ua";
 import { analyticsSalt, clientIp, visitorHash } from "@/lib/analytics/visitor";
 import { checkRateLimit } from "@/lib/rate-limit";
-import { ADMIN_FLAG_COOKIE } from "@/lib/auth/constants";
+import { ADMIN_FLAG_COOKIE, OWN_COOKIE } from "@/lib/auth/constants";
 
 // node, not edge: the visitor hash uses node:crypto and Prisma needs a full runtime.
 export const runtime = "nodejs";
@@ -42,7 +42,10 @@ export async function POST(request: NextRequest) {
     if (isBot(ua)) return noContent();
 
     // 3. The site owner's own browsing would drown out real visitors.
-    if (request.cookies.get(ADMIN_FLAG_COOKIE)?.value === "1") {
+    if (
+      request.cookies.get(ADMIN_FLAG_COOKIE)?.value === "1" ||
+      request.cookies.get(OWN_COOKIE)?.value === "1"
+    ) {
       return noContent();
     }
 

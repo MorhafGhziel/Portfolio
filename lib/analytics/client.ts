@@ -67,8 +67,8 @@ export function optedOut(): boolean {
     if (nav.doNotTrack === "1" || nav.globalPrivacyControl === true) return true;
     // Automated browsers: Playwright, Puppeteer, Selenium.
     if (nav.webdriver) return true;
-    // The site owner. Set at sign-in and readable here on purpose.
-    if (document.cookie.includes("pf_admin=1")) return true;
+    // The site owner: the session flag, or the year-long device marker.
+    if (/(^|; )(pf_admin|pf_own)=1/.test(document.cookie)) return true;
     return false;
   } catch {
     return false;

@@ -17,6 +17,7 @@ import {
   sessionCookieOptions,
 } from "@/lib/auth/session";
 import { clientIp } from "@/lib/analytics/visitor";
+import { OWN_COOKIE, OWN_TTL_S } from "@/lib/auth/constants";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -102,6 +103,12 @@ export async function POST(request: NextRequest) {
     response.cookies.set(SESSION_COOKIE, token, sessionCookieOptions(expiresAt));
     // Companion flag, readable by the beacon so the owner's visits are skipped.
     response.cookies.set(ADMIN_FLAG_COOKIE, "1", adminFlagCookieOptions(expiresAt));
+    // Outlives the session, so this browser stays out of the numbers after sign-out.
+    response.cookies.set(OWN_COOKIE, "1", {
+      ...adminFlagCookieOptions(expiresAt),
+      expires: undefined,
+      maxAge: OWN_TTL_S,
+    });
     return response;
   } catch (error) {
     console.error("[auth] verify failed:", error);
