@@ -1,146 +1,90 @@
 import { Resend } from "resend";
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/db";
 
-// Initialize Resend lazily to avoid build-time errors
-const getResend = () => {
-  return new Resend(process.env.RESEND_API_KEY || "");
-};
+/**
+ * The contact form's endpoint.
+ *
+ * Needs RESEND_API_KEY (and optionally RESEND_FROM_EMAIL / RESEND_TO_EMAIL).
+ * Without the key it answers 503, and the form tells the visitor to email
+ * directly — it never pretends a message went out.
+ */
+
+const schema = z.object({
+  name: z.string().trim().min(1).max(200),
+  email: z.email().max(200),
+  message: z.string().trim().min(1).max(10000),
+  projectType: z.enum(["website", "ecommerce", "webapp", "interactive", "other"]),
+  budget: z.string().max(40).optional(),
+  timeline: z.string().max(40).optional(),
+  locale: z.enum(["en", "ar"]).optional(),
+  website: z.string().max(200).optional(), // honeypot
+});
+
+const escapeHtml = (text: string) =>
+  text.replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" })[m]!);
 
 export async function POST(request: NextRequest) {
+  let body: unknown;
   try {
-    // Check if API key is configured
-    if (!process.env.RESEND_API_KEY) {
-      console.error("RESEND_API_KEY is not configured");
-      return NextResponse.json(
-        {
-          error:
-            "Email service is not configured. Please contact the administrator.",
-        },
-        { status: 500 }
-      );
-    }
-
-    const body = await request.json();
-    const { name, email, subject, message } = body;
-
-    // Validate required fields
-    if (!name || !email || !subject || !message) {
-      return NextResponse.json(
-        { error: "All fields are required" },
-        { status: 400 }
-      );
-    }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Invalid email format" },
-        { status: 400 }
-      );
-    }
-
-    // Escape HTML to prevent XSS
-    const escapeHtml = (text: string) => {
-      const map: { [key: string]: string } = {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;",
-      };
-      return text.replace(/[&<>"']/g, (m) => map[m]);
-    };
-
-    const safeName = escapeHtml(name);
-    const safeEmail = escapeHtml(email);
-    const safeSubject = escapeHtml(subject);
-    const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
-
-    // Send email using Resend
-    // Sends from the murhaf.site domain, which must be verified in Resend
-    const fromEmail =
-      process.env.RESEND_FROM_EMAIL || "Portfolio Contact <contact@murhaf.site>";
-    const toEmail = process.env.RESEND_TO_EMAIL || "ghzielmorhaf@gmail.com";
-
-    // Store the message before sending. The two paths are independent on
-    // purpose: if Resend is down the message is still in the dashboard, and
-    // if the database is down the email still arrives. Losing a lead because
-    // one of them failed is the outcome worth engineering against.
-    await prisma.contactMessage
-      .create({
-        data: {
-          name: String(name).slice(0, 200),
-          email: String(email).slice(0, 200),
-          subject: String(subject).slice(0, 300),
-          message: String(message).slice(0, 10000),
-          country: request.headers.get("x-vercel-ip-country"),
-        },
-      })
-      .catch((dbError) => {
-        console.error("[contact] could not store message:", dbError);
-      });
-
-    const resend = getResend();
-    const { data, error } = await resend.emails.send({
-      from: fromEmail,
-      to: [toEmail],
-      subject: `Portfolio Contact: ${safeSubject}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h2 style="color: #333; border-bottom: 2px solid #333; padding-bottom: 10px;">
-            New Contact Form Submission
-          </h2>
-          <div style="margin-top: 20px;">
-            <p><strong>Name:</strong> ${safeName}</p>
-            <p><strong>Email:</strong> ${safeEmail}</p>
-            <p><strong>Subject:</strong> ${safeSubject}</p>
-            <div style="margin-top: 20px;">
-              <strong>Message:</strong>
-              <p style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin-top: 10px; white-space: pre-wrap;">
-                ${safeMessage}
-              </p>
-            </div>
-          </div>
-        </div>
-      `,
-      replyTo: email,
-    });
-
-    if (error) {
-      console.error("Resend error details:", JSON.stringify(error, null, 2));
-      return NextResponse.json(
-        {
-          error: "Failed to send email",
-          details: error.message || "Unknown error occurred",
-        },
-        { status: 500 }
-      );
-    }
-
-    if (!data) {
-      console.error("No data returned from Resend");
-      return NextResponse.json(
-        { error: "Failed to send email - no response from email service" },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json(
-      { message: "Email sent successfully", id: data.id },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("Error processing contact form:", error);
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
-    return NextResponse.json(
-      {
-        error: "Internal server error",
-        details: errorMessage,
-      },
-      { status: 500 }
-    );
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
+  const parsed = schema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Invalid fields" }, { status: 400 });
+  }
+  const d = parsed.data;
+
+  // A filled honeypot is a bot. Answer like a success so it moves on.
+  if (d.website) return NextResponse.json({ ok: true });
+
+  const subject = [d.projectType, d.budget, d.timeline].filter(Boolean).join(" · ");
+
+  // Stored and emailed independently: if one path is down, the lead survives
+  // in the other.
+  await prisma.contactMessage
+    .create({
+      data: {
+        name: d.name,
+        email: d.email,
+        subject: subject.slice(0, 300),
+        message: d.message,
+        country: request.headers.get("x-vercel-ip-country"),
+      },
+    })
+    .catch((e) => console.error("[contact] could not store message:", e));
+
+  if (!process.env.RESEND_API_KEY) {
+    console.error("[contact] RESEND_API_KEY is not configured");
+    return NextResponse.json({ error: "Email is not configured" }, { status: 503 });
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const rows: [string, string][] = [
+    ["Name", d.name],
+    ["Email", d.email],
+    ["Project", d.projectType],
+    ["Budget", d.budget ?? "—"],
+    ["Timeline", d.timeline ?? "—"],
+    ["Language", d.locale ?? "—"],
+  ];
+  const { data, error } = await resend.emails.send({
+    from: process.env.RESEND_FROM_EMAIL || "Portfolio Contact <contact@murhaf.site>",
+    to: [process.env.RESEND_TO_EMAIL || "ghzielmorhaf@gmail.com"],
+    replyTo: d.email,
+    subject: `New project: ${subject}`,
+    html: `<div style="font-family:Arial,sans-serif;max-width:600px">
+      ${rows.map(([k, v]) => `<p><strong>${k}:</strong> ${escapeHtml(v)}</p>`).join("")}
+      <p style="white-space:pre-wrap;background:#f5f5f5;padding:14px;border-radius:6px">${escapeHtml(d.message)}</p>
+    </div>`,
+  });
+
+  if (error || !data) {
+    console.error("[contact] Resend error:", error);
+    return NextResponse.json({ error: "Failed to send" }, { status: 502 });
+  }
+  return NextResponse.json({ ok: true, id: data.id });
 }
