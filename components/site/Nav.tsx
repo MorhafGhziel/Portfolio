@@ -15,6 +15,8 @@ type Props = { lang: Locale; copy: Copy["nav"] };
 export default function Nav({ lang, copy }: Props) {
   const pathname = usePathname() ?? `/${lang}`;
   const [open, setOpen] = useState(false);
+  // The menu stays mounted a moment after closing, so it can animate out.
+  const [shown, setShown] = useState(false);
   const menuBtn = useRef<HTMLButtonElement>(null);
   const home = `/${lang}`;
   const onHome = pathname === home;
@@ -31,6 +33,15 @@ export default function Nav({ lang, copy }: Props) {
   ];
 
   useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    if (open) {
+      setShown(true);
+      return;
+    }
+    const t = setTimeout(() => setShown(false), 520);
+    return () => clearTimeout(t);
+  }, [open]);
 
   useEffect(() => {
     const l = getLenis();
@@ -94,7 +105,7 @@ export default function Nav({ lang, copy }: Props) {
         <i aria-hidden="true" />
       </button>
 
-      <div id="menu" className="menu" hidden={!open}>
+      <div id="menu" className="menu" hidden={!shown} data-closing={shown && !open ? "1" : undefined}>
         <nav aria-label="Menu">
           <ol>
             {links.map((l, i) => (
@@ -108,6 +119,9 @@ export default function Nav({ lang, copy }: Props) {
           </ol>
         </nav>
         <div className="menu__foot">
+          <a className="btn btn--solid menu__cta" href={sec("contact")} onClick={() => setOpen(false)}>
+            {copy.start}
+          </a>
           <a href={`mailto:${SETTINGS.email}`}>{SETTINGS.email}</a>
           <a href={wa} target="_blank" rel="noopener">
             WhatsApp

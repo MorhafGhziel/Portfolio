@@ -608,6 +608,37 @@ html[lang="ar"] .nav__logo {
   font-size: 17px;
   color: var(--ink-2);
 }
+.menu__cta {
+  width: 100%;
+  height: 54px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.menu {
+  animation: menuFade 0.35s var(--ease-q) both;
+}
+/* Closing plays the opening backwards: the links drop away last-first,
+   then the backdrop fades. */
+.menu[data-closing] {
+  animation: menuFade 0.3s var(--ease-q) 0.2s reverse both;
+  pointer-events: none;
+}
+.menu[data-closing] li {
+  animation: menuOut 0.35s var(--ease-q) both;
+  animation-delay: calc((3 - var(--i)) * 40ms);
+}
+.menu[data-closing] .menu__foot {
+  animation: menuOut 0.35s var(--ease-q) both;
+}
+@keyframes menuFade {
+  from { opacity: 0; }
+}
+@keyframes menuOut {
+  to {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
 @keyframes menuIn {
   from {
     opacity: 0;
@@ -633,17 +664,9 @@ html[lang="ar"] .nav__logo {
   .nav__menu {
     display: block;
   }
+  /* On phones the call to action lives inside the menu. */
   .nav__cta {
-    margin-inline-start: auto;
-    height: 48px;
-    padding: 0 18px;
-    font-size: 14px;
-  }
-}
-@media (max-width: 380px) {
-  .nav__cta {
-    padding: 0 14px;
-    font-size: 13px;
+    display: none;
   }
 }
 
