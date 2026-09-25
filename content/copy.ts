@@ -136,6 +136,13 @@ const en = {
         where: "Remote",
         line: "7 paid client builds, including Etar, Alpha Factory, IEDAR, Omdah and Snaya.",
       },
+      {
+        role: "B.Sc. Computer Science",
+        org: "Asia Pacific University",
+        when: "Graduated 2023",
+        where: "Kuala Lumpur",
+        line: "Bachelor's degree in Computer Science.",
+      },
     ],
   },
   contact: {
@@ -327,6 +334,13 @@ const ar: Copy = {
         when: "٢٠٢٤ – الآن",
         where: "عن بُعد",
         line: "٧ مشاريع مدفوعة لعملاء، منها إطار وألفا فاكتوري وأيدار وعُمدة والصناعية.",
+      },
+      {
+        role: "بكالوريوس علوم الحاسب",
+        org: "جامعة آسيا والمحيط الهادئ",
+        when: "تخرجت ٢٠٢٣",
+        where: "كوالالمبور",
+        line: "بكالوريوس في علوم الحاسب.",
       },
     ],
   },
