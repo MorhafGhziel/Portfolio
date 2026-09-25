@@ -428,6 +428,14 @@ html[dir="rtl"] .svc[data-open="1"] .svc__name {
   position: relative;
   height: 2px;
   margin: 19px 0 38px;
+}
+/* The track runs from the first stop to the last, and no further. */
+.process__line::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 4.5px;
+  width: calc(100% * var(--run));
   background: var(--line-2);
 }
 .process__fill {
