@@ -23,8 +23,9 @@ type Props = {
 
 const CATS: Category[] = ["websites", "ecommerce", "webapps"];
 
-/** Rhythm: one full-width, then a two-up row, repeating. */
-const sizeAt = (i: number) => (i % 3 === 0 ? "full" : "half");
+/** Rhythm: one full-width, then a two-up row, repeating. A card left alone
+ *  at the end of a row goes full-width instead of leaving a gap. */
+const sizeAt = (i: number, n: number) => (i % 3 === 0 || (i === n - 1 && i % 3 === 1) ? "full" : "half");
 
 export default function WorkGrid({ cards, lang, copy, allowList, eagerFirst }: Props) {
   const [filter, setFilter] = useState<Category | "all">("all");
@@ -88,7 +89,7 @@ export default function WorkGrid({ cards, lang, copy, allowList, eagerFirst }: P
       {view === "grid" ? (
         <div ref={grid} className="grid">
           {shown.map((c, i) => (
-            <ProjectCard key={c.slug} card={c} lang={lang} copy={copy} size={sizeAt(i)} priority={eagerFirst && i === 0} level={allowList ? "h2" : "h3"} />
+            <ProjectCard key={c.slug} card={c} lang={lang} copy={copy} size={sizeAt(i, shown.length)} priority={eagerFirst && i === 0} level={allowList ? "h2" : "h3"} />
           ))}
           {!shown.length && <p className="grid__empty">{copy.empty}</p>}
         </div>

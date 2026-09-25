@@ -11,8 +11,9 @@ export type Category = "websites" | "ecommerce" | "webapps";
  * client   = paid freelance build for a named company
  * job      = shipped in a full-time role
  * personal = my own product, live and public
+ * studio   = SIMA, my own studio
  */
-export type ProjectKind = "client" | "job" | "personal";
+export type ProjectKind = "client" | "job" | "personal" | "studio";
 
 export type Project = {
   slug: string;

@@ -12,6 +12,74 @@ import type { Project } from "./types";
  */
 export const PROJECTS: Project[] = [
   {
+    "slug": "sima",
+    "name": {
+      "en": "SIMA Studio",
+      "ar": "سِمة"
+    },
+    "headline": {
+      "en": "Bilingual Studio Website with 3D Work and Clear Packages",
+      "ar": "موقع استوديو بالعربي والإنجليزي، بتجارب ثلاثية الأبعاد وباقات واضحة"
+    },
+    "summary": {
+      "en": "My studio's own site: websites and 3D product experiences for Saudi companies, in Arabic and English.",
+      "ar": "موقع استوديوي الخاص: مواقع وتجارب منتجات ثلاثية الأبعاد لشركات سعودية، بالعربي والإنجليزي."
+    },
+    "kind": "studio",
+    "client": {
+      "en": "SIMA (my studio)",
+      "ar": "سِمة (استوديوي)"
+    },
+    "categories": [
+      "websites"
+    ],
+    "year": "2026",
+    "role": {
+      "en": "Founder · Design + Full-stack",
+      "ar": "المؤسس · تصميم وتطوير"
+    },
+    "services": {
+      "en": [
+        "Brand",
+        "Design",
+        "Development",
+        "3D"
+      ],
+      "ar": [
+        "هوية",
+        "تصميم",
+        "تطوير",
+        "ثلاثي الأبعاد"
+      ]
+    },
+    "stack": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "GSAP",
+      "Motion",
+      "Three.js",
+      "RTL / i18n",
+      "Vercel"
+    ],
+    "liveUrl": "https://www.simastudio.it.com/",
+    "cover": "/images/sima/1.png",
+    "gallery": [
+      "/images/sima/1.png",
+      "/images/sima/3.png",
+      "/images/sima/4.png"
+    ],
+    "idea": {
+      "en": "A studio site built to sell: real client work up front, clear packages in SAR, and one tap to WhatsApp. Arabic and English, with a 3D product experience as proof of what the studio can build.",
+      "ar": "موقع استوديو مبني عشان يبيع: أعمال عملاء حقيقية في الواجهة، وباقات واضحة بالريال، وضغطة وحدة للواتساب. بالعربي والإنجليزي، مع تجربة منتج ثلاثية الأبعاد تثبت وش يقدر يبني الاستوديو."
+    },
+    "notes": {
+      "en": "SIMA (سِمة) is my design and web studio in Riyadh. Its site is Arabic-first and bilingual, built with Next.js, Tailwind CSS, GSAP, Motion and Three.js. It shows live client work, packages with prices in SAR, and a WhatsApp link with a ready message, so a visitor can go from looking to asking in one step.",
+      "ar": "سِمة استوديو تصميم ومواقع أسسته في الرياض. موقعه يبدأ من العربي وثنائي اللغة، مبني بـ Next.js و Tailwind CSS و GSAP و Motion و Three.js. يعرض أعمال عملاء حقيقية، وباقات بأسعارها بالريال، ورابط واتساب برسالة جاهزة، فيقدر الزائر ينتقل من التصفح للسؤال بخطوة وحدة."
+    }
+  },
+  {
     "slug": "omdah",
     "name": {
       "en": "Omdah Studio",
@@ -727,4 +795,4 @@ export const PROJECTS: Project[] = [
 ];
 
 /** The home page's "Selected work", in this order. Reorder freely. */
-export const FEATURED: string[] = ["omdah","etar","inno","archy","iedar","ai-cv-generator"];
+export const FEATURED: string[] = ["sima","omdah","etar","inno","archy","lumen","iedar","ai-cv-generator"];
