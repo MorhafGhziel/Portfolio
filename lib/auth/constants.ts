@@ -21,7 +21,7 @@ export const SESSION_TTL_MS = 30 * 24 * 60 * 60_000; // 30 days
 /**
  * "This browser is mine." A year-long marker, separate from the session, so the
  * owner's visits stay out of the numbers after sign-out and on devices that
- * never sign in. Set at sign-in and by visiting /api/own once (?off=1 clears it).
+ * never sign in. Set at sign-in.
  * Readable by the beacon, like the flag above; it authorises nothing.
  */
 export const OWN_COOKIE = "pf_own";
