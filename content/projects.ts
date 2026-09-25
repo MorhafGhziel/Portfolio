@@ -795,4 +795,4 @@ export const PROJECTS: Project[] = [
 ];
 
 /** The home page's "Selected work", in this order. Reorder freely. */
-export const FEATURED: string[] = ["sima","etar","inno","omdah","archy","lumen","iedar","ai-cv-generator"];
+export const FEATURED: string[] = ["sima","etar","inno","lumen","archy","ai-cv-generator","omdah","iedar"];
