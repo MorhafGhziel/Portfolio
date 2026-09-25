@@ -9,7 +9,7 @@ import Magnetic from "./Magnetic";
 export default function Hero({ lang, copy }: { lang: Locale; copy: Copy["hero"] }) {
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <Horizon variant="dusk" />
+      <Horizon variant="dusk" priority />
       <div className="hero__body wrap">
         <Title as="h1" id="hero-title" text={copy.title} className="hero__title" reveal={false} />
         <p className="hero__lead">{copy.lead}</p>

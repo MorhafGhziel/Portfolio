@@ -35,8 +35,8 @@ app/(site)/[lang] the public site: /en, /ar, /[lang]/work, /[lang]/work/[slug]
   sections.css    work, services, process, about, contact, case study, transitions
 app/admin         dashboard (own root layout, unchanged)
 components/site   Horizon (shader), Reel, WorkGrid, ProjectCard, Services, Contact, Nav…
-public/media/     <slug>/preview.mp4|webm, poster.jpg|webp, m1–m3.webp; reel/; horizon/
-scripts/          capture-horizon.js, subset-accent.py
+public/media/     <slug>/preview.mp4|webm, poster.jpg|webp, m1–m3.webp; reel/; desert/
+scripts/          paint/ (desert.py, strokes.py), subset-accent.py
 ```
 
 `middleware.ts` sends any path without a locale to `/en`; a bare `/` goes to `/ar` when the browser prefers Arabic. Old URLs (`/contact`) redirect.
@@ -51,7 +51,8 @@ No code changes needed. Case pages, OG images, the sitemap and "Next project" pi
 
 ## The three moments
 
-- **The Horizon** (`components/site/Horizon.tsx`) is one fragment shader: dunes, a light that follows the pointer, dot-matrix digits, grain. It compiles when the page is idle (`KHR_parallel_shader_compile`, no main-thread block), runs at 30 fps and stops off-screen. It needs a real GPU (`failIfMajorPerformanceCaveat`); otherwise the stills in `public/media/horizon/` show. Regenerate those with `node scripts/capture-horizon.js` against a running build. Reduced motion draws a single frame.
+- **The Horizon** (`components/site/Horizon.tsx`) is a hand-painted desert in six layers (sky, far, mist, mid, near, front), the same approach as AZAL. `scripts/paint/desert.py` renders the layers and `scripts/paint/strokes.py` (the AZAL stroke painter) paints them. The pointer shifts the layers apart by depth, scrolling sinks the land, and the mist drifts. Dusk sits in the hero and night in Contact, and every section sits on the painting's ground colour (`--bg`). Files live in `public/media/desert/<dusk|night>/<wide|tall>/`. Repaint with:
+  `uv run --python 3.12 --with numpy --with pillow python scripts/paint/desert.py <dir> dusk 1920 1080`, then `strokes.py <dir>/<layer>.png <out>.png <layer>` for each layer.
 - **The Reel** (`Reel.tsx`) animates one CSS variable, `--p`, which drives both the clip-path and the corner labels. It pins an inner stage, never the React-owned section.
 - **The seamless open**: card media and case hero share `view-transition-name: media-<slug>`. `next-view-transitions` wraps navigation, and browser back reverses the transition.
 
@@ -65,6 +66,6 @@ No code changes needed. Case pages, OG images, the sitemap and "Next project" pi
 - Project videos, posters and phone screens: captured by Claude from the live sites listed in each project (your own work), September 2026.
 - Showreel: a montage of those captures. Replace it with a real cut (see CONTENT-NEEDED.md).
 - Portrait: `public/images/me.png` (existing).
-- Horizon: generated in code, no stock.
+- Desert: rendered and stroke-painted in code (scripts/paint), no stock.
 
 See **CONTENT-NEEDED.md** for what's still missing.

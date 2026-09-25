@@ -4,9 +4,10 @@
    ========================================================================== */
 
 :root {
-  --bg: #0b0b0c;
-  --surface: #141416;
-  --surface-2: #1b1b1e;
+  /* The ground colour of the painted desert: every section sits on it. */
+  --bg: #120e17;
+  --surface: #1b1621;
+  --surface-2: #231d2a;
   --ink: #f2f0eb;
   --ink-2: #9a9791;
   --ink-3: #85817b; /* 5:1 on --bg, the floor for small text */
@@ -297,7 +298,7 @@ html[dir="rtl"] .btn:hover::before {
 .btn--ghost {
   color: var(--ink);
   box-shadow: inset 0 0 0 1px var(--line-2);
-  background: rgba(11, 11, 12, 0.18);
+  background: rgba(18, 14, 23, 0.18);
 }
 .btn--ghost::before {
   background: var(--ink);
@@ -392,7 +393,7 @@ html.has-cursor [data-cursor] * {
   height: 48px;
   padding: 0 6px 0 18px;
   border-radius: 999px;
-  background: rgba(20, 20, 22, 0.62);
+  background: rgba(27, 22, 33, 0.62);
   box-shadow: inset 0 0 0 1px var(--line);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   backdrop-filter: blur(14px) saturate(1.2);
@@ -455,7 +456,7 @@ html[lang="ar"] .nav__logo {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(20, 20, 22, 0.62);
+  background: rgba(27, 22, 33, 0.62);
   box-shadow: inset 0 0 0 1px var(--line);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
@@ -571,40 +572,86 @@ html[lang="ar"] .nav__logo {
   position: absolute;
   inset: 0;
   z-index: -1;
-  /* Painted before WebGL starts, and kept if it can't (no GPU, blocked, or
-     reduced motion on some devices). Stills of the real shader, exported by
-     scripts/capture-horizon.js. The site grain sits on top. */
-  background: #0b0b0c url("/media/horizon/dusk-wide.webp") 50% 100% / cover no-repeat;
+  overflow: hidden;
+  background: var(--bg);
+  --mx: 0;
+  --my: 0;
+  --sy: 0;
 }
-.horizon--night {
-  background-image: url("/media/horizon/night-wide.webp");
-}
-@media (max-aspect-ratio: 4/5) {
-  .horizon {
-    background-image: url("/media/horizon/dusk-tall.webp");
-  }
-  .horizon--night {
-    background-image: url("/media/horizon/night-tall.webp");
-  }
-}
-html[dir="rtl"] .horizon--dusk {
-  transform: scaleX(-1);
-}
-html[dir="rtl"] .horizon--dusk canvas {
-  transform: scaleX(-1);
-}
-.horizon canvas {
+.horizon__l {
   position: absolute;
-  inset: 0;
+  inset: -3% -4%;
+  display: block;
+  /* depth: the pointer pulls near layers further; scrolling sinks the land */
+  transform: translate3d(
+    calc(var(--mx) * var(--d) * -22px),
+    calc(var(--my) * var(--d) * -8px + var(--sy) * var(--d) * 22vh),
+    0
+  );
+  will-change: transform;
+}
+.horizon__l img {
   width: 100%;
   height: 100%;
-  opacity: 0;
-  transition: opacity 1.2s var(--ease-q);
+  object-fit: cover;
+  object-position: 50% 100%;
 }
-.horizon[data-ready="1"] canvas {
-  opacity: 1;
+.horizon__l--sky img {
+  object-position: 50% 50%;
+}
+.horizon__l--mist img {
+  animation: mist 38s ease-in-out infinite alternate;
+}
+@keyframes mist {
+  from { transform: translateX(-2.5%); }
+  to { transform: translateX(2.5%); }
+}
+/* The painting ends in the page colour, so sections continue it. */
+.horizon::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 20;
+  height: 18%;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+}
+.horizon--night::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 20;
+  height: 22%;
+  background: linear-gradient(to top, transparent, var(--bg));
+}
+html[dir="rtl"] .horizon--dusk .horizon__l img {
+  transform: scaleX(-1);
+}
+.horizon__stars i {
+  position: absolute;
+  border-radius: 50%;
+  background: #e9e4f5;
+  opacity: 0.7;
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+@keyframes twinkle {
+  to { opacity: 0.2; }
 }
 
+/* A soft shade behind the headline so it stays readable over the bright horizon. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(70% 60% at 18% 62%, rgba(18, 14, 23, 0.55), transparent 70%);
+}
+html[dir="rtl"] .hero::before {
+  background: radial-gradient(70% 60% at 82% 62%, rgba(18, 14, 23, 0.55), transparent 70%);
+}
+.hero__title {
+  text-shadow: 0 2px 30px rgba(18, 14, 23, 0.35);
+}
 .hero__body {
   position: absolute;
   inset-inline: 0;
@@ -766,7 +813,7 @@ html[lang="ar"] .hero__title {
 .reel__shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(11, 11, 12, 0.45) 0%, transparent 22%, transparent 70%, rgba(11, 11, 12, 0.55) 100%);
+  background: linear-gradient(180deg, rgba(18, 14, 23, 0.45) 0%, transparent 22%, transparent 70%, rgba(18, 14, 23, 0.55) 100%);
   pointer-events: none;
 }
 /* The labels ride in the card's corners, and settle into the screen's. */
