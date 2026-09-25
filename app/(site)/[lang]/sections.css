@@ -418,37 +418,38 @@ html[dir="rtl"] .svc[data-open="1"] .svc__name {
 
 /* ---- process -------------------------------------------------------------- */
 
-/* The steps sit on one line; a small sun walks it as you scroll. */
-.process__ridge {
-  position: relative;
-  height: 40px;
-  margin-bottom: 20px;
-}
-.process__ridge svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-.process__ridge path {
-  fill: none;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-}
-.process__track {
-  stroke: var(--line-2);
-}
+/* The steps sit on one line; a small sun walks it as you scroll.
+   The line runs from the centre of the first column to the centre of the
+   last, and everything on it is placed by --p (0 → 1). */
 .process__line {
-  stroke: var(--accent);
+  --p: 0;
+  position: relative;
+  height: 2px;
+  margin: 19px calc(50% / var(--n)) 38px;
+  background: var(--line-2);
+}
+.process__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(var(--p));
+  transform-origin: left center;
+}
+html[dir="rtl"] .process__fill {
+  transform-origin: right center;
 }
 .process__stop,
 .process__sun {
   position: absolute;
-  left: calc(var(--x) * 1%);
-  top: calc(var(--y) * 1%);
+  top: 50%;
   border-radius: 50%;
   translate: -50% -50%;
 }
+html[dir="rtl"] :is(.process__stop, .process__sun) {
+  translate: 50% -50%;
+}
 .process__stop {
+  inset-inline-start: calc(100% * var(--i) / (var(--n) - 1));
   width: 9px;
   height: 9px;
   background: var(--bg);
@@ -463,22 +464,18 @@ html:not(.js) .process__stop,
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
 }
 .process__sun {
-  --x: 12.5;
-  --y: 50;
+  inset-inline-start: calc(100% * var(--p));
   width: 16px;
   height: 16px;
   background: var(--accent);
   box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent),
     0 0 36px 8px color-mix(in srgb, var(--accent) 45%, transparent);
 }
-/* Without the walk (reduced motion, no JS) the sun rests on the last stop. */
-html:not(.js) .process__sun,
-.process[data-static] .process__sun {
-  --x: 87.5;
-  --y: 50;
-}
-html[dir="rtl"] .process__ridge {
-  scale: -1 1;
+/* Without the walk (reduced motion, no JS) the line is full and the sun
+   rests on the last stop. */
+html:not(.js) .process__line,
+.process[data-static] .process__line {
+  --p: 1;
 }
 .process__steps {
   display: grid;
@@ -518,7 +515,7 @@ html.js .process:not([data-static]) .process__step:not([data-lit]) {
   color: var(--accent);
 }
 @media (max-width: 860px) {
-  .process__ridge {
+  .process__line {
     display: none;
   }
   .process__steps {
