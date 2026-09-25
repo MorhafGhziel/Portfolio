@@ -246,17 +246,27 @@ html[lang="ar"] .title .serif {
 }
 
 /* Line masks. Hidden state only exists with JS. */
+/* The mask is padded past the line box so accents above and descenders
+   below are never clipped; the negative margin keeps the line spacing. */
 .ln {
   display: block;
   overflow: hidden;
-  padding: 0.04em 0.08em 0.1em;
-  margin: -0.04em -0.08em -0.1em;
+  padding: 0.1em 0.1em 0.2em;
+  margin: -0.1em -0.1em -0.2em;
+}
+/* Arabic dots and tails reach much further below the line. */
+html[lang="ar"] .ln {
+  padding-block: 0.2em 0.45em;
+  margin-block: -0.2em -0.45em;
 }
 .ln > span {
   display: inline-block;
 }
 html.js [data-reveal] .ln > span {
-  transform: translate3d(0, 112%, 0);
+  transform: translate3d(0, 130%, 0);
+}
+html.js[lang="ar"] [data-reveal] .ln > span {
+  transform: translate3d(0, 150%, 0);
 }
 html.js [data-reveal][data-in] .ln > span {
   transform: none;
