@@ -419,20 +419,22 @@ html[dir="rtl"] .svc[data-open="1"] .svc__name {
 /* ---- process -------------------------------------------------------------- */
 
 /* The steps sit on one line; a small sun walks it as you scroll.
-   The line runs from the centre of the first column to the centre of the
-   last, and everything on it is placed by --p (0 → 1). */
+   Each stop sits over the first letter of its step. The sun travels from
+   the first stop to the last, placed by --p (0 → 1); --run is the share of
+   the line between those two stops. */
 .process__line {
   --p: 0;
+  --run: calc((var(--n) - 1) / var(--n));
   position: relative;
   height: 2px;
-  margin: 19px calc(50% / var(--n)) 38px;
+  margin: 19px 0 38px;
   background: var(--line-2);
 }
 .process__fill {
   position: absolute;
   inset: 0;
   background: var(--accent);
-  transform: scaleX(var(--p));
+  transform: scaleX(calc(var(--p) * var(--run)));
   transform-origin: left center;
 }
 html[dir="rtl"] .process__fill {
@@ -448,8 +450,9 @@ html[dir="rtl"] .process__fill {
 html[dir="rtl"] :is(.process__stop, .process__sun) {
   translate: 50% -50%;
 }
+/* Stops are centred 4.5px in from each column's start edge. */
 .process__stop {
-  inset-inline-start: calc(100% * var(--i) / (var(--n) - 1));
+  inset-inline-start: calc(100% * var(--i) / var(--n) + 4.5px);
   width: 9px;
   height: 9px;
   background: var(--bg);
@@ -464,7 +467,7 @@ html:not(.js) .process__stop,
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
 }
 .process__sun {
-  inset-inline-start: calc(100% * var(--p));
+  inset-inline-start: calc(100% * var(--p) * var(--run) + 4.5px);
   width: 16px;
   height: 16px;
   background: var(--accent);
@@ -481,10 +484,9 @@ html:not(.js) .process__line,
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 }
-/* Each step is centred under its stop. */
+/* Each step reads from its stop. */
 .process__step {
-  padding-inline: 16px;
-  text-align: center;
+  padding-inline-end: 32px;
   transition: opacity 0.6s var(--ease-q);
 }
 .process__step .mono {
@@ -505,7 +507,6 @@ html[lang="ar"] .process__step h3 {
 .process__step p {
   color: var(--ink-2);
   max-width: 26ch;
-  margin-inline: auto;
 }
 /* Before the sun arrives, a step waits in the dusk. */
 html.js .process:not([data-static]) .process__step:not([data-lit]) {
@@ -524,10 +525,6 @@ html.js .process:not([data-static]) .process__step:not([data-lit]) {
   }
   .process__step {
     padding: 0;
-    text-align: start;
-  }
-  .process__step p {
-    margin-inline: 0;
   }
   html.js .process:not([data-static]) .process__step:not([data-lit]) {
     opacity: 1;
