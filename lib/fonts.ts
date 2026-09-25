@@ -1,11 +1,11 @@
-import { Geist, Geist_Mono, Instrument_Serif, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { Bricolage_Grotesque, Geist_Mono, Instrument_Serif, IBM_Plex_Sans_Arabic } from "next/font/google";
 import localFont from "next/font/local";
 
 /* Self-hosted at build time by next/font, with size-adjusted fallbacks so
    swapping in the real face doesn't move the layout. Only the faces the
    first screen needs are preloaded. */
 
-export const sans = Geist({ variable: "--f-sans", subsets: ["latin"], display: "swap" });
+export const sans = Bricolage_Grotesque({ variable: "--f-sans", subsets: ["latin"], display: "swap" });
 
 // Metadata only; never in the first paint's critical path.
 export const mono = Geist_Mono({ variable: "--f-mono", subsets: ["latin"], display: "swap", preload: false });
