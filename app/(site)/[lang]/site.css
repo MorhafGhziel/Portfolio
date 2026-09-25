@@ -513,6 +513,10 @@ html[lang="ar"] .nav__logo {
   box-shadow: inset 0 0 0 1px var(--line);
   font-family: var(--f-ar-sans), var(--f-sans), sans-serif;
 }
+/* Almarai sits its letters low in the line box: lift "ع" to the optical centre. */
+.nav__lang:lang(ar) {
+  padding-bottom: 8px;
+}
 .nav__theme {
   display: grid;
   place-items: center;
