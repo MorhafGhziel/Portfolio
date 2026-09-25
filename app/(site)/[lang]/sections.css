@@ -625,6 +625,61 @@ html.js .process:not([data-static]) .process__step:not([data-lit]) {
   }
 }
 
+/* Work history: when on the left, what in the middle, where on the right. */
+.history {
+  margin-top: clamp(72px, 8vw, 120px);
+}
+.history__title {
+  margin-bottom: 20px;
+  color: var(--ink-3);
+}
+.history__row {
+  display: grid;
+  grid-template-columns: minmax(150px, 2fr) minmax(0, 7fr) minmax(120px, 2fr);
+  gap: 24px;
+  align-items: baseline;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+.history__row:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.history__when,
+.history__where {
+  color: var(--ink-2);
+}
+.history__where {
+  text-align: end;
+}
+.history__role {
+  font-size: clamp(20px, 1.8vw, 28px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+html[lang="ar"] .history__role {
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+.history__role span {
+  color: var(--accent);
+}
+.history__line {
+  margin-top: 6px;
+  max-width: 62ch;
+  color: var(--ink-2);
+}
+@media (max-width: 760px) {
+  .history__row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .history__where {
+    text-align: start;
+    order: 3;
+  }
+}
+
 /* ---- contact -------------------------------------------------------------- */
 
 .contact {
