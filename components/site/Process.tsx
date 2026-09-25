@@ -5,21 +5,21 @@ import { useEffect, useRef } from "react";
 type Step = { name: string; line: string };
 
 /**
- * HOW I WORK — the steps sit along a dune ridge that climbs to the crest.
- * Scrolling walks a small sun along the ridge; the line draws in behind it
+ * HOW I WORK — the steps sit along one straight line, like a horizon.
+ * Scrolling walks a small sun along it; the line draws in behind it
  * and each step lights up as the sun reaches it.
  * Reduced motion (or no JS): the whole ridge is drawn and every step is lit.
  */
 
-// The ridge, in a 1000 × 160 box. Stops sit on it at these points.
+// The line, in a 1000 × 40 box. Stops sit at the start of each quarter,
+// so every step reads from its stop.
 const STOPS: [number, number][] = [
-  [8, 138],
-  [258, 108],
-  [508, 70],
-  [758, 30],
+  [8, 20],
+  [258, 20],
+  [508, 20],
+  [758, 20],
 ];
-// Stops sit at the start of each quarter, so every step reads from its stop.
-const RIDGE = "M0 150 C 4 146, 6 140, 8 138 S 170 120, 258 108 S 430 84, 508 70 S 690 40, 758 30 S 930 12, 1000 10";
+const RIDGE = "M0 20 H 1000";
 
 export default function Process({ steps }: { steps: Step[] }) {
   const root = useRef<HTMLDivElement>(null);
@@ -70,7 +70,7 @@ export default function Process({ steps }: { steps: Step[] }) {
       p.style.strokeDashoffset = `${1 - cur}`;
       const pt = p.getPointAtLength(total * cur);
       s.style.setProperty("--x", `${pt.x / 10}`);
-      s.style.setProperty("--y", `${pt.y / 1.6}`);
+      s.style.setProperty("--y", `${pt.y / 0.4}`);
       items.forEach((it, i) => it.toggleAttribute("data-lit", cur >= at[i] - 0.01));
     };
     const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
@@ -85,13 +85,13 @@ export default function Process({ steps }: { steps: Step[] }) {
   return (
     <div ref={root} className="process">
       <div className="process__ridge" aria-hidden="true">
-        <svg viewBox="0 0 1000 160" preserveAspectRatio="none">
+        <svg viewBox="0 0 1000 40" preserveAspectRatio="none">
           <path className="process__track" d={RIDGE} />
           {/* pathLength="1": the draw-in is a share of the line, whatever size it's shown at. */}
           <path ref={path} className="process__line" d={RIDGE} pathLength={1} />
         </svg>
         {STOPS.map(([x, y], i) => (
-          <i key={i} className="process__stop" style={{ ["--x" as string]: x / 10, ["--y" as string]: y / 1.6 }} />
+          <i key={i} className="process__stop" style={{ ["--x" as string]: x / 10, ["--y" as string]: y / 0.4 }} />
         ))}
         <span ref={sun} className="process__sun" />
       </div>

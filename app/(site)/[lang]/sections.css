@@ -418,22 +418,20 @@ html[dir="rtl"] .svc[data-open="1"] .svc__name {
 
 /* ---- process -------------------------------------------------------------- */
 
-/* The steps climb a dune ridge; a small sun walks it as you scroll. */
+/* The steps sit on one line; a small sun walks it as you scroll. */
 .process__ridge {
   position: relative;
-  height: clamp(110px, 11vw, 170px);
-  margin-bottom: 28px;
+  height: 40px;
+  margin-bottom: 20px;
 }
 .process__ridge svg {
   width: 100%;
   height: 100%;
   overflow: visible;
 }
-/* The box stretches to the section, so widths are in its own units:
-   about 1.5px on screen. */
 .process__ridge path {
   fill: none;
-  stroke-width: 1.6;
+  stroke-width: 1.5;
   stroke-linecap: round;
 }
 .process__track {
@@ -458,18 +456,18 @@ html[dir="rtl"] .svc[data-open="1"] .svc__name {
 }
 .process__sun {
   --x: 0;
-  --y: 93.75;
+  --y: 50;
   width: 16px;
   height: 16px;
   background: var(--accent);
   box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent),
     0 0 36px 8px color-mix(in srgb, var(--accent) 45%, transparent);
 }
-/* Without the walk (reduced motion, no JS) the sun rests on the crest. */
+/* Without the walk (reduced motion, no JS) the sun rests at the end. */
 html:not(.js) .process__sun,
 .process[data-static] .process__sun {
   --x: 100;
-  --y: 6.25;
+  --y: 50;
 }
 html[dir="rtl"] .process__ridge {
   scale: -1 1;
