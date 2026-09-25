@@ -658,6 +658,11 @@ html[lang="ar"] .nav__logo {
   inset: 0;
   z-index: -1;
   overflow: hidden;
+  /* Decoration only: nothing to drag, select or click. The parallax listens
+     on the window, so it doesn't need pointer events here. */
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
   background: var(--bg);
   --mx: 0;
   --my: 0;
@@ -752,6 +757,50 @@ html[dir="rtl"] .horizon--dusk .horizon__l img {
 }
 .hero .horizon__stars {
   animation: skyIn 2s var(--ease-q) 1.2s both;
+}
+/* The day sky's life: clouds drift and birds glide, both left to right,
+   slowly enough to read as weather, not animation. */
+.horizon__life > * {
+  position: absolute;
+  left: 0;
+  animation: cross linear infinite;
+}
+.horizon__cloud {
+  aspect-ratio: 5 / 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+  filter: blur(6px);
+}
+.horizon__bird svg {
+  width: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: rgba(70, 58, 66, 0.6);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  animation: flap 0.9s ease-in-out infinite alternate;
+  transform-origin: 50% 70%;
+}
+.horizon__bird:nth-child(odd) svg {
+  animation-delay: -0.4s;
+}
+@keyframes cross {
+  from { translate: -30vw 0; }
+  to { translate: 110vw 0; }
+}
+@keyframes flap {
+  to { scale: 1 0.45; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Still weather: everything rests where it would have started. */
+  .horizon__life > *,
+  .horizon__bird svg {
+    animation: none !important;
+    translate: calc(var(--o) * 1vw) 0;
+  }
+  .horizon__bird svg {
+    translate: none;
+  }
 }
 /* Dusk stars stay faint: the sky is still light near the horizon. */
 .horizon--dusk .horizon__stars i {

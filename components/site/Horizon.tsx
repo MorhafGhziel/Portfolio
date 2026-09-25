@@ -38,6 +38,21 @@ const STARS: [number, number, number, number][] = [
 
 const LIGHT = { dusk: "day", night: "dawn" } as const;
 
+// The day sky: soft clouds drifting and a few birds gliding across (hero only).
+// [top %, width vw, seconds to cross, start offset %]
+const CLOUDS: [number, number, number, number][] = [
+  [8, 26, 150, 10],
+  [18, 18, 190, 55],
+  [4, 14, 170, 80],
+  [26, 22, 210, 30],
+];
+// [top %, size px, seconds to cross, start offset %]
+const BIRDS: [number, number, number, number][] = [
+  [20, 18, 70, 25],
+  [23, 13, 70, 29],
+  [14, 15, 95, 70],
+];
+
 type Props = { variant?: "dusk" | "night"; className?: string; priority?: boolean };
 
 export default function Horizon({ variant = "dusk", className, priority }: Props) {
@@ -102,6 +117,7 @@ export default function Horizon({ variant = "dusk", className, priority }: Props
               <img
                 src={`/media/desert/${mood}/wide/${l.name}.webp`}
                 alt=""
+                draggable={false}
                 decoding="async"
                 loading="lazy"
                 fetchPriority={priority && (i === 0 || i === LAYERS.length - 1) ? "high" : "auto"}
@@ -110,6 +126,28 @@ export default function Horizon({ variant = "dusk", className, priority }: Props
           ))}
         </div>
       ))}
+      {variant === "dusk" && (
+        <div className="horizon__life horizon__set--light" style={{ zIndex: 1 }}>
+          {CLOUDS.map(([top, w, t, o], i) => (
+            <i
+              key={i}
+              className="horizon__cloud"
+              style={{ top: `${top}%`, width: `${w}vw`, animationDuration: `${t}s`, animationDelay: `${(-t * o) / 100}s`, ["--o" as string]: o }}
+            />
+          ))}
+          {BIRDS.map(([top, size, t, o], i) => (
+            <span
+              key={i}
+              className="horizon__bird"
+              style={{ top: `${top}%`, width: size, animationDuration: `${t}s`, animationDelay: `${(-t * o) / 100}s`, ["--o" as string]: o }}
+            >
+              <svg viewBox="0 0 20 8">
+                <path d="M1 6 Q 5.5 0.5 10 6 Q 14.5 0.5 19 6" />
+              </svg>
+            </span>
+          ))}
+        </div>
+      )}
       <div className="horizon__stars horizon__set--dark" style={{ zIndex: 1 }}>
         {(variant === "night" ? STARS : STARS.filter(([, y]) => y < 30)).map(([x, y, s, d], i) => (
           <i key={i} style={{ left: `${x}%`, top: `${y}%`, width: s, height: s, animationDelay: `${d}s` }} />
