@@ -47,7 +47,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <div className="section__head">
             <Title id="work-title" text={c.work.title} />
           </div>
-          <WorkGrid cards={cards} lang={lang} copy={c.work} />
+          <WorkGrid cards={cards} lang={lang} copy={c.work} bigCount={3} />
           <div className="work__more">
             <Link className="btn btn--ghost" href={`/${lang}/work`}>
               {c.work.viewAll} <span aria-hidden="true">{lang === "ar" ? "←" : "→"}</span>

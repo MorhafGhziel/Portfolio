@@ -19,6 +19,8 @@ type Props = {
   allowList?: boolean;
   /** Load the first card eagerly (only when it's near the top of the page). */
   eagerFirst?: boolean;
+  /** Show only this many as big cards; the rest follow as a compact list. */
+  bigCount?: number;
 };
 
 const CATS: Category[] = ["websites", "ecommerce", "webapps"];
@@ -27,7 +29,7 @@ const CATS: Category[] = ["websites", "ecommerce", "webapps"];
  *  at the end of a row goes full-width instead of leaving a gap. */
 const sizeAt = (i: number, n: number) => (i % 3 === 0 || (i === n - 1 && i % 3 === 1) ? "full" : "half");
 
-export default function WorkGrid({ cards, lang, copy, allowList, eagerFirst }: Props) {
+export default function WorkGrid({ cards, lang, copy, allowList, eagerFirst, bigCount }: Props) {
   const [filter, setFilter] = useState<Category | "all">("all");
   const [view, setView] = useState<"grid" | "list">("grid");
   const grid = useRef<HTMLDivElement>(null);
@@ -35,7 +37,9 @@ export default function WorkGrid({ cards, lang, copy, allowList, eagerFirst }: P
 
   // Only offer filters that have something in them.
   const cats = useMemo(() => CATS.filter((c) => cards.some((p) => p.categories.includes(c))), [cards]);
-  const shown = filter === "all" ? cards : cards.filter((c) => c.categories.includes(filter));
+  const filtered = filter === "all" ? cards : cards.filter((c) => c.categories.includes(filter));
+  const shown = bigCount ? filtered.slice(0, bigCount) : filtered;
+  const rest = bigCount ? filtered.slice(bigCount) : [];
 
   const choose = (f: Category | "all") => {
     if (f === filter) return;
@@ -96,12 +100,25 @@ export default function WorkGrid({ cards, lang, copy, allowList, eagerFirst }: P
       ) : (
         <WorkList cards={shown} lang={lang} copy={copy} />
       )}
+      {rest.length > 0 && <WorkList cards={rest} lang={lang} copy={copy} start={shown.length} className="list--rest" />}
     </>
   );
 }
 
 /** Compact rows with a floating preview that follows the pointer. */
-function WorkList({ cards, lang, copy }: { cards: Card[]; lang: Locale; copy: Copy["work"] }) {
+function WorkList({
+  cards,
+  lang,
+  copy,
+  start = 0,
+  className = "",
+}: {
+  cards: Card[];
+  lang: Locale;
+  copy: Copy["work"];
+  start?: number;
+  className?: string;
+}) {
   const [hover, setHover] = useState<Card | null>(null);
   const float = useRef<HTMLDivElement>(null);
   const move = (e: React.PointerEvent) => {
@@ -109,7 +126,7 @@ function WorkList({ cards, lang, copy }: { cards: Card[]; lang: Locale; copy: Co
     if (f) f.style.transform = `translate3d(${e.clientX + 24}px, ${e.clientY - 90}px, 0)`;
   };
   return (
-    <div className="list" onPointerMove={move} onPointerLeave={() => setHover(null)}>
+    <div className={`list ${className}`} onPointerMove={move} onPointerLeave={() => setHover(null)}>
       <ol>
         {cards.map((c, i) => (
           <li key={c.slug}>
@@ -119,7 +136,10 @@ function WorkList({ cards, lang, copy }: { cards: Card[]; lang: Locale; copy: Co
               data-cursor="VIEW"
               onPointerEnter={(e) => e.pointerType === "mouse" && setHover(c)}
             >
-              <span className="mono list__i">{String(i + 1).padStart(2, "0")}</span>
+              <span className="mono list__i">{String(start + i + 1).padStart(2, "0")}</span>
+              {/* Touch screens get no hover preview, so each row carries a small picture. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="list__thumb" src={c.media.poster} alt="" loading="lazy" decoding="async" />
               <span className="list__name">{c.name}</span>
               <span className="list__cat">{c.tags.join(" · ")}</span>
               <span className="mono list__kind">{copy.kind[c.kind]}</span>
