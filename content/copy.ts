@@ -10,7 +10,7 @@ const en = {
   meta: {
     title: "Murhaf Ghziel: websites people remember",
     description:
-      "Full-stack developer in Riyadh. Websites, stores and web apps, from first sketch to launch.",
+      "Full-stack developer in Riyadh who also designs. SaaS, websites and stores, from first sketch to launch.",
     workTitle: "Work",
     workDescription: "Websites, stores and web apps built by Murhaf Ghziel in Riyadh.",
   },
@@ -31,7 +31,7 @@ const en = {
   },
   hero: {
     title: "I build websites\npeople *remember*.",
-    lead: "I'm Murhaf, a full-stack developer in Riyadh, building websites, stores and web apps from first sketch to launch.",
+    lead: "I'm Murhaf, a full-stack developer in Riyadh who designs what he builds: SaaS, websites and stores, from first sketch to launch.",
     viewWork: "View work",
     start: "Start a project",
     city: "Riyadh",
@@ -97,7 +97,7 @@ const en = {
   about: {
     title: "Behind the *work*",
     lines: [
-      "I'm Murhaf, a full-stack developer based in Riyadh.",
+      "I'm Murhaf, a full-stack developer based in Riyadh, with a designer's eye.",
       "Most of my paid work is SaaS platforms and whole sites for Saudi companies, from the first screen to deployment, usually as the only developer on the project.",
       "In my work Arabic is never a mirror of the English. It's designed first.",
       "I care how fast a thing feels, and how easy it stays to change six months later.",
@@ -202,7 +202,7 @@ type Copy = typeof en;
 const ar: Copy = {
   meta: {
     title: "مرهف غزيل: مواقع تبقى في الذاكرة",
-    description: "مطوّر ويب متكامل في الرياض. مواقع ومتاجر وتطبيقات ويب، من أول فكرة إلى الإطلاق.",
+    description: "مطوّر ويب متكامل في الرياض يصمّم كمان. منصات SaaS ومواقع ومتاجر، من أول فكرة إلى الإطلاق.",
     workTitle: "الأعمال",
     workDescription: "مواقع ومتاجر وتطبيقات ويب صمّمها وبناها مرهف غزيل في الرياض.",
   },
@@ -223,7 +223,7 @@ const ar: Copy = {
   },
   hero: {
     title: "أبني مواقع\n*تبقى* في الذاكرة.",
-    lead: "أنا مرهف، مطوّر ويب متكامل في الرياض. أبني مواقع ومتاجر وتطبيقات ويب، من أول فكرة إلى يوم الإطلاق.",
+    lead: "أنا مرهف، مطوّر ويب متكامل في الرياض، وأصمّم اللي أبنيه: منصات SaaS ومواقع ومتاجر، من أول فكرة إلى يوم الإطلاق.",
     viewWork: "شوف الأعمال",
     start: "ابدأ مشروعك",
     city: "الرياض",
@@ -289,7 +289,7 @@ const ar: Copy = {
   about: {
     title: "ورا *الشغل*",
     lines: [
-      "أنا مرهف، مطوّر ويب متكامل في الرياض.",
+      "أنا مرهف، مطوّر ويب متكامل في الرياض، وعندي عين مصمّم.",
       "أغلب شغلي المدفوع منصات SaaS ومواقع كاملة لشركات سعودية، من أول شاشة للنشر، وغالباً أكون المطوّر الوحيد في المشروع.",
       "العربي عندي مو نسخة معكوسة من الإنجليزي. أصمّمه أول.",
       "يهمّني الموقع كيف يحسّ بالسرعة، وكيف يظل سهل التعديل بعد ستة أشهر.",
