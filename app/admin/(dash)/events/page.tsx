@@ -9,7 +9,7 @@ export const metadata = { title: "Events" };
 
 /** Slugs are what the beacon sends; the dashboard should show real titles. */
 const PROJECT_TITLES = new Map(
-  PROJECTS.map((p) => [p.slug, p.title.split(" - ")[0] ?? p.slug]),
+  PROJECTS.map((p) => [p.slug, p.name.en]),
 );
 
 export default async function EventsPage({
